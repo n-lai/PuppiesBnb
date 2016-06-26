@@ -6,7 +6,7 @@
 ## New Session
 ![new-session]
 
-## PuppiesIndex / PuppiesIndexItem / PuppiesFormß
+## PuppiesIndex / PuppiesIndexItem / PuppiesForm
 ![puppy]
 
 ## PuppiesIndex / PuppiesIndexItem
