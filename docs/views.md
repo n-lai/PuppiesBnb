@@ -6,17 +6,25 @@
 ## New Session
 ![new-session]
 
-## PuppiesIndex / PuppiesIndexItem / PuppiesForm
-![puppy]
+## App
+![app]
 
-## PuppiesIndex / PuppiesIndexItem
+## PuppiesIndex / PuppiesIndexItem / PuppiesMap
 ![puppies]
 
-## NotebookForm
-![notebook-form]
+## PuppiesIndexItem / PuppyDetail / BookingForm / ReviewForm
+![puppy]
+
+## BookingForm
+![booking-form]
+
+## ReviewForm
+![review-form]
 
 [new-user]: ./wireframes/new_user.png
 [new-session]: ./wireframes/new_session.png
+[app]: ./wireframes/app.png
 [puppy]: ./wireframes/root_puppy.png
 [puppies]: ./wireframes/root_puppies.png
-[notebook-form]: ./wireframes/notebook_form.png
+[booking-form]: ./wireframes/booking_form.png
+[review-form]: ./wireframes/review_form.png
