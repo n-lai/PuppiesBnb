@@ -12,6 +12,10 @@
 - `POST /users`
 - `PATCH /users`
 
+- Time Permitting
+  - `GET /users/puppies`
+  - `GET /users/puppy_rentals`
+
 ### Session
 
 - `GET /session/new`
@@ -20,34 +24,19 @@
 
 ## JSON API
 
-### Notes
+### Puppies
 
-- `GET /api/notes`
-  - Notes index/search
-  - accepts `tag_name` query param to list notes by tag
-  - accepts pagination params (if I get there)
-- `POST /api/notes`
-- `GET /api/notes/:id`
-- `PATCH /api/notes/:id`
-- `DELETE /api/notes/:id`
+- `GET /api/puppies`
+  - Puppies index/search
+- `POST /api/puppies`
+- `GET /api/puppies/:id`
+- `PATCH /api/puppies/:id`
+- `DELETE /api/puppies/:id`
 
-### Notebooks
 
-- `GET /api/notebooks`
-- `POST /api/notebooks`
-- `GET /api/notebooks/:id`
-- `PATCH /api/notebooks/:id`
-- `DELETE /api/notebooks/:id`
-- `GET /api/notebooks/:id/notes`
-  - index of all notes for a notebook
-  - accepts pagination params (if I get there)
+### Reviews
 
-### Tags
-
-- A note's tags will be included in the note show template
-- `GET /api/tags`
-  - includes query param for typeahead suggestions
-- `POST /api/notes/:note_id/tags`: add tag to note by name
-  - if note doesn't already exist, it will be created
-- `DELETE /api/notes/:note_id/tags/:tag_name`: remove tag from note by
+- A puppy's reviews will be included in the puppy show template
+- `POST /api/puppies/:puppie_id/reviews`: add review to puppy
+- `DELETE /api/puppies/:puppie_id/reviews/:review_id`: remove review from puppy by
   name
