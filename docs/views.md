@@ -6,11 +6,11 @@
 ## New Session
 ![new-session]
 
-## NotesIndex / NoteIndexItem / NoteForm
-![notes]
+## PuppiesIndex / PuppiesIndexItem / PuppiesFormß
+![puppy]
 
-## NotebooksIndex / NotebookIndexItem
-![notebooks]
+## PuppiesIndex / PuppiesIndexItem
+![puppies]
 
 ## NotebookForm
 ![notebook-form]
