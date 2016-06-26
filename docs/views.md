@@ -17,6 +17,6 @@
 
 [new-user]: ./wireframes/new_user.png
 [new-session]: ./wireframes/new_session.png
-[notes]: ./wireframes/root_notes.png
-[notebooks]: ./wireframes/root_notebooks.png
+[puppy]: ./wireframes/root_puppy.png
+[puppies]: ./wireframes/root_puppies.png
 [notebook-form]: ./wireframes/notebook_form.png
