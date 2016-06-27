@@ -1,44 +1,37 @@
-# Phase 3: Notebooks and Tags (2 days)
+# Phase 3: Flux Architecture and Router
 
 ## Rails
 ### Models
-* Notebook
-* Tag
-* Tagging
 
 ### Controllers
-* Api::NotebooksController (create, destroy, index, show, update)
 
 ### Views
-* notebooks/index.json.jbuilder
-* notebooks/show.json.jbuilder
-* tags/show.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* NotebooksIndex
-  - NotebookIndexItem
-* NotebookForm
-* SearchIndex
+* PuppiesIndex
+  - PuppiesIndexItem
 
 ### Stores
-* Notebook
+* Puppies
 
 ### Actions
-* ApiActions.receiveAllNotebooks -> triggered by ApiUtil
-* ApiActions.receiveSingleNotebook
-* ApiActions.deleteNotebook
-* NotebookActions.fetchAllNotebooks -> triggers ApiUtil
-* NotebookActions.fetchSingleNotebook
-* NotebookActions.createNotebook
-* NotebookActions.editNotebook
-* NotebookActions.destroyNotebook
+* ApiActions.receiveAllPuppies -> triggered by ApiUtil
+* ApiActions.receiveSinglePuppy
+* ApiActions.deletePuppy
+* PuppyActions.fetchAllPuppies -> triggers ApiUtil
+* PuppyActions.fetchSingleNote
+* PuppyActions.createPuppy
+* PuppyActions.editPuppy
+* PuppyActions.destroyPuppy
 
 ### ApiUtil
-* ApiUtil.fetchAllNotebooks
-* ApiUtil.fetchSingleNotebook
-* ApiUtil.createNotebook
-* ApiUtil.editNotebook
-* ApiUtil.destroyNotebook
+* ApiUtil.fetchAllPuppies
+* ApiUtil.fetchSinglePuppy
+* ApiUtil.createPuppy
+* ApiUtil.editPuppy
+* ApiUtil.destroyPuppy
 
 ## Gems/Libraries
+* Flux Dispatcher (npm)
+* Twitter Bootstrap

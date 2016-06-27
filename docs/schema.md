@@ -7,6 +7,9 @@ id          | integer   | not null, primary key
 name        | string    | not null
 lat         | float     | not null
 lng         | float     | not null
+temperament | string    | not null
+image_url   | string    | not null
+temperament | string    | not null
 description | text      | not null
 owner_id    | integer   | not null, foreign key (references users), indexed
 

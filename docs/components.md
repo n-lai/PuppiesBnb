@@ -3,14 +3,13 @@
 **Bolded** components are associated with routes.
 
 * **App**
-  * SplashPage
-    * **PuppiesIndex**
-      * PuppiesMap
-      * PuppiesIndexItem
-    * **PuppyDetail**
-      * ReviewIndex
-      * BookingForm
-      * ReviewForm
+  * **PuppiesIndex**
+    * PuppiesMap
+    * PuppiesIndexItem
+  * **PuppyDetail**
+    * ReviewIndex
+    * BookingForm
+    * ReviewForm
 
 
 
