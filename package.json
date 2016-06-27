@@ -1,0 +1,29 @@
+{
+  "name": "puppies_bnb",
+  "version": "1.0.0",
+  "description": "[Heroku link][heroku]",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "./node_modules/.bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n-lai/PuppiesBnb.git"
+  },
+  "engines": {
+    "node": "4.1.1",
+    "npm": "2.1.x"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n-lai/PuppiesBnb/issues"
+  },
+  "homepage": "https://github.com/n-lai/PuppiesBnb#readme"
+}
