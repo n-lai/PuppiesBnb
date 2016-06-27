@@ -18,12 +18,23 @@
   "engines": {
     "node": "6.2.1",
     "npm": "3.9.3"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/n-lai/PuppiesBnb/issues"
   },
-  "homepage": "https://github.com/n-lai/PuppiesBnb#readme"
+  "homepage": "https://github.com/n-lai/PuppiesBnb#readme",
+  "dependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.0",
+    "flux": "^2.1.1",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-router": "^2.5.1",
+    "webpack": "^1.13.1"
+  }
 }
