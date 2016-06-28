@@ -23,7 +23,7 @@
 ### Actions
 * ApiActions.receiveAllPuppies -> triggered by ApiUtil
 * ApiActions.receiveSinglePuppy
-* ApiActions.deletePuppy
+* ApiActions.removePuppy
 * PuppyActions.fetchAllPuppies -> triggers ApiUtil
 * PuppyActions.fetchSinglePuppy
 * PuppyActions.createPuppy

@@ -14,8 +14,13 @@
 ## Flux
 ### Views (React Components)
 * ReviewIndex
-* Review
-* Booking
+* ReviewIndexItem
+* ReviewDetail
+* ReviewForm
+* BookingIndex
+* BookingIndexItem
+* BookingDetail
+* BookingForm
 * Profile
 
 ### Stores

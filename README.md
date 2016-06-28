@@ -89,7 +89,7 @@ the API.
 
 ### Phase 5: Landing Page (1 day, W2 We 6pm)
 
-**Objective:** Landing page will have carousel of puppy pictures and a guest login button in the middle.  
+**Objective:** Landing page will have carousel of puppy pictures and a guest login button in the middle.
 
 - [ ] Landing Page
 - [ ] Style Landing Page
