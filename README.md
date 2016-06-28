@@ -74,7 +74,7 @@ the API.
 - [ ] NavBar Component
 - [ ] Search Component
 
-### Phase 4: Profile, Booking, Review, and ReviewIndex Components (1 day, W2 M 12pm)
+### Phase 4: Profile, Booking, Review, and ReviewIndex Components (1 day, W2 Tu 6pm)
 
 **Objective:** Puppies can be booked and reviewed.
 
@@ -87,9 +87,9 @@ the API.
 - [ ] Style Reviews
 - [ ] Full Puppy Seed Data
 
-### Phase 5: Landing Page (1 day, W2 Tu 12pm)
+### Phase 5: Landing Page (1 day, W2 We 6pm)
 
-**Objective:** Reviews belong to Puppies, and can be viewed according to puppy.
+**Objective:** Landing page will have carousel of puppy pictures and a guest login button in the middle.  
 
 - [ ] Landing Page
 - [ ] Style Landing Page
