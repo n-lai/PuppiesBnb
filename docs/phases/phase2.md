@@ -13,11 +13,29 @@
 
 ## Flux
 ### Views (React Components)
+* PuppyIndex
+  - PuppyIndexItem
+* PuppyDetail
 
 ### Stores
+* PuppiesStore
 
 ### Actions
+* ApiActions.receiveAllPuppies -> triggered by ApiUtil
+* ApiActions.receiveSinglePuppy
+* ApiActions.deletePuppy
+* PuppyActions.fetchAllPuppies -> triggers ApiUtil
+* PuppyActions.fetchSinglePuppy
+* PuppyActions.createPuppy
+* PuppyActions.editPuppy
+* PuppyActions.destroyPuppy
 
 ### ApiUtil
+* ApiUtil.fetchAllPuppies
+* ApiUtil.fetchSinglePuppy
+* ApiUtil.createPuppy
+* ApiUtil.editPuppy
+* ApiUtil.destroyPuppy
+
 
 ## Gems/Libraries

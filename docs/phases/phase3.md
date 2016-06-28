@@ -1,4 +1,4 @@
-# Phase 3: Flux Architecture and Router
+# Phase 3: Map, Filters, NavBar, and Search Components
 
 ## Rails
 ### Models
@@ -9,29 +9,15 @@
 
 ## Flux
 ### Views (React Components)
-* PuppiesIndex
-  - PuppiesIndexItem
+* Maps
+* Filters
+* NavBar
+* Search
 
 ### Stores
-* Puppies
 
 ### Actions
-* ApiActions.receiveAllPuppies -> triggered by ApiUtil
-* ApiActions.receiveSinglePuppy
-* ApiActions.deletePuppy
-* PuppyActions.fetchAllPuppies -> triggers ApiUtil
-* PuppyActions.fetchSingleNote
-* PuppyActions.createPuppy
-* PuppyActions.editPuppy
-* PuppyActions.destroyPuppy
 
 ### ApiUtil
-* ApiUtil.fetchAllPuppies
-* ApiUtil.fetchSinglePuppy
-* ApiUtil.createPuppy
-* ApiUtil.editPuppy
-* ApiUtil.destroyPuppy
 
 ## Gems/Libraries
-* Flux Dispatcher (npm)
-* Twitter Bootstrap

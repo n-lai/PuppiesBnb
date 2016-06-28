@@ -43,37 +43,36 @@ PuppiesBnb is a web application inspired by AirBnb that will be build using Ruby
 
 ## Implementation Timeline
 
-### Phase 1: Backend setup and Front End User Authentication (1 day, W1 Tu 6pm)
+### Phase 1: Backend setup and Front End User Authentication (2 days, W1 We 6pm)
 
 **Objective:** Functioning rails project with Authentication
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
-- [ ] user signup/signin pages
-- [ ] blank landing page after signin
-- [ ] have app deployed to Heroku
+- [ ] Host on Heroku
+- [ ] Rails User JSON API
+- [ ] Front-end authentication
+- [ ] Guest Demo Login
+- [ ] Style front-end authentication
 
-### Phase 2: Puppies Model, API, and basic APIUtil (1.5 days, W1 Th 12pm)
+### Phase 2: Puppies Model, Seed Data, Puppy Components (1 day, W1 Th 6pm)
 
 **Objective:** Puppies can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Puppy` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for puppies (`PuppiesController`)
-- [ ] jBuilder views for puppies
+- [ ] Puppy CRUD JSON API
+- [ ] Some Puppy Seed Data
+- [ ] Puppy Index Component
+- [ ] Puppy Index Item Component
+- [ ] Puppy Detail Component
 
-### Phase 3: Flux Architecture and Router (1.5 days, W1 F 6pm)
+### Phase 3: Map, Filters, NavBar, and Search Components (2 days, W2 M 6pm)
 
-**Objective:** Puppies can be created, read, edited and destroyed with the user interface.
+**Objective:** Puppies can be searched according to location and availability and filtered according to temperament
 
-- [ ] setup the flux loop with skeleton files
-- [ ] setup React Router
-- implement each puppy component, building out the flux loop as needed.
-  - [ ] `PuppiesIndex`
-  - [ ] `PuppyIndexItem`
-  - [ ] `PuppyForm`
+- [ ] Map Component
+- [ ] Filters Component
+- [ ] Style Map and Filters
+- [ ] NavBar Component
+- [ ] Search Component
 
 ### Phase 4: Start Styling (0.5 days, W2 M 12pm)
 

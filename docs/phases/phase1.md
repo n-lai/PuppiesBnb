@@ -1,22 +1,21 @@
-# Phase 1: User Authentication, Puppy Model and JSON API
+# Phase 1: Backend setup and Front End User Authentication
 
 ## Rails
 ### Models
 * User
-* Puppy
 
 ### Controllers
 * UsersController (create, new)
 * SessionsController (create, new, destroy)
 
 ### Views
-* users/new.html.erb
-* session/new.html.erb
 
 ## Flux
 ### Views (React Components)
+* SessionsForm
 
 ### Stores
+* SessionsStore
 
 ### Actions
 
