@@ -1,31 +1,50 @@
-# Phase 4: Rentals and Reviews
+# Phase 4: Profile, Booking, Review, and ReviewIndex Components
 
 ## Rails
 ### Models
-* Rental
+* Booking
 * Review
 
 ### Controllers
-* Api::RentalController (create, destroy, show)
-* Api::ReviewsController (create, destroy)
+* Api::BookingsController (create, destroy, show)
+* Api::ReviewsController (create, destroy, show)
 
 ### Views
-* puppies/id/reviews.json.jbuilder
-* users/id/rentals.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* PuppiesIndex
-  - PuppyIndexItem
-* PuppiesMap
-* SearchIndex
+* ReviewIndex
+* Review
+* Booking
+* Profile
 
 ### Stores
-* Puppies
-* Rentals
+* Reviews
+* Bookings
 
 ### Actions
+* ApiActions.receiveAllReviews
+* ApiActions.receiveSingleReviews
+* ApiActions.removeReview
+* ReviewActions.fetchAllReviews
+* ReviewActions.fetchSingleReview
+* ReviewActions.deleteReview
+* ApiActions.receiveAllBookings
+* ApiActions.receiveSingleBooking
+* ApiActions.removeBooking
+* ReviewActions.fetchAllBookings
+* ReviewActions.fetchSingleBooking
+* ReviewActions.editBooking
+* ReviewActions.deleteBooking
+
 
 ### ApiUtil
+* ApiUtil.fetchAllReviews
+* ApiUtil.createReview
+* ApiUtil.destroyReview
+* ApiUtil.fetchAllBookings
+* ApiUtil.createBooking
+* ApiUtil.editBooking
+* ApiUtil.destroyBooking
 
 ## Gems/Libraries

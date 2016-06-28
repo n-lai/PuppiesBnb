@@ -1,4 +1,4 @@
-# Phase 5: Styling Cleanup and Seeding
+# Phase 5: Landing Page
 
 ## Rails
 ### Models
@@ -9,6 +9,7 @@
 
 ## Flux
 ### Views (React Components)
+* Landing Page
 
 ### Stores
 

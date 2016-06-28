@@ -74,46 +74,35 @@ the API.
 - [ ] NavBar Component
 - [ ] Search Component
 
-### Phase 4: Start Styling (0.5 days, W2 M 12pm)
+### Phase 4: Profile, Booking, Review, and ReviewIndex Components (1 day, W2 M 12pm)
 
-**Objective:** Existing pages (including signup/signin) will look good.
+**Objective:** Puppies can be booked and reviewed.
 
-- [ ] create a basic style guide
-- [ ] position elements on the page
-- [ ] add basic colors & styles
+- [ ] Profile Component
+- [ ] Style Profile
+- [ ] Booking Component
+- [ ] Style Bookings
+- [ ] Review Component
+- [ ] ReviewIndex Component
+- [ ] Style Reviews
+- [ ] Full Puppy Seed Data
 
-### Phase 5: Reviews (1 day, W2 Tu 12pm)
+### Phase 5: Landing Page (1 day, W2 Tu 12pm)
 
 **Objective:** Reviews belong to Puppies, and can be viewed according to puppy.
 
-- [ ] create `Review` model
-- build out API, Flux loop, and components for:
-  - [ ] Review CRUD
-  - [ ] adding reviews requires a puppy
-- Use CSS to style new views
+- [ ] Landing Page
+- [ ] Style Landing Page
 
-### Phase 6: Rentals (1 days, W2 Th 12pm)
+### Phase 6: Puppy Hosting (1 days, W2 Th 12pm)
 
-**Objective:** Puppies can be rented by other users.
+**Objective:** Puppies can be hosted by the user.
 
-- [ ] create `Puppy Rental` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] rental CRUD
-  - [ ] renting a puppy requires that puppy isn't already rented for that time slot
-- [ ] Style new elements
+- [ ] Update profile component so that users can become hosts
+- [ ] Style profile page
 
-
-### Phase 7: Styling Cleanup and Seeding (1 day, W2 F 6pm)
-
-**objective:** Make the site feel more cohesive.
-
-- [ ] Get feedback on my UI from others
-- [ ] Refactor HTML classes & CSS rules
-- [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
-- [ ] User/Owner profiles
-- [ ] Pagination / infinite scroll for Puppies Index
 - [ ] Messaging
 
 [phase-one]: docs/phases/phase1.md

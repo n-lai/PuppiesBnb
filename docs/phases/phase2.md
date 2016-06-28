@@ -18,7 +18,7 @@
 * PuppyDetail
 
 ### Stores
-* PuppiesStore
+* Puppies
 
 ### Actions
 * ApiActions.receiveAllPuppies -> triggered by ApiUtil
