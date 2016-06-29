@@ -9,6 +9,7 @@ const ModalStyles = {
     left: '25%',
     top: '10%',
     right: '25%',
+    padding: '20px',
     backgroundColor: 'white'
   }
 };

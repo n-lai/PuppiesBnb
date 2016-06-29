@@ -73,12 +73,9 @@ const SignupForm = React.createClass({
 
   render() {
     return(
-      <div className='signup-form-container'>
-        <form onSubmit={this.handleSubmit} className='signup-form-box'>
+        <div>
           { this.fieldErrors("base") }
-
-          <div className='signup-form'>
-
+          <form onSubmit={this.handleSubmit} className='signup-form'>
               <input
                 type="text"
                 value={this.state.name}
@@ -121,9 +118,8 @@ const SignupForm = React.createClass({
             <br></br>
             <button className='signup-form-button' type="submit">Sign Up</button>
             <button className='signup-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
     );
   }
 });

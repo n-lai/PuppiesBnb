@@ -7,6 +7,8 @@ id          | integer   | not null, primary key
 name        | string    | not null
 lat         | float     | not null
 lng         | float     | not null
+type        | string    | not null
+price       | integer   | not null
 temperament | string    | not null
 image_url   | string    | not null
 description | text      | not null

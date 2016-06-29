@@ -69,11 +69,10 @@ const LoginForm = React.createClass({
 
   render() {
     return (
-      <div className='login-form-container'>
-        <form onSubmit={this.handleSubmit} className='login-form-box'>
+        <div>
           { this.fieldErrors("base") }
 
-          <div className='login-form'>
+          <form onSubmit={this.handleSubmit} className='login-form'>
             { this.fieldErrors("username") }
               <input
                 type="text"
@@ -94,9 +93,8 @@ const LoginForm = React.createClass({
             <br></br>
             <button className='login-form-button' type="submit">Log In</button>
             <button className='login-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
     );
   }
 

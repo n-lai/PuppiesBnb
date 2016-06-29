@@ -26463,53 +26463,49 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'login-form-container', __self: this
+	      {
+	        __self: this
 	      },
+	      this.fieldErrors("base"),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.handleSubmit, className: 'login-form-box', __self: this
+	        { onSubmit: this.handleSubmit, className: 'login-form', __self: this
 	        },
-	        this.fieldErrors("base"),
+	        this.fieldErrors("username"),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.username,
+	          placeholder: 'Username',
+	          onChange: this.update("username"),
+	          className: 'login-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        this.fieldErrors("password"),
+	        React.createElement('input', {
+	          type: 'password',
+	          value: this.state.password,
+	          placeholder: 'Password',
+	          onChange: this.update("password"),
+	          className: 'login-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
 	        React.createElement(
-	          'div',
-	          { className: 'login-form', __self: this
+	          'button',
+	          { className: 'login-form-button', type: 'submit', __self: this
 	          },
-	          this.fieldErrors("username"),
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.username,
-	            placeholder: 'Username',
-	            onChange: this.update("username"),
-	            className: 'login-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          this.fieldErrors("password"),
-	          React.createElement('input', {
-	            type: 'password',
-	            value: this.state.password,
-	            placeholder: 'Password',
-	            onChange: this.update("password"),
-	            className: 'login-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement(
-	            'button',
-	            { className: 'login-form-button', type: 'submit', __self: this
-	            },
-	            'Log In'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'login-form-button', onClick: this.handleGuestLogin, __self: this
-	            },
-	            'Guest Log In'
-	          )
+	          'Log In'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'login-form-button', onClick: this.handleGuestLogin, __self: this
+	          },
+	          'Guest Log In'
 	        )
 	      )
 	    );
@@ -33224,84 +33220,80 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'signup-form-container', __self: this
+	      {
+	        __self: this
 	      },
+	      this.fieldErrors("base"),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.handleSubmit, className: 'signup-form-box', __self: this
+	        { onSubmit: this.handleSubmit, className: 'signup-form', __self: this
 	        },
-	        this.fieldErrors("base"),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.name,
+	          placeholder: 'Name',
+	          onChange: this.update("name"),
+	          className: 'signup-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.username,
+	          placeholder: 'Username',
+	          onChange: this.update("username"),
+	          className: 'signup-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.email,
+	          placeholder: 'Email Address',
+	          onChange: this.update("email"),
+	          className: 'signup-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'password',
+	          value: this.state.password,
+	          placeholder: 'Password',
+	          onChange: this.update("password"),
+	          className: 'signup-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.profile_img_url,
+	          placeholder: 'Profile Picture URL',
+	          onChange: this.update("profile_img_url"),
+	          className: 'signup-input',
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
 	        React.createElement(
-	          'div',
-	          { className: 'signup-form', __self: this
+	          'button',
+	          { className: 'signup-form-button', type: 'submit', __self: this
 	          },
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.name,
-	            placeholder: 'Name',
-	            onChange: this.update("name"),
-	            className: 'signup-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.username,
-	            placeholder: 'Username',
-	            onChange: this.update("username"),
-	            className: 'signup-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.email,
-	            placeholder: 'Email Address',
-	            onChange: this.update("email"),
-	            className: 'signup-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement('input', {
-	            type: 'password',
-	            value: this.state.password,
-	            placeholder: 'Password',
-	            onChange: this.update("password"),
-	            className: 'signup-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.profile_img_url,
-	            placeholder: 'Profile Picture URL',
-	            onChange: this.update("profile_img_url"),
-	            className: 'signup-input',
-	            __self: this
-	          }),
-	          React.createElement('br', {
-	            __self: this
-	          }),
-	          React.createElement(
-	            'button',
-	            { className: 'signup-form-button', type: 'submit', __self: this
-	            },
-	            'Sign Up'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'signup-form-button', onClick: this.handleGuestLogin, __self: this
-	            },
-	            'Guest Log In'
-	          )
+	          'Sign Up'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'signup-form-button', onClick: this.handleGuestLogin, __self: this
+	          },
+	          'Guest Log In'
 	        )
 	      )
 	    );
@@ -35372,6 +35364,7 @@
 	    left: '25%',
 	    top: '10%',
 	    right: '25%',
+	    padding: '20px',
 	    backgroundColor: 'white'
 	  }
 	};

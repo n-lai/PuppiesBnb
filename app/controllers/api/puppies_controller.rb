@@ -33,12 +33,13 @@ class PuppiesController < ApplicationController
   def destroy
     @puppy = Puppy.find(params[:id])
     @puppy.destroy
+    render :show
   end
 
 
 
   private
   def puppy_params
-    params.require(:puppy).permit(:name, :lat, :lng, :temperament, :image_url, :description)
+    params.require(:puppy).permit(:name, :lat, :lng, :temperament, :price, :type, :image_url, :description)
   end
 end
