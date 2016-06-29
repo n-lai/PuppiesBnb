@@ -68,7 +68,6 @@ const SignupForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.signup(userData);
-    this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
   },
 
 

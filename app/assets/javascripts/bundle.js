@@ -26459,8 +26459,6 @@
 
 	    ErrorActions.clearErrors();
 	    SessionActions.login(userData);
-
-	    this.setState({ username: "", password: "" });
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -33223,7 +33221,6 @@
 
 	    ErrorActions.clearErrors();
 	    SessionActions.signup(userData);
-	    this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
 	  },
 	  render: function render() {
 	    return React.createElement(

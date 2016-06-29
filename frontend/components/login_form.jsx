@@ -65,8 +65,6 @@ const LoginForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.login(userData);
-
-    this.setState({ username: "", password: "" })
   },
 
   render() {
