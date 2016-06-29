@@ -31,7 +31,7 @@ SessionStore.currentUser = function() {
 };
 
 SessionStore.isUserLoggedIn = function() {
-  return !!_currentUser;
+  return !!_currentUser.id;
 };
 
 module.exports = SessionStore;

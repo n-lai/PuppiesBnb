@@ -2,6 +2,7 @@ const React = require('react');
 const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
+const ErrorActions = require('../actions/error_actions');
 const SessionActions = require('../actions/session_actions');
 const hashHistory = require('react-router').hashHistory;
 
@@ -50,6 +51,7 @@ const LoginForm = React.createClass({
   handleGuestLogin(e) {
     e.preventDefault();
 
+    ErrorActions.clearErrors();
     SessionActions.login({ username: 'guest', password: 'password' });
   },
 

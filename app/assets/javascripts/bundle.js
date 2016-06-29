@@ -78,16 +78,20 @@
 	window.SessionActions = SessionActions;
 
 	document.addEventListener('DOMContentLoaded', function () {
-	  SessionActions.receiveCurrentUser(window.currentUser);
+	  if (window.currentUser) {
+	    SessionActions.receiveCurrentUser(window.currentUser);
+	  }
 	  var root = document.getElementById('content');
 	  ReactDOM.render(appRouter, root);
 	});
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var SessionApiUtil = {
 	  signup: function signup(user, success, _error) {
@@ -122,6 +126,7 @@
 	      success: success,
 	      error: function error() {
 	        console.log("Logout Error in SessionApiUtil#logout");
+	        hashHistory.push('/login');
 	      }
 	    });
 	  }
@@ -26377,6 +26382,7 @@
 	var Link = __webpack_require__(9).Link;
 	var SessionStore = __webpack_require__(238);
 	var ErrorStore = __webpack_require__(260);
+	var ErrorActions = __webpack_require__(258);
 	var SessionActions = __webpack_require__(2);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
@@ -26440,6 +26446,7 @@
 	  handleGuestLogin: function handleGuestLogin(e) {
 	    e.preventDefault();
 
+	    ErrorActions.clearErrors();
 	    SessionActions.login({ username: 'guest', password: 'password' });
 	  },
 	  handleSubmit: function handleSubmit(e) {
@@ -26551,7 +26558,7 @@
 	};
 
 	SessionStore.isUserLoggedIn = function () {
-	  return !!_currentUser;
+	  return !!_currentUser.id;
 	};
 
 	module.exports = SessionStore;
@@ -33085,6 +33092,7 @@
 	var SessionStore = __webpack_require__(238);
 	var ErrorStore = __webpack_require__(260);
 	var SessionActions = __webpack_require__(2);
+	var ErrorActions = __webpack_require__(258);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var SignupForm = React.createClass({
@@ -33105,6 +33113,9 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.signupListener.remove();
 	    this.errorListener.remove();
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    ErrorActions.clearErrors();
 	  },
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
@@ -33155,6 +33166,7 @@
 	      profile_img_url: this.state.profile_img_url
 	    };
 
+	    ErrorActions.clearErrors();
 	    SessionActions.signup(userData);
 	    this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
 	  },
@@ -33280,10 +33292,9 @@
 	      errors: errors
 	    });
 	  },
-	  clearErrors: function clearErrors(errors) {
+	  clearErrors: function clearErrors() {
 	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.CLEAR_ERRORS,
-	      errors: errors
+	      actionType: ErrorConstants.CLEAR_ERRORS
 	    });
 	  }
 	};
@@ -33321,11 +33332,13 @@
 	var setErrors = function setErrors(payload) {
 	  _errors = payload.errors;
 	  _form = payload.form;
+	  ErrorStore.__emitChange();
 	};
 
 	var clearErrors = function clearErrors(payload) {
 	  _errors = {};
 	  _form = "";
+	  ErrorStore.__emitChange();
 	};
 
 	ErrorStore.__onDispatch = function (payload) {
@@ -33337,7 +33350,6 @@
 	      clearErrors();
 	      break;
 	  }
-	  ErrorStore.__emitChange();
 	};
 
 	ErrorStore.formErrors = function (form) {

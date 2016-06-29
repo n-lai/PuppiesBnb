@@ -10,11 +10,13 @@ let _form = "";
 const setErrors = function(payload) {
   _errors = payload.errors;
   _form = payload.form;
+  ErrorStore.__emitChange();
 };
 
 const clearErrors = function(payload) {
   _errors = {};
   _form = "";
+  ErrorStore.__emitChange();
 };
 
 ErrorStore.__onDispatch = function(payload) {
@@ -26,7 +28,6 @@ ErrorStore.__onDispatch = function(payload) {
       clearErrors();
       break;
   }
-  ErrorStore.__emitChange();
 };
 
 ErrorStore.formErrors = function(form) {

@@ -10,10 +10,9 @@ const ErrorActions = {
     });
   },
 
-  clearErrors(errors) {
+  clearErrors() {
     AppDispatcher.dispatch({
       actionType: ErrorConstants.CLEAR_ERRORS,
-      errors: errors
     });
   }
 };

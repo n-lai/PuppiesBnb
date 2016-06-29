@@ -1,3 +1,5 @@
+const hashHistory = require('react-router').hashHistory;
+
 const SessionApiUtil = {
   signup(user, success, error) {
     $.ajax({
@@ -33,6 +35,7 @@ const SessionApiUtil = {
       success,
       error: function() {
         console.log("Logout Error in SessionApiUtil#logout");
+        hashHistory.push('/login');
       }
     });
   }

@@ -3,6 +3,7 @@ const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
 const SessionActions = require('../actions/session_actions');
+const ErrorActions = require('../actions/error_actions');
 const hashHistory = require('react-router').hashHistory;
 
 const SignupForm = React.createClass({
@@ -23,6 +24,10 @@ const SignupForm = React.createClass({
   componentWillUnmount() {
     this.signupListener.remove();
     this.errorListener.remove();
+  },
+
+  componentDidUpdate() {
+    ErrorActions.clearErrors();
   },
 
   redirectIfLoggedIn() {
@@ -58,6 +63,7 @@ const SignupForm = React.createClass({
       profile_img_url: this.state.profile_img_url
     };
 
+    ErrorActions.clearErrors();
     SessionActions.signup(userData);
     this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
   },
