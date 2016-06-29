@@ -26540,7 +26540,7 @@
 	};
 
 	SessionStore.isUserLoggedIn = function () {
-	  return !!_currentUser.id;
+	  return !!_currentUser;
 	};
 
 	module.exports = SessionStore;
