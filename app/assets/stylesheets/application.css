@@ -13,3 +13,77 @@
  *= require_tree .
  *= require_self
  */
+
+
+ html, body, section, article, h1, h2, h3, h6, p, strong, em, a, select, ul, li, input, textarea, button, img {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+
+  box-sizing: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  color: inherit;
+
+  background: transparent;
+
+  font-size: 14px;
+  font-weight: 300;
+  font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  list-style-type: none;
+}
+
+h2 {
+  font-size: 34px;
+}
+
+button {
+  display: block;
+  padding: 20px
+  border: 1px solid;
+  border-radius: 2px;
+  cursor: pointer;
+  color: white;
+  background-color: #FF5A5F;
+  text-align: center;
+  font-size: 16px;
+  padding: 9px 27px;
+  margin: 10px 10px;
+}
+
+.logout-button {
+  
+}
+
+.login-input, .signup-input {
+  height: 64px;
+  font-size: 16px;
+  padding:10px;
+  border-radius: 2px;
+  border: 1px solid #c4c4c4;
+  width: 358px;
+  margin: 10px 10px;
+}
+
+.login-form-button, .signup-form-button {
+  width: 327px;
+  height: 64px;
+}
+
+.login-form-container {
+  width: 400px;
+}
+
+.login-form-box, .signup-form-box {
+  width: 400px;
+  padding: 10px;
+  background-color: white;
+}
+
+.modal {
+  width: 400px;
+  margin: 0 auto;
+}

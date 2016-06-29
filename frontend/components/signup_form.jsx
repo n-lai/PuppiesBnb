@@ -26,10 +26,6 @@ const SignupForm = React.createClass({
     this.errorListener.remove();
   },
 
-  componentDidUpdate() {
-    ErrorActions.clearErrors();
-  },
-
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
       this.context.router.push("/");
@@ -38,7 +34,6 @@ const SignupForm = React.createClass({
 
   fieldErrors(field) {
     const errors = ErrorStore.formErrors("signup");
-
     if (!errors[field]) {return; }
 
     const messages = errors[field].map( (errorMsg, i) => {
@@ -52,6 +47,14 @@ const SignupForm = React.createClass({
     return (e) => this.setState({ [property]: e.target.value });
   },
 
+  handleGuestLogin(e) {
+    e.preventDefault();
+
+    ErrorActions.clearErrors();
+    SessionActions.login({ username: 'guest', password: 'password' });
+    this.props.close();
+  },
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -63,16 +66,12 @@ const SignupForm = React.createClass({
       profile_img_url: this.state.profile_img_url
     };
 
+    this.props.close();
     ErrorActions.clearErrors();
     SessionActions.signup(userData);
     this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
   },
 
-  handleGuestLogin(e) {
-    e.preventDefault();
-
-    SessionActions.login({ username: 'guest', password: 'password' });
-  },
 
   render() {
     return(
@@ -82,53 +81,48 @@ const SignupForm = React.createClass({
 
           <div className='signup-form'>
 
-            <label>Name:
               <input
                 type="text"
                 value={this.state.name}
+                placeholder='Name'
                 onChange={this.update("name")}
                 className='signup-input'
               />
-            </label>
-
-            <label>Username:
+              <br></br>
               <input
                 type="text"
                 value={this.state.username}
+                placeholder='Username'
                 onChange={this.update("username")}
                 className='signup-input'
               />
-            </label>
-
-            <label>Email address:
+              <br></br>
               <input
                 type="text"
                 value={this.state.email}
+                placeholder='Email Address'
                 onChange={this.update("email")}
                 className='signup-input'
               />
-            </label>
-
-            <label>Password:
+            <br></br>
               <input
                 type="password"
                 value={this.state.password}
+                placeholder='Password'
                 onChange={this.update("password")}
                 className='signup-input'
               />
-            </label>
-
-            <label>Profile Picture URL:
+            <br></br>
               <input
                 type="text"
                 value={this.state.profile_img_url}
+                placeholder='Profile Picture URL'
                 onChange={this.update("profile_img_url")}
                 className='signup-input'
               />
-            </label>
-
-            <input type="submit" value="Sign Up"/>
-            <button onClick={this.handleGuestLogin}>Guest Login</button>
+            <br></br>
+            <button className='signup-form-button' type="submit">Sign Up</button>
+            <button className='signup-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>
           </div>
         </form>
       </div>

@@ -18,6 +18,7 @@ const SessionActions = {
       actionType: SessionConstants.LOGIN,
       user: user
     });
+    hashHistory.push("/");
   },
 
   logout() {
@@ -28,7 +29,7 @@ const SessionActions = {
     AppDispatcher.dispatch({
       actionType: SessionConstants.LOGOUT
     });
-    hashHistory.push("/login");
+    hashHistory.push("/");
   }
 };
 

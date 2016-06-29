@@ -17,8 +17,7 @@ const SessionActions = require('./actions/session_actions');
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path="/" component={ App } />
-      <Route path="/login" component={ LoginForm }/>
-      <Route path="/signup" component={ SignupForm }/>
+      
   </Router>
 );
 

@@ -34,7 +34,6 @@ const LoginForm = React.createClass({
 
   fieldErrors(field) {
     const errors = ErrorStore.formErrors("login");
-
     if (!errors[field]) {return; }
 
     const messages = errors[field].map( (errorMsg, i) => {
@@ -53,6 +52,7 @@ const LoginForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.login({ username: 'guest', password: 'password' });
+    this.props.close();
   },
 
   handleSubmit(e) {
@@ -63,8 +63,9 @@ const LoginForm = React.createClass({
       password: this.state.password
     };
 
+    ErrorActions.clearErrors();
     SessionActions.login(userData);
-
+    this.props.close();
     this.setState({ username: "", password: "" })
   },
 
@@ -75,26 +76,26 @@ const LoginForm = React.createClass({
           { this.fieldErrors("base") }
 
           <div className='login-form'>
-            <label>Username:
+            { this.fieldErrors("username") }
               <input
                 type="text"
                 value={this.state.username}
+                placeholder="Username"
                 onChange={this.update("username")}
                 className='login-input'
               />
-            </label>
-
-            <label>Password:
+            <br></br>
+              { this.fieldErrors("password") }
               <input
                 type="password"
                 value={this.state.password}
+                placeholder="Password"
                 onChange={this.update("password")}
                 className='login-input'
               />
-            </label>
-
-            <input type="submit" value="Log In"/>
-            <button onClick={this.handleGuestLogin}>Guest Login</button>
+            <br></br>
+            <button className='login-form-button' type="submit">Log In</button>
+            <button className='login-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>
           </div>
         </form>
       </div>
