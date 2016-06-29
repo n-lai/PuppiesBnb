@@ -42,7 +42,6 @@ h2 {
 
 button {
   display: block;
-  padding: 20px
   border: 1px solid;
   border-radius: 2px;
   cursor: pointer;
@@ -54,9 +53,6 @@ button {
   margin: 10px 10px;
 }
 
-.logout-button {
-  
-}
 
 .login-input, .signup-input {
   height: 64px;
