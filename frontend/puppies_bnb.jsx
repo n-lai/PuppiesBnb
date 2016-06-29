@@ -26,6 +26,7 @@ window.SessionApiUtil = SessionApiUtil;
 window.SessionActions = SessionActions;
 
 document.addEventListener('DOMContentLoaded', () => {
+  SessionActions.receiveCurrentUser(window.currentUser);
   const root = document.getElementById('content');
   ReactDOM.render(appRouter, root);
 });

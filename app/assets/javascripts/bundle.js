@@ -78,6 +78,7 @@
 	window.SessionActions = SessionActions;
 
 	document.addEventListener('DOMContentLoaded', function () {
+	  SessionActions.receiveCurrentUser(window.currentUser);
 	  var root = document.getElementById('content');
 	  ReactDOM.render(appRouter, root);
 	});
