@@ -28,6 +28,7 @@ const SignupForm = React.createClass({
 
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
+      this.props.close();
       this.context.router.push("/");
     }
   },
@@ -52,7 +53,6 @@ const SignupForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.login({ username: 'guest', password: 'password' });
-    this.props.close();
   },
 
   handleSubmit(e) {
@@ -66,7 +66,6 @@ const SignupForm = React.createClass({
       profile_img_url: this.state.profile_img_url
     };
 
-    this.props.close();
     ErrorActions.clearErrors();
     SessionActions.signup(userData);
     this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });

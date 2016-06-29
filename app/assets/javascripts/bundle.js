@@ -139,6 +139,7 @@
 	var SessionApiUtil = __webpack_require__(1);
 	var AppDispatcher = __webpack_require__(3);
 	var SessionConstants = __webpack_require__(8);
+	var SessionStore = __webpack_require__(238);
 	var hashHistory = __webpack_require__(9).hashHistory;
 	var ErrorActions = __webpack_require__(258);
 
@@ -154,7 +155,9 @@
 	      actionType: SessionConstants.LOGIN,
 	      user: user
 	    });
-	    hashHistory.push("/");
+	    if (SessionStore.currentUser().id) {
+	      hashHistory.push("/");
+	    }
 	  },
 	  logout: function logout() {
 	    SessionApiUtil.logout(SessionActions.removeCurrentUser);
@@ -26404,6 +26407,7 @@
 	  },
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
+	      this.props.close();
 	      this.context.router.push("/");
 	    }
 	  },
@@ -26444,7 +26448,6 @@
 
 	    ErrorActions.clearErrors();
 	    SessionActions.login({ username: 'guest', password: 'password' });
-	    this.props.close();
 	  },
 	  handleSubmit: function handleSubmit(e) {
 	    e.preventDefault();
@@ -26456,7 +26459,7 @@
 
 	    ErrorActions.clearErrors();
 	    SessionActions.login(userData);
-	    this.props.close();
+
 	    this.setState({ username: "", password: "" });
 	  },
 	  render: function render() {
@@ -33165,6 +33168,7 @@
 	  },
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
+	      this.props.close();
 	      this.context.router.push("/");
 	    }
 	  },
@@ -33205,7 +33209,6 @@
 
 	    ErrorActions.clearErrors();
 	    SessionActions.login({ username: 'guest', password: 'password' });
-	    this.props.close();
 	  },
 	  handleSubmit: function handleSubmit(e) {
 	    e.preventDefault();
@@ -33218,7 +33221,6 @@
 	      profile_img_url: this.state.profile_img_url
 	    };
 
-	    this.props.close();
 	    ErrorActions.clearErrors();
 	    SessionActions.signup(userData);
 	    this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });

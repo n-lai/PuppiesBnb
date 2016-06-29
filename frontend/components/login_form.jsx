@@ -28,6 +28,7 @@ const LoginForm = React.createClass({
 
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
+      this.props.close();
       this.context.router.push("/");
     }
   },
@@ -52,7 +53,6 @@ const LoginForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.login({ username: 'guest', password: 'password' });
-    this.props.close();
   },
 
   handleSubmit(e) {
@@ -65,7 +65,7 @@ const LoginForm = React.createClass({
 
     ErrorActions.clearErrors();
     SessionActions.login(userData);
-    this.props.close();
+
     this.setState({ username: "", password: "" })
   },
 
