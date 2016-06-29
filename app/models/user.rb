@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   before_validation :ensure_session_token
 
+  has_many :puppies
+
   attr_reader :password
 
   def self.generate_session_token

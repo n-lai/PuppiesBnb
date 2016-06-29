@@ -33119,10 +33119,15 @@
 	        {
 	          __self: this
 	        },
+	        React.createElement(
+	          'p',
+	          { className: 'greeting', __self: this
+	          },
+	          'Hello from the PuppiesBnb App!'
+	        ),
 	        this.greeting()
 	      ),
-	      modal,
-	      'Hello from the PuppiesBnb App!'
+	      modal
 	    );
 	  }
 	});
@@ -35369,7 +35374,11 @@
 	  },
 
 	  content: {
-	    position: 'relative'
+	    position: 'fixed',
+	    left: '25%',
+	    top: '10%',
+	    right: '25%',
+	    backgroundColor: 'white'
 	  }
 	};
 

@@ -78,10 +78,10 @@ const App = React.createClass({
     return (
       <div className='app-container'>
         <header>
+          <p className='greeting'>Hello from the PuppiesBnb App!</p>
           { this.greeting() }
         </header>
         {modal}
-        Hello from the PuppiesBnb App!
       </div>
     );
   }

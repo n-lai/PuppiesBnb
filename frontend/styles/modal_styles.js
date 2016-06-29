@@ -5,7 +5,11 @@ const ModalStyles = {
   },
 
   content: {
-    position: 'relative',
+    position: 'fixed',
+    left: '25%',
+    top: '10%',
+    right: '25%',
+    backgroundColor: 'white'
   }
 };
 

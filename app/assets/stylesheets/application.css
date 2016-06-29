@@ -14,7 +14,9 @@
  *= require_self
  */
 
-
+html, body {
+  height: 100%;
+}
  html, body, section, article, h1, h2, h3, h6, p, strong, em, a, select, ul, li, input, textarea, button, img {
   margin: 0;
   border: 0;
@@ -41,7 +43,6 @@ h2 {
 }
 
 button {
-  display: block;
   border: 1px solid;
   border-radius: 2px;
   cursor: pointer;
@@ -65,21 +66,26 @@ button {
 }
 
 .login-form-button, .signup-form-button {
-  width: 327px;
+  width: 324px;
   height: 64px;
 }
 
-.login-form-container {
-  width: 400px;
-}
 
 .login-form-box, .signup-form-box {
-  width: 400px;
-  padding: 10px;
   background-color: white;
 }
 
 .modal {
   width: 400px;
   margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.greeting {
+  display: block;
+  justify-content: flex-start;
 }
