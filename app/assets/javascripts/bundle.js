@@ -26422,7 +26422,7 @@
 	    var messages = errors[field].map(function (errorMsg, i) {
 	      return React.createElement(
 	        'li',
-	        { key: i, __self: _this
+	        { key: i, className: 'errors', __self: _this
 	        },
 	        errorMsg
 	      );
@@ -33069,7 +33069,7 @@
 	            id: 'login-button',
 	            __self: this
 	          },
-	          'Login'
+	          'Log In'
 	        ),
 	        React.createElement(
 	          'button',
@@ -33078,7 +33078,7 @@
 	            id: 'signup-button',
 	            __self: this
 	          },
-	          'Signup'
+	          'Sign Up'
 	        )
 	      );
 	    }
@@ -33119,12 +33119,6 @@
 	        {
 	          __self: this
 	        },
-	        React.createElement(
-	          'p',
-	          { className: 'greeting', __self: this
-	          },
-	          'Hello from the PuppiesBnb App!'
-	        ),
 	        this.greeting()
 	      ),
 	      modal
@@ -33186,7 +33180,7 @@
 	    var messages = errors[field].map(function (errorMsg, i) {
 	      return React.createElement(
 	        'li',
-	        { key: i, __self: _this
+	        { key: i, className: 'errors', __self: _this
 	        },
 	        errorMsg
 	      );

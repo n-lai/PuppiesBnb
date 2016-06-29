@@ -2,7 +2,7 @@
 
 [Heroku link][heroku]
 
-[heroku]: https://puppiesbnbapp.herokuapp.com/
+[PuppiesBnb]: https://puppiesbnbapp.herokuapp.com/
 
 ## Minimum Viable Product
 

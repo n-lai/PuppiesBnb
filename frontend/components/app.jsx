@@ -37,12 +37,12 @@ const App = React.createClass({
           <button
             onClick={this.handleOpenModal.bind(this, "Log In")}
             id='login-button'
-          >Login</button>
+          >Log In</button>
 
           <button
             onClick={this.handleOpenModal.bind(this, "Sign Up")}
             id='signup-button'
-          >Signup</button>
+          >Sign Up</button>
         </nav>
       );
     }
@@ -78,7 +78,6 @@ const App = React.createClass({
     return (
       <div className='app-container'>
         <header>
-          <p className='greeting'>Hello from the PuppiesBnb App!</p>
           { this.greeting() }
         </header>
         {modal}
