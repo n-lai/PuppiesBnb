@@ -32994,14 +32994,65 @@
 	'use strict';
 
 	var React = __webpack_require__(11);
+	var Link = __webpack_require__(9).Link;
+	var SessionStore = __webpack_require__(238);
+	var SessionActions = __webpack_require__(2);
 
 	var App = React.createClass({
 	  displayName: 'App',
+	  greeting: function greeting() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        'hgroup',
+	        { className: 'header-group', __self: this
+	        },
+	        React.createElement(
+	          'h2',
+	          { className: 'header-name', __self: this
+	          },
+	          'Hi, ',
+	          SessionStore.currentUser().name,
+	          '!'
+	        ),
+	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'Logout', onClick: this._handleLogout, __self: this
+	        })
+	      );
+	    } else if (!['/login', '/signup'].includes(this.props.location.pathname)) {
+	      return React.createElement(
+	        'nav',
+	        { className: 'login-signup', __self: this
+	        },
+	        React.createElement(
+	          Link,
+	          { to: '/login', activeClassName: 'current', __self: this
+	          },
+	          'Login'
+	        ),
+	        ' ',
+	        React.createElement(
+	          Link,
+	          { to: '/signup', activeClassName: 'current', __self: this
+	          },
+	          'Signup'
+	        )
+	      );
+	    }
+	  },
+	  _handleLogout: function _handleLogout() {
+	    SessionActions.logout();
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'app-container', __self: this
 	      },
+	      React.createElement(
+	        'header',
+	        {
+	          __self: this
+	        },
+	        this.greeting()
+	      ),
 	      'Hello from the PuppiesBnb App!'
 	    );
 	  }
@@ -33020,6 +33071,7 @@
 	var React = __webpack_require__(11);
 	var Link = __webpack_require__(9).Link;
 	var SessionStore = __webpack_require__(238);
+	var ErrorStore = __webpack_require__(260);
 	var SessionActions = __webpack_require__(2);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
