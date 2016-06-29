@@ -26437,6 +26437,11 @@
 	      return _this2.setState(_defineProperty({}, property, e.target.value));
 	    };
 	  },
+	  handleGuestLogin: function handleGuestLogin(e) {
+	    e.preventDefault();
+
+	    SessionActions.login({ username: 'guest', password: 'password' });
+	  },
 	  handleSubmit: function handleSubmit(e) {
 	    e.preventDefault();
 
@@ -26492,7 +26497,13 @@
 	            })
 	          ),
 	          React.createElement('input', { type: 'submit', value: 'Log In', __self: this
-	          })
+	          }),
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleGuestLogin, __self: this
+	            },
+	            'Guest Login'
+	          )
 	        )
 	      )
 	    );
@@ -33147,6 +33158,11 @@
 	    SessionActions.signup(userData);
 	    this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
 	  },
+	  handleGuestLogin: function handleGuestLogin(e) {
+	    e.preventDefault();
+
+	    SessionActions.login({ username: 'guest', password: 'password' });
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -33232,7 +33248,13 @@
 	            })
 	          ),
 	          React.createElement('input', { type: 'submit', value: 'Sign Up', __self: this
-	          })
+	          }),
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleGuestLogin, __self: this
+	            },
+	            'Guest Login'
+	          )
 	        )
 	      )
 	    );

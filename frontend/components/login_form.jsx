@@ -47,6 +47,12 @@ const LoginForm = React.createClass({
     return (e) => this.setState({ [property]: e.target.value });
   },
 
+  handleGuestLogin(e) {
+    e.preventDefault();
+
+    SessionActions.login({ username: 'guest', password: 'password' });
+  },
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -86,7 +92,7 @@ const LoginForm = React.createClass({
             </label>
 
             <input type="submit" value="Log In"/>
-
+            <button onClick={this.handleGuestLogin}>Guest Login</button>
           </div>
         </form>
       </div>

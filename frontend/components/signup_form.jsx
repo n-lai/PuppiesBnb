@@ -62,6 +62,12 @@ const SignupForm = React.createClass({
     this.setState({ username: "", password: "", name: "", email: "", profile_img_url: "" });
   },
 
+  handleGuestLogin(e) {
+    e.preventDefault();
+
+    SessionActions.login({ username: 'guest', password: 'password' });
+  },
+
   render() {
     return(
       <div className='signup-form-container'>
@@ -116,7 +122,7 @@ const SignupForm = React.createClass({
             </label>
 
             <input type="submit" value="Sign Up"/>
-
+            <button onClick={this.handleGuestLogin}>Guest Login</button>
           </div>
         </form>
       </div>
