@@ -2,14 +2,15 @@ const SessionApiUtil = require('../util/session_api_util');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const SessionConstants = require('../constants/session_constants');
 const hashHistory = require('react-router').hashHistory;
+const ErrorActions = require('./error_actions');
 
 const SessionActions = {
-  signup(user) {
-    SessionApiUtil.signup(user, this.receiveCurrentUser);
+  signup(userData) {
+    SessionApiUtil.signup(userData, this.receiveCurrentUser, ErrorActions.setErrors);
   },
 
-  login(user) {
-    SessionApiUtil.login(user, this.receiveCurrentUser);
+  login(userData) {
+    SessionApiUtil.login(userData, this.receiveCurrentUser, ErrorActions.setErrors);
   },
 
   receiveCurrentUser(user) {

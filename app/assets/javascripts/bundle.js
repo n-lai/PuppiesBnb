@@ -138,13 +138,14 @@
 	var AppDispatcher = __webpack_require__(3);
 	var SessionConstants = __webpack_require__(8);
 	var hashHistory = __webpack_require__(9).hashHistory;
+	var ErrorActions = __webpack_require__(258);
 
 	var SessionActions = {
-	  signup: function signup(user) {
-	    SessionApiUtil.signup(user, this.receiveCurrentUser);
+	  signup: function signup(userData) {
+	    SessionApiUtil.signup(userData, this.receiveCurrentUser, ErrorActions.setErrors);
 	  },
-	  login: function login(user) {
-	    SessionApiUtil.login(user, this.receiveCurrentUser);
+	  login: function login(userData) {
+	    SessionApiUtil.login(userData, this.receiveCurrentUser, ErrorActions.setErrors);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(user) {
 	    AppDispatcher.dispatch({
@@ -26374,6 +26375,7 @@
 	var React = __webpack_require__(11);
 	var Link = __webpack_require__(9).Link;
 	var SessionStore = __webpack_require__(238);
+	var ErrorStore = __webpack_require__(260);
 	var SessionActions = __webpack_require__(2);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
@@ -26390,20 +26392,48 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.sessionListener.remove();
+	    this.errorListener.remove();
 	  },
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      this.context.router.push("/");
 	    }
 	  },
-	  update: function update(property) {
+	  fieldErrors: function fieldErrors(field) {
 	    var _this = this;
 
+	    var errors = ErrorStore.formErrors("login");
+
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i, __self: _this
+	        },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      {
+	        __self: this
+	      },
+	      messages
+	    );
+	  },
+	  update: function update(property) {
+	    var _this2 = this;
+
 	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
+	      return _this2.setState(_defineProperty({}, property, e.target.value));
 	    };
 	  },
 	  handleSubmit: function handleSubmit(e) {
@@ -26427,6 +26457,7 @@
 	        'form',
 	        { onSubmit: this.handleSubmit, className: 'login-form-box', __self: this
 	        },
+	        this.fieldErrors("base"),
 	        React.createElement(
 	          'div',
 	          { className: 'login-form', __self: this
@@ -33005,20 +33036,48 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.signupListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.signupListener.remove();
+	    this.errorListener.remove();
 	  },
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      this.context.router.push("/");
 	    }
 	  },
-	  update: function update(property) {
+	  fieldErrors: function fieldErrors(field) {
 	    var _this = this;
 
+	    var errors = ErrorStore.formErrors("signup");
+
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i, __self: _this
+	        },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      {
+	        __self: this
+	      },
+	      messages
+	    );
+	  },
+	  update: function update(property) {
+	    var _this2 = this;
+
 	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
+	      return _this2.setState(_defineProperty({}, property, e.target.value));
 	    };
 	  },
 	  handleSubmit: function handleSubmit(e) {
@@ -33044,6 +33103,7 @@
 	        'form',
 	        { onSubmit: this.handleSubmit, className: 'signup-form-box', __self: this
 	        },
+	        this.fieldErrors("base"),
 	        React.createElement(
 	          'div',
 	          { className: 'signup-form', __self: this
@@ -33127,6 +33187,103 @@
 	});
 
 	module.exports = SignupForm;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(3);
+	var ErrorConstants = __webpack_require__(259);
+
+	var ErrorActions = {
+	  setErrors: function setErrors(form, errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.SET_ERRORS,
+	      form: form,
+	      errors: errors
+	    });
+	  },
+	  clearErrors: function clearErrors(errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.CLEAR_ERRORS,
+	      errors: errors
+	    });
+	  }
+	};
+
+	module.exports = ErrorActions;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ErrorConstants = {
+	  SET_ERRORS: 'SET_ERRORS',
+	  CLEAR_ERRORS: 'CLEAR_ERRORS'
+	};
+
+	module.exports = ErrorConstants;
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(3);
+	var Store = __webpack_require__(239).Store;
+	var ErrorConstants = __webpack_require__(259);
+
+	var ErrorStore = new Store(AppDispatcher);
+
+	var _errors = {};
+	var _form = "";
+
+	var setErrors = function setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	};
+
+	var clearErrors = function clearErrors(payload) {
+	  _errors = {};
+	  _form = "";
+	};
+
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      clearErrors();
+	      break;
+	  }
+	  ErrorStore.__emitChange();
+	};
+
+	ErrorStore.formErrors = function (form) {
+	  if (form !== _form) {
+	    return {};
+	  }
+
+	  var result = {};
+
+	  for (var field in _errors) {
+	    result[field] = Array.from(_errors[field]);
+	  }
+
+	  return result;
+	};
+
+	ErrorStore.form = function () {
+	  return _form;
+	};
+
+	module.exports = ErrorStore;
 
 /***/ }
 /******/ ]);

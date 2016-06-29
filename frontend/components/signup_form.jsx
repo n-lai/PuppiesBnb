@@ -5,7 +5,7 @@ const SessionActions = require('../actions/session_actions');
 const hashHistory = require('react-router').hashHistory;
 
 const SignupForm = React.createClass({
-  
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -16,16 +16,30 @@ const SignupForm = React.createClass({
 
   componentDidMount() {
     this.signupListener = SessionStore.addListener(this.redirectIfLoggedIn);
+    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
   },
 
   componentWillUnmount() {
     this.signupListener.remove();
+    this.errorListener.remove();
   },
 
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
       this.context.router.push("/");
     }
+  },
+
+  fieldErrors(field) {
+    const errors = ErrorStore.formErrors("signup");
+
+    if (!errors[field]) {return; }
+
+    const messages = errors[field].map( (errorMsg, i) => {
+      return <li key={ i }>{ errorMsg }</li>;
+    });
+
+    return <ul>{ messages }</ul>;
   },
 
   update(property) {
@@ -51,6 +65,8 @@ const SignupForm = React.createClass({
     return(
       <div className='signup-form-container'>
         <form onSubmit={this.handleSubmit} className='signup-form-box'>
+          { this.fieldErrors("base") }
+
           <div className='signup-form'>
 
             <label>Name:
