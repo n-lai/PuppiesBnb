@@ -17,7 +17,7 @@ const PuppyIndexItem = React.createClass({
         <div className='caption'>
           <span className='puppy-index-info'>{puppy.name}</span>
           <span className='puppy-index-info'>{puppy.breed}</span>
-          <span className='puppy-index-info'>${puppy.price} per night</span>
+          <span className='puppy-index-info'>${puppy.price} per day</span>
         </div>
       </div>
     );

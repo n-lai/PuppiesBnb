@@ -55,7 +55,6 @@ const PuppyMap = React.createClass({
   _onChange() {
     const currentPuppyIds = this.state.markers.map(marker => marker.puppyId);
     const newPuppyIds = PuppyStore.all().map(puppy => puppy.id);
-
     this.state.markers.forEach(marker => {
       if (!newPuppyIds.includes(marker.puppyId)) {
         this.removeMarker(marker);

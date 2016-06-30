@@ -16,6 +16,7 @@
 
 html, body {
   height: 100%;
+  width: 100%;
 }
  html, body, section, article, h1, h2, h3, h6, p, strong, em, a, select, ul, li, input, textarea, button, img {
   margin: 0;
@@ -100,7 +101,7 @@ li.errors {
 }
 
 .puppy-index {
-  max-width: 50%;
+  max-width: 55%;
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -130,4 +131,8 @@ li.errors {
 .map {
   width: 500px;
   height: 500px;
+}
+
+.search {
+  display: flex;
 }

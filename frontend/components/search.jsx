@@ -6,8 +6,9 @@ const Search = React.createClass({
   render() {
     return(
       <div className='search'>
-        <PuppyMap />
         <PuppyIndex />
+
+        <PuppyMap />
       </div>
     );
   }

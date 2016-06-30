@@ -35672,7 +35672,7 @@
 	          },
 	          '$',
 	          puppy.price,
-	          ' per night'
+	          ' per day'
 	        )
 	      )
 	    );
@@ -35771,10 +35771,10 @@
 	      'div',
 	      { className: 'search', __self: this
 	      },
-	      React.createElement(PuppyMap, {
+	      React.createElement(PuppyIndex, {
 	        __self: this
 	      }),
-	      React.createElement(PuppyIndex, {
+	      React.createElement(PuppyMap, {
 	        __self: this
 	      })
 	    );
@@ -35850,7 +35850,6 @@
 	    var newPuppyIds = PuppyStore.all().map(function (puppy) {
 	      return puppy.id;
 	    });
-
 	    this.state.markers.forEach(function (marker) {
 	      if (!newPuppyIds.includes(marker.puppyId)) {
 	        _this2.removeMarker(marker);
