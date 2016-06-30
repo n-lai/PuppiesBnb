@@ -10,11 +10,18 @@ const _resetAllPuppies = function(puppies) {
 
   puppies.forEach(puppy => {
     _puppies[puppy.id] = puppy;
+    PuppyStore.__emitChange();
   });
 };
 
 const _resetSinglePuppy = function(puppy) {
   _puppies[puppy.id] = puppy;
+  PuppyStore.__emitChange();
+};
+
+const _removePuppy = function(puppy) {
+  delete _puppies[puppy.id];
+  PuppyStore.__emitChange();
 };
 
 PuppyStore.__onDispatch = function(payload) {
@@ -22,8 +29,13 @@ PuppyStore.__onDispatch = function(payload) {
     case PuppyConstants.PUPPIES_RECEIVED:
       _resetAllPuppies(payload.puppies);
       break;
+    case PuppyConstants.PUPPY_RECEIVED:
+      _resetSinglePuppy(payload.puppy);
+      break;
+    case PuppyConstants.PUPPY_REMOVED:
+      _removePuppy(payload.puppy);
+      break;
   }
-  PuppyStore.__emitChange();
 };
 
 PuppyStore.all = function() {
@@ -36,6 +48,10 @@ PuppyStore.all = function() {
   }
 
   return puppies;
+};
+
+PuppyStore.find = function(id) {
+  return _puppies[id];
 };
 
 module.exports = PuppyStore;

@@ -13,6 +13,10 @@ const PuppyIndex = React.createClass({
     PuppyActions.fetchAllPuppies();
   },
 
+  componentWillUnmount() {
+    this.puppyListener.remove();
+  },
+
   _handleChange() {
     this.setState({ puppies: PuppyStore.all() });
   },

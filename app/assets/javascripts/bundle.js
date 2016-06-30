@@ -77,9 +77,9 @@
 	    },
 	    React.createElement(IndexRoute, { component: PuppyIndex, __self: undefined
 	    }),
-	    React.createElement(Route, { path: '/puppies', component: PuppyIndex, __self: undefined
+	    React.createElement(Route, { path: '/api/puppies', component: PuppyIndex, __self: undefined
 	    }),
-	    React.createElement(Route, { path: '/puppies/:puppyId', component: PuppyDetail, __self: undefined
+	    React.createElement(Route, { path: '/api/puppies/:puppyId', component: PuppyDetail, __self: undefined
 	    })
 	  )
 	);
@@ -35406,11 +35406,18 @@
 
 	  puppies.forEach(function (puppy) {
 	    _puppies[puppy.id] = puppy;
+	    PuppyStore.__emitChange();
 	  });
 	};
 
 	var _resetSinglePuppy = function _resetSinglePuppy(puppy) {
 	  _puppies[puppy.id] = puppy;
+	  PuppyStore.__emitChange();
+	};
+
+	var _removePuppy = function _removePuppy(puppy) {
+	  delete _puppies[puppy.id];
+	  PuppyStore.__emitChange();
 	};
 
 	PuppyStore.__onDispatch = function (payload) {
@@ -35418,8 +35425,13 @@
 	    case PuppyConstants.PUPPIES_RECEIVED:
 	      _resetAllPuppies(payload.puppies);
 	      break;
+	    case PuppyConstants.PUPPY_RECEIVED:
+	      _resetSinglePuppy(payload.puppy);
+	      break;
+	    case PuppyConstants.PUPPY_REMOVED:
+	      _removePuppy(payload.puppy);
+	      break;
 	  }
-	  PuppyStore.__emitChange();
 	};
 
 	PuppyStore.all = function () {
@@ -35432,6 +35444,10 @@
 	  }
 
 	  return puppies;
+	};
+
+	PuppyStore.find = function (id) {
+	  return _puppies[id];
 	};
 
 	module.exports = PuppyStore;
@@ -35470,6 +35486,30 @@
 	      actionType: PuppyConstants.PUPPIES_RECEIVED,
 	      puppies: puppies
 	    });
+	  },
+	  fetchPuppy: function fetchPuppy(id) {
+	    PuppyApiUtil.fetchPuppy(id, this.receivePuppy);
+	  },
+	  receivePuppy: function receivePuppy(puppy) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPY_RECEIVED,
+	      puppy: puppy
+	    });
+	  },
+	  createPuppy: function createPuppy(puppy) {
+	    PuppyApiUtil.createPuppy(puppy, this.receivePuppy);
+	  },
+	  editPuppy: function editPuppy(puppy) {
+	    PuppyApiUtil.updatePuppy(puppy, this.receivePuppy);
+	  },
+	  deletePuppy: function deletePuppy(id) {
+	    PuppyApiUtil.deletePuppy(id, this.removePuppy);
+	  },
+	  removePuppy: function removePuppy(puppy) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPY_REMOVED,
+	      puppy: puppy
+	    });
 	  }
 	};
 
@@ -35488,6 +35528,44 @@
 	      url: '/api/puppies',
 	      success: function success(puppies) {
 	        cb(puppies);
+	      }
+	    });
+	  },
+	  fetchPuppy: function fetchPuppy(id, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies/' + id,
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  createPuppy: function createPuppy(puppy, cb) {
+	    $.ajax({
+	      method: 'POST',
+	      url: '/api/puppies',
+	      data: { puppy: puppy },
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  updatePuppy: function updatePuppy(puppy, cb) {
+	    $.ajax({
+	      method: 'PATCH',
+	      url: '/api/puppies/' + puppy.id,
+	      data: { puppy: puppy },
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  deletePuppy: function deletePuppy(id, cb) {
+	    $.ajax({
+	      method: 'DELETE',
+	      url: '/api/puppies' + id,
+	      success: function success(puppy) {
+	        cb(puppy);
 	      }
 	    });
 	  }
@@ -35514,6 +35592,9 @@
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this._handleChange);
 	    PuppyActions.fetchAllPuppies();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
 	  },
 	  _handleChange: function _handleChange() {
 	    this.setState({ puppies: PuppyStore.all() });
@@ -35548,6 +35629,7 @@
 	  displayName: 'PuppyIndexItem',
 	  _handleClick: function _handleClick() {
 	    var puppyId = this.props.puppy.id;
+	    hashHistory.push('/api/puppies/' + puppyId);
 	  },
 	  render: function render() {
 	    var puppy = this.props.puppy;
@@ -35600,9 +35682,76 @@
 
 /***/ },
 /* 288 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var PuppyStore = __webpack_require__(282);
+	var PuppyActions = __webpack_require__(284);
+
+	var PuppyDetail = React.createClass({
+	  displayName: 'PuppyDetail',
+	  getInitialState: function getInitialState() {
+	    var puppyId = parseInt(this.props.params.puppyId);
+	    var potentialPuppy = PuppyStore.find(puppyId) || {};
+	    return { puppy: potentialPuppy };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.puppyListener = PuppyStore.addListener(this._onChange);
+	    PuppyActions.fetchPuppy(parseInt(this.props.params.puppyId));
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    PuppyActions.fetchPuppy(parseInt(newProps.params.puppyId));
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    var puppyId = parseInt(this.props.params.puppyId);
+	    var potentialPuppy = PuppyStore.find(puppyId) || {};
+	    this.setState({ puppy: potentialPuppy });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var puppy = this.state.puppy;
+	    if (puppy === undefined) {
+	      return React.createElement('div', {
+	        __self: this
+	      });
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'puppy-detail-container', __self: this
+	      },
+	      React.createElement(
+	        'div',
+	        { className: 'puppy-image-container', __self: this
+	        },
+	        React.createElement('img', { src: puppy.image_url, __self: this
+	        })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'puppy-details', __self: this
+	        },
+	        ['name', 'breed', 'temperament', 'description'].map(function (attr) {
+	          return React.createElement(
+	            'p',
+	            { key: attr, __self: _this
+	            },
+	            attr,
+	            ': ',
+	            puppy[attr]
+	          );
+	        })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PuppyDetail;
 
 /***/ }
 /******/ ]);

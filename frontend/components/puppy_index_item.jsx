@@ -4,6 +4,7 @@ const hashHistory = require('react-router').hashHistory;
 const PuppyIndexItem = React.createClass({
   _handleClick() {
     const puppyId = this.props.puppy.id;
+    hashHistory.push('/api/puppies/' + puppyId);
   },
 
   render() {

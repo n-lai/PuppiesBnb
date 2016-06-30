@@ -100,6 +100,7 @@ li.errors {
 }
 
 .puppy-index {
+  max-width: 50%;
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -121,5 +122,17 @@ img {
 }
 
 .puppy-index-pic {
+  width: 100%;
+}
+
+.puppy-image-container {
+  max-height: 750px;
+  width: 100%;
+  background-color: grey;
+  overflow: hidden;
+}
+
+.puppy-image-container img{
+  height: 100%;
   width: 100%;
 }

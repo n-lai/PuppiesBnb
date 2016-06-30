@@ -24,8 +24,8 @@ const appRouter = (
   <Router history={ HashHistory }>
     <Route path='/' component={ App }>
       <IndexRoute component={PuppyIndex} />
-      <Route path='/puppies' component={PuppyIndex}/>
-      <Route path='/puppies/:puppyId' component={PuppyDetail}/>
+      <Route path='/api/puppies' component={PuppyIndex}/>
+      <Route path='/api/puppies/:puppyId' component={PuppyDetail}/>
     </Route>
   </Router>
 );
