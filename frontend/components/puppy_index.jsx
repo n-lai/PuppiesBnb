@@ -10,7 +10,6 @@ const PuppyIndex = React.createClass({
 
   componentDidMount() {
     this.puppyListener = PuppyStore.addListener(this._handleChange);
-    PuppyActions.fetchAllPuppies();
   },
 
   componentWillUnmount() {

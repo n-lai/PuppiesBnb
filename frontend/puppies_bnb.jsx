@@ -10,6 +10,7 @@ const HashHistory = ReactRouter.hashHistory;
 const LoginForm = require('./components/login_form');
 const SignupForm = require('./components/signup_form');
 const App = require('./components/app');
+const Search = require('./components/search');
 
 const SessionApiUtil = require('./util/session_api_util');
 const SessionActions = require('./actions/session_actions');
@@ -23,8 +24,8 @@ const PuppyDetail = require('./components/puppy_detail');
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path='/' component={ App }>
-      <IndexRoute component={PuppyIndex} />
-      <Route path='/api/puppies' component={PuppyIndex}/>
+      <IndexRoute component={Search} />
+      <Route path='/api/puppies' component={Search}/>
       <Route path='/api/puppies/:puppyId' component={PuppyDetail}/>
     </Route>
   </Router>

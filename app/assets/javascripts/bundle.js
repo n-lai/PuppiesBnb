@@ -58,6 +58,7 @@
 	var LoginForm = __webpack_require__(237);
 	var SignupForm = __webpack_require__(257);
 	var App = __webpack_require__(256);
+	var Search = __webpack_require__(289);
 
 	var SessionApiUtil = __webpack_require__(1);
 	var SessionActions = __webpack_require__(2);
@@ -75,9 +76,9 @@
 	    Route,
 	    { path: '/', component: App, __self: undefined
 	    },
-	    React.createElement(IndexRoute, { component: PuppyIndex, __self: undefined
+	    React.createElement(IndexRoute, { component: Search, __self: undefined
 	    }),
-	    React.createElement(Route, { path: '/api/puppies', component: PuppyIndex, __self: undefined
+	    React.createElement(Route, { path: '/api/puppies', component: Search, __self: undefined
 	    }),
 	    React.createElement(Route, { path: '/api/puppies/:puppyId', component: PuppyDetail, __self: undefined
 	    })
@@ -35478,8 +35479,8 @@
 	var PuppyStore = __webpack_require__(282);
 
 	var PuppyActions = {
-	  fetchAllPuppies: function fetchAllPuppies() {
-	    PuppyApiUtil.fetchAllPuppies(this.receiveAllPuppies);
+	  fetchAllPuppies: function fetchAllPuppies(bounds) {
+	    PuppyApiUtil.fetchAllPuppies(bounds, this.receiveAllPuppies);
 	  },
 	  receiveAllPuppies: function receiveAllPuppies(puppies) {
 	    AppDispatcher.dispatch({
@@ -35522,10 +35523,11 @@
 	'use strict';
 
 	var PuppyApiUtil = {
-	  fetchAllPuppies: function fetchAllPuppies(cb) {
+	  fetchAllPuppies: function fetchAllPuppies(bounds, cb) {
 	    $.ajax({
 	      method: 'GET',
 	      url: '/api/puppies',
+	      data: { bounds: bounds },
 	      success: function success(puppies) {
 	        cb(puppies);
 	      }
@@ -35591,7 +35593,6 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this._handleChange);
-	    PuppyActions.fetchAllPuppies();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.puppyListener.remove();
@@ -35752,6 +35753,143 @@
 	});
 
 	module.exports = PuppyDetail;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var PuppyMap = __webpack_require__(290);
+	var PuppyIndex = __webpack_require__(286);
+
+	var Search = React.createClass({
+	  displayName: 'Search',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'search', __self: this
+	      },
+	      React.createElement(PuppyMap, {
+	        __self: this
+	      }),
+	      React.createElement(PuppyIndex, {
+	        __self: this
+	      })
+	    );
+	  }
+	});
+
+	module.exports = Search;
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var ReactDOM = __webpack_require__(107);
+	var PuppyStore = __webpack_require__(282);
+
+	var PuppyMap = React.createClass({
+	  displayName: 'PuppyMap',
+	  getInitialState: function getInitialState() {
+	    return { markers: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.puppyListener = PuppyStore.addListener(this._onChange);
+
+	    var mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
+	    var mapOptions = {
+	      center: { lat: 37.7758, lng: -122.435 }, // this is SF
+	      zoom: 13
+	    };
+	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
+	    this.listenForMove();
+	    this._onChange();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    this._onChange();
+	  },
+	  listenForMove: function listenForMove() {
+	    var _this = this;
+
+	    var that = this;
+	    google.maps.event.addListener(this.map, 'idle', function () {
+	      var latLng = _this.map.getBounds();
+	      var northEast = latLng.getNorthEast();
+	      var southWest = latLng.getSouthWest();
+
+	      var bounds = {
+	        'northEast': { 'lat': northEast.lat(), 'lng': northEast.lng() },
+	        'southWest': { 'lat': southWest.lat(), 'lng': southWest.lng() }
+	      };
+	      PuppyActions.fetchAllPuppies(bounds);
+	    });
+
+	    google.maps.event.addListener(this.map, 'click', function (event) {
+	      var location = event.latLng;
+	      var lat = location.lat();
+	      var lng = location.lng();
+	      var coords = { lat: lat, lng: lng };
+
+	      that._handleClick(coords);
+	    });
+	  },
+	  _onChange: function _onChange() {
+	    var _this2 = this;
+
+	    var currentPuppyIds = this.state.markers.map(function (marker) {
+	      return marker.puppyId;
+	    });
+	    var newPuppyIds = PuppyStore.all().map(function (puppy) {
+	      return puppy.id;
+	    });
+
+	    this.state.markers.forEach(function (marker) {
+	      if (!newPuppyIds.includes(marker.puppyId)) {
+	        _this2.removeMarker(marker);
+	      }
+	    });
+
+	    PuppyStore.all().forEach(function (puppy) {
+	      if (!currentPuppyIds.includes(puppy.id)) {
+	        var location = { lat: puppy['lat'], lng: puppy['lng'] };
+	        _this2.addMarker(location, _this2.map, puppy.id);
+	      }
+	    });
+	  },
+	  _handleClick: function _handleClick(coords) {
+	    hashHistory.push({
+	      pathname: "puppies/new",
+	      query: coords
+	    });
+	  },
+	  removeMarker: function removeMarker(marker) {
+	    var idx = this.state.markers.indexOf(marker);
+	    this.state.markers[idx].setMap(null);
+	    this.state.markers.splice(idx, 1);
+	  },
+	  addMarker: function addMarker(location, map, puppyId) {
+	    var marker = new google.maps.Marker({
+	      position: location,
+	      map: map,
+	      puppyId: puppyId
+	    });
+	    this.state.markers.push(marker);
+	  },
+	  render: function render() {
+	    return React.createElement('div', { className: 'map', ref: 'map', __self: this
+	    });
+	  }
+	});
+
+	module.exports = PuppyMap;
 
 /***/ }
 /******/ ]);

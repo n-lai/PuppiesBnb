@@ -5,8 +5,8 @@ const PuppyStore = require('../stores/puppy_store');
 
 
 const PuppyActions = {
-  fetchAllPuppies() {
-    PuppyApiUtil.fetchAllPuppies(this.receiveAllPuppies);
+  fetchAllPuppies(bounds) {
+    PuppyApiUtil.fetchAllPuppies(bounds, this.receiveAllPuppies);
   },
 
   receiveAllPuppies(puppies) {

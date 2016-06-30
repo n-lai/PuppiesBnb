@@ -1,8 +1,9 @@
 const PuppyApiUtil = {
-  fetchAllPuppies(cb) {
+  fetchAllPuppies(bounds, cb) {
     $.ajax({
       method: 'GET',
       url: '/api/puppies',
+      data: { bounds },
       success: function(puppies) {
         cb(puppies);
       }
