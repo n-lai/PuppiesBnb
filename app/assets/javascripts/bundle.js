@@ -64,13 +64,21 @@
 
 	var PuppyStore = __webpack_require__(282);
 	var PuppyActions = __webpack_require__(284);
+	var PuppyIndex = __webpack_require__(286);
 
 	var appRouter = React.createElement(
 	  Router,
 	  { history: HashHistory, __self: undefined
 	  },
-	  React.createElement(Route, { path: '/', component: App, __self: undefined
-	  })
+	  React.createElement(
+	    Route,
+	    { path: '/', component: App, __self: undefined
+	    },
+	    React.createElement(IndexRoute, { component: PuppyIndex, __self: undefined
+	    }),
+	    React.createElement(Route, { path: '/puppies', component: PuppyIndex, __self: undefined
+	    })
+	  )
 	);
 
 	window.SessionApiUtil = SessionApiUtil;
@@ -33122,7 +33130,8 @@
 	        },
 	        this.greeting()
 	      ),
-	      modal
+	      modal,
+	      this.props.children
 	    );
 	  }
 	});
@@ -35402,7 +35411,6 @@
 	};
 
 	PuppyStore.__onDispatch = function (payload) {
-	  debugger;
 	  switch (payload.actionType) {
 	    case PuppyConstants.PUPPIES_RECEIVED:
 	      _resetAllPuppies(payload.puppies);
@@ -35483,6 +35491,109 @@
 	};
 
 	module.exports = PuppyApiUtil;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var PuppyStore = __webpack_require__(282);
+	var PuppyActions = __webpack_require__(284);
+	var PuppyIndexItem = __webpack_require__(287);
+
+	var PuppyIndex = React.createClass({
+	  displayName: 'PuppyIndex',
+	  getInitialState: function getInitialState() {
+	    return { puppies: PuppyStore.all() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.puppyListener = PuppyStore.addListener(this._handleChange);
+	    PuppyActions.fetchAllPuppies();
+	  },
+	  _handleChange: function _handleChange() {
+	    this.setState({ puppies: PuppyStore.all() });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    return React.createElement(
+	      'div',
+	      { className: 'puppy-index', __self: this
+	      },
+	      this.state.puppies.map(function (puppy) {
+	        return React.createElement(PuppyIndexItem, { key: puppy.id, puppy: puppy, __self: _this
+	        });
+	      })
+	    );
+	  }
+	});
+
+	module.exports = PuppyIndex;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var hashHistory = __webpack_require__(9).hashHistory;
+
+	var PuppyIndexItem = React.createClass({
+	  displayName: 'PuppyIndexItem',
+	  _handleClick: function _handleClick() {
+	    var puppyId = this.props.puppy.id;
+	  },
+	  render: function render() {
+	    var puppy = this.props.puppy;
+	    return React.createElement(
+	      'div',
+	      { className: 'puppy-index-item', onClick: this._handleClick, key: puppy.id, __self: this
+	      },
+	      React.createElement(
+	        'div',
+	        { className: 'img-container', __self: this
+	        },
+	        React.createElement(
+	          'div',
+	          { className: 'puppy-index-pic', __self: this
+	          },
+	          React.createElement('img', { src: puppy.image_url, __self: this
+	          })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'caption', __self: this
+	        },
+	        React.createElement(
+	          'span',
+	          { className: 'puppy-index-info', __self: this
+	          },
+	          puppy.name
+	        ),
+	        React.createElement(
+	          'span',
+	          { className: 'puppy-index-info', __self: this
+	          },
+	          puppy.breed
+	        ),
+	        React.createElement(
+	          'span',
+	          { className: 'puppy-index-info', __self: this
+	          },
+	          '$',
+	          puppy.price,
+	          ' per night'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PuppyIndexItem;
 
 /***/ }
 /******/ ]);

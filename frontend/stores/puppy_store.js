@@ -18,7 +18,6 @@ const _resetSinglePuppy = function(puppy) {
 };
 
 PuppyStore.__onDispatch = function(payload) {
-  debugger
   switch (payload.actionType) {
     case PuppyConstants.PUPPIES_RECEIVED:
       _resetAllPuppies(payload.puppies);

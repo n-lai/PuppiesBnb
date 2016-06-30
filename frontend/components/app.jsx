@@ -81,6 +81,7 @@ const App = React.createClass({
           { this.greeting() }
         </header>
         {modal}
+        {this.props.children}
       </div>
     );
   }

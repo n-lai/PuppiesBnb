@@ -83,3 +83,58 @@ header {
 li.errors {
   padding: 7px;
 }
+
+.puppy-index-item {
+  box-sizing: border-box;
+  display: inline-block;
+  /*display: flex;*/
+  /*width: 400px;*/
+}
+
+/*img.index-images {
+  height: auto;
+  width: auto;
+  max-width: 375px;
+  max-height: 250px;
+  background-color: grey;
+}*/
+
+.caption {
+  display: flex;
+  justify-content: space-around;
+}
+
+.puppy-index-info {
+  padding: 20px;
+}
+
+.puppy-index {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.img-container {
+  max-width: 375px;
+  max-height: 250px;
+  background-color: grey;
+  overflow: hidden;
+}
+
+/*.index-images {
+  width: 100%;
+  height: auto;
+}*/
+
+img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  @include translateX(-50%);
+  max-height: 100%;
+}
+
+.puppy-index-pic {
+  width: 100%;
+}
