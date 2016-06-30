@@ -1,27 +1,28 @@
-class PuppiesController < ApplicationController
-  before_action :require_logged_in, only: [:create, :update, :destroy]
+class Api::PuppiesController < ApplicationController
 
   def index
     @puppies = Puppy.all
+    render json: @puppies
   end
 
   def show
     @puppy = Puppy.find(params[:id])
+    render "api/puppies/show"
   end
 
   def create
     @puppy = Puppy.new(puppy_params)
-    @puppy.owner_id = current_user.id
 
     if @puppy.save
       render "api/puppies/show"
     else
+      debugger
       render json: { base: @puppy.errors.full_messages }, status: 422
     end
   end
 
   def update
-    @puppy = Puppy.find(params[id])
+    @puppy = Puppy.find(params[:id])
 
     if @puppy.update(puppy_params)
       render "api/puppies/show"
@@ -40,6 +41,6 @@ class PuppiesController < ApplicationController
 
   private
   def puppy_params
-    params.require(:puppy).permit(:name, :lat, :lng, :temperament, :price, :type, :image_url, :description)
+    params.require(:puppy).permit(:name, :lat, :lng, :temperament, :price, :breed, :image_url, :description, :owner_id)
   end
 end

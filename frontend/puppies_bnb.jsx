@@ -14,15 +14,21 @@ const App = require('./components/app');
 const SessionApiUtil = require('./util/session_api_util');
 const SessionActions = require('./actions/session_actions');
 
+const PuppyStore = require('./stores/puppy_store');
+const PuppyActions = require('./actions/puppy_actions');
+
+
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path="/" component={ App } />
-      
   </Router>
 );
 
 window.SessionApiUtil = SessionApiUtil;
 window.SessionActions = SessionActions;
+window.PuppyStore = PuppyStore;
+window.PuppyActions = PuppyActions;
+
 
 document.addEventListener('DOMContentLoaded', () => {
   if (window.currentUser) {

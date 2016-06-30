@@ -62,6 +62,9 @@
 	var SessionApiUtil = __webpack_require__(1);
 	var SessionActions = __webpack_require__(2);
 
+	var PuppyStore = __webpack_require__(282);
+	var PuppyActions = __webpack_require__(284);
+
 	var appRouter = React.createElement(
 	  Router,
 	  { history: HashHistory, __self: undefined
@@ -72,6 +75,8 @@
 
 	window.SessionApiUtil = SessionApiUtil;
 	window.SessionActions = SessionActions;
+	window.PuppyStore = PuppyStore;
+	window.PuppyActions = PuppyActions;
 
 	document.addEventListener('DOMContentLoaded', function () {
 	  if (window.currentUser) {
@@ -35370,6 +35375,114 @@
 	};
 
 	module.exports = ModalStyles;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(3);
+	var Store = __webpack_require__(239).Store;
+	var PuppyConstants = __webpack_require__(283);
+	var PuppyStore = new Store(AppDispatcher);
+
+	var _puppies = {};
+
+	var _resetAllPuppies = function _resetAllPuppies(puppies) {
+	  _puppies = {};
+
+	  puppies.forEach(function (puppy) {
+	    _puppies[puppy.id] = puppy;
+	  });
+	};
+
+	var _resetSinglePuppy = function _resetSinglePuppy(puppy) {
+	  _puppies[puppy.id] = puppy;
+	};
+
+	PuppyStore.__onDispatch = function (payload) {
+	  debugger;
+	  switch (payload.actionType) {
+	    case PuppyConstants.PUPPIES_RECEIVED:
+	      _resetAllPuppies(payload.puppies);
+	      break;
+	  }
+	  PuppyStore.__emitChange();
+	};
+
+	PuppyStore.all = function () {
+	  var puppies = [];
+
+	  for (var id in _puppies) {
+	    if (_puppies.hasOwnProperty(id)) {
+	      puppies.push(_puppies[id]);
+	    }
+	  }
+
+	  return puppies;
+	};
+
+	module.exports = PuppyStore;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var PuppyConstants = {
+	  PUPPIES_RECEIVED: 'PUPPIES_RECEIVED',
+	  PUPPY_RECEIVED: 'PUPPY_RECEIVED',
+	  PUPPY_REMOVED: 'PUPPY_REMOVED'
+	};
+
+	module.exports = PuppyConstants;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PuppyApiUtil = __webpack_require__(285);
+	var AppDispatcher = __webpack_require__(3);
+	var PuppyConstants = __webpack_require__(283);
+	var PuppyStore = __webpack_require__(282);
+
+	var PuppyActions = {
+	  fetchAllPuppies: function fetchAllPuppies() {
+	    PuppyApiUtil.fetchAllPuppies(this.receiveAllPuppies);
+	  },
+	  receiveAllPuppies: function receiveAllPuppies(puppies) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPIES_RECEIVED,
+	      puppies: puppies
+	    });
+	  }
+	};
+
+	module.exports = PuppyActions;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var PuppyApiUtil = {
+	  fetchAllPuppies: function fetchAllPuppies(cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies',
+	      success: function success(puppies) {
+	        cb(puppies);
+	      }
+	    });
+	  }
+	};
+
+	module.exports = PuppyApiUtil;
 
 /***/ }
 /******/ ]);

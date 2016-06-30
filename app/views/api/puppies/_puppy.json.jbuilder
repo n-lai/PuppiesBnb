@@ -1,4 +1,4 @@
 json.extract!(
   puppy,
-  :id, :name, :lat, :lng, :temperament, :image_url, :description
+  :id, :name, :lat, :lng, :temperament, :image_url, :description, :breed, :price
 )

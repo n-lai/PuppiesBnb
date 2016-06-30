@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
 
   before_validation :ensure_session_token
 
-  has_many :puppies
+  has_many :puppies,
+    primary_key: :id,
+    foreign_key: :owner_id,
+    class_name: 'Puppy'
 
   attr_reader :password
 
