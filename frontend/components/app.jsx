@@ -34,15 +34,17 @@ const App = React.createClass({
     } else if ( !['/login', '/signup'].includes(this.props.location.pathname) ) {
       return (
         <nav className='login-signup'>
-          <button
-            onClick={this.handleOpenModal.bind(this, "Log In")}
-            id='login-button'
-          >Log In</button>
+          <div className='nav-bar-buttons'>
+            <button
+              onClick={this.handleOpenModal.bind(this, "Log In")}
+              id='login-button'
+            >Log In</button>
 
-          <button
-            onClick={this.handleOpenModal.bind(this, "Sign Up")}
-            id='signup-button'
-          >Sign Up</button>
+            <button
+              onClick={this.handleOpenModal.bind(this, "Sign Up")}
+              id='signup-button'
+            >Sign Up</button>
+          </div>
         </nav>
       );
     }
@@ -78,6 +80,8 @@ const App = React.createClass({
     return (
       <div className='app-container'>
         <header>
+          <Link to='/api/puppies' className='logo'>PuppiesBnb</Link>
+
           { this.greeting() }
         </header>
         {modal}

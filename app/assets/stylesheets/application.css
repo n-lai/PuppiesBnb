@@ -78,7 +78,8 @@ button {
 
 header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin: 0px 25px;
 }
 
 li.errors {
@@ -101,6 +102,7 @@ li.errors {
 }
 
 .puppy-index {
+  float: left;
   max-width: 55%;
   display:flex;
   flex-wrap: wrap;
@@ -129,10 +131,12 @@ li.errors {
 }
 
 .map {
+  float: right;
   width: 500px;
   height: 500px;
 }
 
 .search {
-  display: flex;
+  display: block;
+  margin: 0px 25px;
 }

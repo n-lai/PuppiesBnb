@@ -33076,22 +33076,27 @@
 	        { className: 'login-signup', __self: this
 	        },
 	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.handleOpenModal.bind(this, "Log In"),
-	            id: 'login-button',
-	            __self: this
+	          'div',
+	          { className: 'nav-bar-buttons', __self: this
 	          },
-	          'Log In'
-	        ),
-	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.handleOpenModal.bind(this, "Sign Up"),
-	            id: 'signup-button',
-	            __self: this
-	          },
-	          'Sign Up'
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal.bind(this, "Log In"),
+	              id: 'login-button',
+	              __self: this
+	            },
+	            'Log In'
+	          ),
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal.bind(this, "Sign Up"),
+	              id: 'signup-button',
+	              __self: this
+	            },
+	            'Sign Up'
+	          )
 	        )
 	      );
 	    }
@@ -33132,6 +33137,12 @@
 	        {
 	          __self: this
 	        },
+	        React.createElement(
+	          Link,
+	          { to: '/api/puppies', className: 'logo', __self: this
+	          },
+	          'PuppiesBnb'
+	        ),
 	        this.greeting()
 	      ),
 	      modal,
@@ -35863,12 +35874,7 @@
 	      }
 	    });
 	  },
-	  _handleClick: function _handleClick(coords) {
-	    hashHistory.push({
-	      pathname: "puppies/new",
-	      query: coords
-	    });
-	  },
+	  _handleClick: function _handleClick(coords) {},
 	  removeMarker: function removeMarker(marker) {
 	    var idx = this.state.markers.indexOf(marker);
 	    this.state.markers[idx].setMap(null);

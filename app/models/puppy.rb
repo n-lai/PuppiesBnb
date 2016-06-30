@@ -22,5 +22,6 @@ class Puppy < ActiveRecord::Base
       AND
         lng BETWEEN #{min_lng} AND #{max_lng}
       SQL
+
   end
 end

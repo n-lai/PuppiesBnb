@@ -70,10 +70,6 @@ const PuppyMap = React.createClass({
   },
 
   _handleClick(coords) {
-    hashHistory.push({
-      pathname: "puppies/new",
-      query: coords
-    });
   },
 
   removeMarker(marker) {

@@ -12,6 +12,7 @@ const _resetAllPuppies = function(puppies) {
     _puppies[puppy.id] = puppy;
     PuppyStore.__emitChange();
   });
+
 };
 
 const _resetSinglePuppy = function(puppy) {
