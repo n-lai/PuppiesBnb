@@ -17,13 +17,15 @@ const SessionActions = require('./actions/session_actions');
 const PuppyStore = require('./stores/puppy_store');
 const PuppyActions = require('./actions/puppy_actions');
 const PuppyIndex = require('./components/puppy_index');
+const PuppyDetail = require('./components/puppy_detail');
 
 
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path='/' component={ App }>
       <IndexRoute component={PuppyIndex} />
-      <Route path='/puppies'component={PuppyIndex}/>
+      <Route path='/puppies' component={PuppyIndex}/>
+      <Route path='/puppies/:puppyId' component={PuppyDetail}/>
     </Route>
   </Router>
 );

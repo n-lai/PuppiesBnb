@@ -65,6 +65,7 @@
 	var PuppyStore = __webpack_require__(282);
 	var PuppyActions = __webpack_require__(284);
 	var PuppyIndex = __webpack_require__(286);
+	var PuppyDetail = __webpack_require__(288);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -77,6 +78,8 @@
 	    React.createElement(IndexRoute, { component: PuppyIndex, __self: undefined
 	    }),
 	    React.createElement(Route, { path: '/puppies', component: PuppyIndex, __self: undefined
+	    }),
+	    React.createElement(Route, { path: '/puppies/:puppyId', component: PuppyDetail, __self: undefined
 	    })
 	  )
 	);
@@ -35594,6 +35597,12 @@
 	});
 
 	module.exports = PuppyIndexItem;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);
