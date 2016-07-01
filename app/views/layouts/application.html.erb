@@ -3,7 +3,7 @@
 <head>
   <title>PuppiesBnb</title>
 
-  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=" + "#{ENV['GOOGLE_MAPS']}" %>
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS']}"%>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
