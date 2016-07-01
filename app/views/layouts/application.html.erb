@@ -2,10 +2,17 @@
 <html>
 <head>
   <title>PuppiesBnb</title>
-  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyDFraQ8I0uEUdvY82etnO4eJ76-QrrvCKc" %>
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=" + "#{ENV['GOOGLE_MAPS']}" %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    window.CLOUDINARY_OPTIONS = {
+      cloud_name: "<%=ENV['CLOUD_NAME']%>",
+      upload_preset: "<%= ENV['UPLOAD_PRESET'] %>"
+    };
+  </script>
 </head>
 <body>
 
