@@ -89,7 +89,7 @@ const PuppyMap = React.createClass({
     const puppy = PuppyStore.find(puppyId);
 
     const content = `<img src=${puppy.image_url} class='map-picture'/>` +
-                    `<h3>${puppy.name}</h3>`
+                    `<h3 class='map-puppy-name'>${puppy.name}</h3>`
 
     marker.addListener('click', () => {
       this.infowindow.setContent(content);

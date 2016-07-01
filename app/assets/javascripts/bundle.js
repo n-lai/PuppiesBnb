@@ -33032,6 +33032,7 @@
 	var ErrorActions = __webpack_require__(258);
 	var LoginForm = __webpack_require__(237);
 	var SignupForm = __webpack_require__(257);
+	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -33106,6 +33107,9 @@
 	    ErrorActions.clearErrors();
 	    this.setState({ modalIsOpen: false });
 	  },
+	  _handleRoot: function _handleRoot() {
+	    hashHistory.push('/');
+	  },
 	  render: function render() {
 	    var component = void 0;
 
@@ -33138,8 +33142,8 @@
 	          __self: this
 	        },
 	        React.createElement(
-	          Link,
-	          { to: '/api/puppies', className: 'logo', __self: this
+	          'button',
+	          { onClick: this._handleRoot, className: 'logo', __self: this
 	          },
 	          'PuppiesBnb'
 	        ),
@@ -35746,9 +35750,38 @@
 	      ),
 	      React.createElement(
 	        'div',
+	        { className: 'random', __self: this
+	        },
+	        React.createElement(
+	          'div',
+	          { className: 'puppy-details-header', __self: this
+	          },
+	          React.createElement(
+	            'div',
+	            { className: 'puppy-basic-info', __self: this
+	            },
+	            React.createElement(
+	              'h2',
+	              { className: 'puppy-detail-name', __self: this
+	              },
+	              puppy.name
+	            ),
+	            React.createElement(
+	              'h3',
+	              { className: 'puppy-detail-breed', __self: this
+	              },
+	              puppy.breed
+	            )
+	          ),
+	          React.createElement('div', { className: 'booking-form', __self: this
+	          })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
 	        { className: 'puppy-details', __self: this
 	        },
-	        ['name', 'breed', 'temperament', 'description'].map(function (attr) {
+	        ['temperament', 'description'].map(function (attr) {
 	          return React.createElement(
 	            'p',
 	            { key: attr, __self: _this
@@ -35892,7 +35925,7 @@
 
 	    var puppy = PuppyStore.find(puppyId);
 
-	    var content = '<img src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<h3>' + puppy.name + '</h3>');
+	    var content = '<img src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<h3 class=\'map-puppy-name\'>' + puppy.name + '</h3>');
 
 	    marker.addListener('click', function () {
 	      _this3.infowindow.setContent(content);

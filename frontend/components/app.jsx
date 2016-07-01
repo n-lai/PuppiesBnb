@@ -7,6 +7,7 @@ const SessionActions = require('../actions/session_actions');
 const ErrorActions = require('../actions/error_actions');
 const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');
+const hashHistory = require('react-router').hashHistory;
 
 const App = React.createClass({
   getInitialState() {
@@ -56,6 +57,10 @@ const App = React.createClass({
     this.setState({ modalIsOpen: false });
   },
 
+  _handleRoot() {
+    hashHistory.push('/');
+  },
+
   render() {
     let component;
 
@@ -80,7 +85,7 @@ const App = React.createClass({
     return (
       <div className='app-container'>
         <header>
-          <Link to='/api/puppies' className='logo'>PuppiesBnb</Link>
+          <button onClick={this._handleRoot} className='logo'>PuppiesBnb</button>
 
           { this.greeting() }
         </header>

@@ -51,8 +51,7 @@ button {
   border: 1px solid;
   border-radius: 2px;
   cursor: pointer;
-  color: white;
-  background-color: #FF5A5F;
+  color: grey;
   text-align: center;
   font-size: 16px;
   padding: 9px 27px;
@@ -73,6 +72,9 @@ button {
 .login-form-button, .signup-form-button {
   width: 100%;
   height: 64px;
+  color: white;
+  background-color: #FF5A5F;
+  margin: 10px 0px;
 }
 
 .login-form, .signup-form {
@@ -133,7 +135,7 @@ li.errors {
 .puppy-image-container {
   height: 500px;
   width: 100%;
-  background-color: grey;
+  background-color: rgba(232, 232, 232, 0.6);
   overflow: hidden;
   text-align: center;
 }
@@ -157,4 +159,47 @@ li.errors {
 .map-picture {
   height: 150px;
   width: 150px;
+}
+
+.map-puppy-name {
+  text-align: center;
+}
+
+.puppy-details-header {
+  position: relative;
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+}
+
+.puppy-detail-name {
+  margin-bottom: 10px;
+}
+
+.puppy-detail-breed {
+}
+
+.booking-form {
+  width: 300px;
+  height: 200px;
+  background-color: transparent;
+  bottom: 25%;
+  position: fixed;
+  right: 8%;
+}
+
+.puppy-basic-info {
+  position: fixed;
+  left: 45%;
+  display: block;
+}
+
+.puppy-details {
+  left: 25%;
+  position: fixed;
+  display: block;
+}
+
+.random {
+  display: block;
 }

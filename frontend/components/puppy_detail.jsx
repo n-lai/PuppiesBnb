@@ -36,8 +36,18 @@ const PuppyDetail = React.createClass({
         <div className='puppy-image-container'>
           <img src={puppy.image_url} />
         </div>
+        <div className='random'>
+          <div className='puppy-details-header'>
+            <div className='puppy-basic-info'>
+              <h2 className='puppy-detail-name'>{puppy.name}</h2>
+              <h3 className='puppy-detail-breed'>{puppy.breed}</h3>
+            </div>
+            <div className='booking-form'></div>
+          </div>
+        </div>
+
         <div className='puppy-details'>
-          {['name', 'breed', 'temperament', 'description' ].map((attr) => {
+          {['temperament', 'description' ].map((attr) => {
             return <p key={attr}>{attr}: {puppy[attr]}</p>;
           })}
         </div>
