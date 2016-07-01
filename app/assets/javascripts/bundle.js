@@ -33057,7 +33057,7 @@
 	        { className: 'header-group', __self: this
 	        },
 	        React.createElement(
-	          'h2',
+	          'h3',
 	          { className: 'header-name', __self: this
 	          },
 	          'Hi, ',

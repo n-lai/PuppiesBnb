@@ -203,3 +203,12 @@ li.errors {
 .random {
   display: block;
 }
+
+.header-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-name {
+  padding: 20px;
+}

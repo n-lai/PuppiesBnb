@@ -28,7 +28,7 @@ const App = React.createClass({
     if (SessionStore.isUserLoggedIn()) {
       return (
         <hgroup className='header-group'>
-          <h2 className='header-name'>Hi, {SessionStore.currentUser().name}!</h2>
+          <h3 className='header-name'>Hi, {SessionStore.currentUser().name}!</h3>
           <button onClick={this._handleLogout} className='logout-button'>Log Out</button>
         </hgroup>
       );
