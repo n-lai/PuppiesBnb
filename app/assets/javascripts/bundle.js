@@ -35886,8 +35886,19 @@
 	      map: map,
 	      puppyId: puppyId
 	    });
+
+	    // marker.addListener('click', () => {
+	    //   infowindow.open(map, marker);
+	    // });
+
 	    this.state.markers.push(marker);
 	  },
+
+
+	  // const infowindow = new google.maps.InfoWindow({
+	  //   content: PuppyStore.find()
+	  // });
+
 	  render: function render() {
 	    return React.createElement('div', { className: 'map', ref: 'map', __self: this
 	    });

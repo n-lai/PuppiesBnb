@@ -102,8 +102,7 @@ li.errors {
 }
 
 .puppy-index {
-  float: left;
-  max-width: 55%;
+  width: 50%;
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -112,31 +111,37 @@ li.errors {
 .img-container {
   max-width: 375px;
   max-height: 250px;
-  background-color: grey;
+  /*background-color: grey;*/
   overflow: hidden;
+
 }
 
+.puppy-index-pic {
+  height: 300px;
+}
 
-.puppy-index-pic img{
+.puppy-index-pic img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   cursor: pointer;
 }
 
 .puppy-image-container {
   max-height: 750px;
   width: 100%;
-  background-color: grey;
+  /*background-color: grey;*/
   overflow: hidden;
   text-align: center;
 }
 
 .map {
-  float: right;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 1000px;
 }
 
 .search {
-  display: block;
+  display: flex;
+  justify-content: space-between;
   margin: 0px 25px;
 }

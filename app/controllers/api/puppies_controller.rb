@@ -1,8 +1,7 @@
 class Api::PuppiesController < ApplicationController
 
   def index
-    @puppies = Puppy.all
-    render json: @puppies
+    render json: Puppy.in_bounds(params[:bounds])
   end
 
   def show

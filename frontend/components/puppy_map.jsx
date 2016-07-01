@@ -84,8 +84,17 @@ const PuppyMap = React.createClass({
       map: map,
       puppyId: puppyId
     });
+
+    // marker.addListener('click', () => {
+    //   infowindow.open(map, marker);
+    // });
+
     this.state.markers.push(marker);
   },
+
+  // const infowindow = new google.maps.InfoWindow({
+  //   content: PuppyStore.find()
+  // });
 
   render() {
     return (
