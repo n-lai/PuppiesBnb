@@ -35811,11 +35811,12 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this._onChange);
+	    this.infowindow = new google.maps.InfoWindow();
 
 	    var mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
 	    var mapOptions = {
 	      center: { lat: 37.7758, lng: -122.435 }, // this is SF
-	      zoom: 13
+	      zoom: 10
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    this.listenForMove();
@@ -35881,24 +35882,25 @@
 	    this.state.markers.splice(idx, 1);
 	  },
 	  addMarker: function addMarker(location, map, puppyId) {
+	    var _this3 = this;
+
 	    var marker = new google.maps.Marker({
 	      position: location,
 	      map: map,
 	      puppyId: puppyId
 	    });
 
-	    // marker.addListener('click', () => {
-	    //   infowindow.open(map, marker);
-	    // });
+	    var puppy = PuppyStore.find(puppyId);
+
+	    var content = '<img src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<h3>' + puppy.name + '</h3>');
+
+	    marker.addListener('click', function () {
+	      _this3.infowindow.setContent(content);
+	      _this3.infowindow.open(map, marker);
+	    });
 
 	    this.state.markers.push(marker);
 	  },
-
-
-	  // const infowindow = new google.maps.InfoWindow({
-	  //   content: PuppyStore.find()
-	  // });
-
 	  render: function render() {
 	    return React.createElement('div', { className: 'map', ref: 'map', __self: this
 	    });

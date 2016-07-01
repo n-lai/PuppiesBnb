@@ -9,11 +9,12 @@ const PuppyMap = React.createClass({
 
   componentDidMount(){
     this.puppyListener = PuppyStore.addListener(this._onChange);
+    this.infowindow = new google.maps.InfoWindow();
 
     const mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
     const mapOptions = {
       center: {lat: 37.7758, lng: -122.435}, // this is SF
-      zoom: 13
+      zoom: 10
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     this.listenForMove();
@@ -85,16 +86,18 @@ const PuppyMap = React.createClass({
       puppyId: puppyId
     });
 
-    // marker.addListener('click', () => {
-    //   infowindow.open(map, marker);
-    // });
+    const puppy = PuppyStore.find(puppyId);
+
+    const content = `<img src=${puppy.image_url} class='map-picture'/>` +
+                    `<h3>${puppy.name}</h3>`
+
+    marker.addListener('click', () => {
+      this.infowindow.setContent(content);
+      this.infowindow.open(map, marker);
+    });
 
     this.state.markers.push(marker);
   },
-
-  // const infowindow = new google.maps.InfoWindow({
-  //   content: PuppyStore.find()
-  // });
 
   render() {
     return (
