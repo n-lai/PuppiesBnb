@@ -72,14 +72,14 @@ const LoginForm = React.createClass({
         <div>
           { this.fieldErrors("base") }
 
-          <form onSubmit={this.handleSubmit} className='login-form'>
+          <form onSubmit={this.handleSubmit} className='form'>
             { this.fieldErrors("username") }
               <input
                 type="text"
                 value={this.state.username}
                 placeholder="Username"
                 onChange={this.update("username")}
-                className='login-input'
+                className='form-input'
               />
             <br></br>
               { this.fieldErrors("password") }
@@ -88,7 +88,7 @@ const LoginForm = React.createClass({
                 value={this.state.password}
                 placeholder="Password"
                 onChange={this.update("password")}
-                className='login-input'
+                className='form-input'
               />
             <br></br>
             <button className='login-form-button' type="submit">Log In</button>

@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PuppyStore = require('../stores/puppy_store');
+const hashHistory = require('react-router').hashHistory;
 
 const PuppyMap = React.createClass({
   getInitialState() {
@@ -51,6 +52,7 @@ const PuppyMap = React.createClass({
 
       that._handleClick(coords);
     });
+
   },
 
   _onChange() {
@@ -88,16 +90,27 @@ const PuppyMap = React.createClass({
 
     const puppy = PuppyStore.find(puppyId);
 
-    const content = `<img src=${puppy.image_url} class='map-picture'/>` +
-                    `<h3 class='map-puppy-name'>${puppy.name}</h3>`
+    const content = `<img id='map-pic' src=${puppy.image_url} class='map-picture'/>` +
+                    `<div class='infowindow-detail'>
+                        <h3 class='map-puppy-name'>${puppy.name}</h3>
+                        <h3>$${puppy.price} / day</h3>
+                      </div>`
 
     marker.addListener('click', () => {
+      const markerPuppy = marker.puppyId;
       this.infowindow.setContent(content);
       this.infowindow.open(map, marker);
+
+      google.maps.event.addDomListener(document.getElementById('map-pic'), 'click', () => {
+        hashHistory.push('/api/puppies/' + markerPuppy)
+      })
+
     });
 
     this.state.markers.push(marker);
   },
+
+
 
   render() {
     return (

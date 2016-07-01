@@ -59,7 +59,7 @@ button {
 }
 
 
-.login-input, .signup-input {
+.form-input {
   height: 64px;
   font-size: 16px;
   padding:10px;
@@ -77,7 +77,7 @@ button {
   margin: 10px 0px;
 }
 
-.login-form, .signup-form {
+.form {
  box-sizing: border-box;
 }
 
@@ -211,4 +211,17 @@ li.errors {
 
 .header-name {
   padding: 20px;
+}
+
+.infowindow-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+#map-pic {
+  cursor: pointer;
+}
+
+#searchTextField {
+  width: 100%;
 }

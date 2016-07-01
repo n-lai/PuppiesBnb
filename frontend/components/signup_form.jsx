@@ -75,13 +75,13 @@ const SignupForm = React.createClass({
     return(
         <div>
           { this.fieldErrors("base") }
-          <form onSubmit={this.handleSubmit} className='signup-form'>
+          <form onSubmit={this.handleSubmit} className='form'>
               <input
                 type="text"
                 value={this.state.name}
                 placeholder='Name'
                 onChange={this.update("name")}
-                className='signup-input'
+                className='form-input'
               />
               <br></br>
               <input
@@ -89,7 +89,7 @@ const SignupForm = React.createClass({
                 value={this.state.username}
                 placeholder='Username'
                 onChange={this.update("username")}
-                className='signup-input'
+                className='form-input'
               />
               <br></br>
               <input
@@ -97,7 +97,7 @@ const SignupForm = React.createClass({
                 value={this.state.email}
                 placeholder='Email Address'
                 onChange={this.update("email")}
-                className='signup-input'
+                className='form-input'
               />
             <br></br>
               <input
@@ -105,7 +105,7 @@ const SignupForm = React.createClass({
                 value={this.state.password}
                 placeholder='Password'
                 onChange={this.update("password")}
-                className='signup-input'
+                className='form-input'
               />
             <br></br>
               <input
@@ -113,7 +113,7 @@ const SignupForm = React.createClass({
                 value={this.state.profile_img_url}
                 placeholder='Profile Picture URL'
                 onChange={this.update("profile_img_url")}
-                className='signup-input'
+                className='form-input'
               />
             <br></br>
             <button className='signup-form-button' type="submit">Sign Up</button>

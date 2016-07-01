@@ -26486,7 +26486,7 @@
 	      this.fieldErrors("base"),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.handleSubmit, className: 'login-form', __self: this
+	        { onSubmit: this.handleSubmit, className: 'form', __self: this
 	        },
 	        this.fieldErrors("username"),
 	        React.createElement('input', {
@@ -26494,7 +26494,7 @@
 	          value: this.state.username,
 	          placeholder: 'Username',
 	          onChange: this.update("username"),
-	          className: 'login-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -26506,7 +26506,7 @@
 	          value: this.state.password,
 	          placeholder: 'Password',
 	          onChange: this.update("password"),
-	          className: 'login-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -33032,6 +33032,7 @@
 	var ErrorActions = __webpack_require__(258);
 	var LoginForm = __webpack_require__(237);
 	var SignupForm = __webpack_require__(257);
+	var PuppyForm = __webpack_require__(292);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var App = React.createClass({
@@ -33050,6 +33051,9 @@
 	    ErrorActions.clearErrors();
 	  },
 
+	  openSearch: function openSearch() {
+	    hashHistory.push('/api/search');
+	  },
 	  greeting: function greeting() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      return React.createElement(
@@ -33063,6 +33067,12 @@
 	          'Hi, ',
 	          SessionStore.currentUser().name,
 	          '!'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleOpenModal.bind(this, "Puppy Form"), id: 'puppy-button', __self: this
+	          },
+	          'Add a Puppy'
 	        ),
 	        React.createElement(
 	          'button',
@@ -33112,15 +33122,16 @@
 	  },
 	  render: function render() {
 	    var component = void 0;
-
 	    if (this.state.modal === "Log In") {
 	      component = React.createElement(LoginForm, { close: this.handleCloseModal, __self: this
 	      });
-	    } else {
+	    } else if (this.state.modal === "Sign Up") {
 	      component = React.createElement(SignupForm, { close: this.handleCloseModal, __self: this
 	      });
+	    } else if (this.state.modal === "Puppy Form") {
+	      component = React.createElement(PuppyForm, { close: this.handleCloseModal, __self: this
+	      });
 	    }
-
 	    var modal = void 0;
 
 	    if (this.state.modalIsOpen) {
@@ -33259,14 +33270,14 @@
 	      this.fieldErrors("base"),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.handleSubmit, className: 'signup-form', __self: this
+	        { onSubmit: this.handleSubmit, className: 'form', __self: this
 	        },
 	        React.createElement('input', {
 	          type: 'text',
 	          value: this.state.name,
 	          placeholder: 'Name',
 	          onChange: this.update("name"),
-	          className: 'signup-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -33277,7 +33288,7 @@
 	          value: this.state.username,
 	          placeholder: 'Username',
 	          onChange: this.update("username"),
-	          className: 'signup-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -33288,7 +33299,7 @@
 	          value: this.state.email,
 	          placeholder: 'Email Address',
 	          onChange: this.update("email"),
-	          className: 'signup-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -33299,7 +33310,7 @@
 	          value: this.state.password,
 	          placeholder: 'Password',
 	          onChange: this.update("password"),
-	          className: 'signup-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -33310,7 +33321,7 @@
 	          value: this.state.profile_img_url,
 	          placeholder: 'Profile Picture URL',
 	          onChange: this.update("profile_img_url"),
-	          className: 'signup-input',
+	          className: 'form-input',
 	          __self: this
 	        }),
 	        React.createElement('br', {
@@ -35836,6 +35847,7 @@
 	var React = __webpack_require__(11);
 	var ReactDOM = __webpack_require__(107);
 	var PuppyStore = __webpack_require__(282);
+	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var PuppyMap = React.createClass({
 	  displayName: 'PuppyMap',
@@ -35925,11 +35937,16 @@
 
 	    var puppy = PuppyStore.find(puppyId);
 
-	    var content = '<img src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<h3 class=\'map-puppy-name\'>' + puppy.name + '</h3>');
+	    var content = '<img id=\'map-pic\' src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<div class=\'infowindow-detail\'>\n                        <h3 class=\'map-puppy-name\'>' + puppy.name + '</h3>\n                        <h3>$' + puppy.price + ' / day</h3>\n                      </div>');
 
 	    marker.addListener('click', function () {
+	      var markerPuppy = marker.puppyId;
 	      _this3.infowindow.setContent(content);
 	      _this3.infowindow.open(map, marker);
+
+	      google.maps.event.addDomListener(document.getElementById('map-pic'), 'click', function () {
+	        hashHistory.push('/api/puppies/' + markerPuppy);
+	      });
 	    });
 
 	    this.state.markers.push(marker);
@@ -35941,6 +35958,168 @@
 	});
 
 	module.exports = PuppyMap;
+
+/***/ },
+/* 291 */,
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(11);
+	var Link = __webpack_require__(9).Link;
+	var PuppyStore = __webpack_require__(282);
+	var SessionStore = __webpack_require__(238);
+	var ErrorStore = __webpack_require__(260);
+	var PuppyActions = __webpack_require__(2);
+	var ErrorActions = __webpack_require__(258);
+	var hashHistory = __webpack_require__(9).hashHistory;
+
+	var PuppyForm = React.createClass({
+	  displayName: 'PuppyForm',
+
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser.id };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var that = this;
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.geocoder = new google.maps.Geocoder();
+	    var input = document.getElementById('searchTextField');
+	    var autocomplete = new google.maps.places.Autocomplete(input);
+	    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+	      var address = autocomplete.getPlace();
+	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
+	    });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	  },
+	  redirectIfPuppyMade: function redirectIfPuppyMade() {},
+	  fieldErrors: function fieldErrors(field) {
+	    var _this = this;
+
+	    var errors = ErrorStore.formErrors("signup");
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i, className: 'errors', __self: _this
+	        },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      {
+	        __self: this
+	      },
+	      messages
+	    );
+	  },
+	  update: function update(property) {
+	    var _this2 = this;
+
+	    return function (e) {
+	      return _this2.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    debugger;
+	    e.preventDefault();
+
+	    var puppyData = {
+	      name: this.state.name,
+	      breed: this.state.breed,
+	      lat: this.state.lat,
+	      lng: this.state.lng,
+	      description: this.state.description,
+	      temperament: this.state.temperament,
+	      owner_id: this.state.owner_id,
+	      price: parseInt(this.state.price)
+
+	    };
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      {
+	        __self: this
+	      },
+	      this.fieldErrors('base'),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, className: 'form', __self: this
+	        },
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Name',
+	          value: this.state.name,
+	          onChange: this.update("name"),
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Breed',
+	          value: this.state.breed,
+	          onChange: this.update("breed"),
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          ref: 'searchField',
+	          id: 'searchTextField',
+	          type: 'text',
+	          placeholder: 'Enter an Address',
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Temperament',
+	          value: this.state.temperament,
+	          onChange: this.update("temperament"),
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement('input', {
+	          type: 'number',
+	          placeholder: 'Price per day',
+	          value: this.state.price,
+	          onChange: this.update("price"),
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement('textarea', {
+	          placeholder: 'Description',
+	          value: this.state.description,
+	          onChange: this.update("description"),
+	          className: 'form-input',
+	          __self: this
+	        }),
+	        React.createElement(
+	          'button',
+	          { type: 'submit', className: 'login-form-button', __self: this
+	          },
+	          'Add Puppy'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PuppyForm;
 
 /***/ }
 /******/ ]);

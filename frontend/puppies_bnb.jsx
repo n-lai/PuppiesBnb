@@ -20,7 +20,6 @@ const PuppyActions = require('./actions/puppy_actions');
 const PuppyIndex = require('./components/puppy_index');
 const PuppyDetail = require('./components/puppy_detail');
 
-
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path='/' component={ App }>

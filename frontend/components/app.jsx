@@ -7,6 +7,7 @@ const SessionActions = require('../actions/session_actions');
 const ErrorActions = require('../actions/error_actions');
 const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');
+const PuppyForm = require ('./puppy_form');
 const hashHistory = require('react-router').hashHistory;
 
 const App = React.createClass({
@@ -24,11 +25,16 @@ const App = React.createClass({
     ErrorActions.clearErrors();
   },
 
+  openSearch() {
+    hashHistory.push('/api/search');
+  },
+
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
       return (
         <hgroup className='header-group'>
           <h3 className='header-name'>Hi, {SessionStore.currentUser().name}!</h3>
+          <button onClick={this.handleOpenModal.bind(this, "Puppy Form")} id='puppy-button'>Add a Puppy</button>
           <button onClick={this._handleLogout} className='logout-button'>Log Out</button>
         </hgroup>
       );
@@ -63,15 +69,13 @@ const App = React.createClass({
 
   render() {
     let component;
-
     if (this.state.modal === "Log In") {
       component = <LoginForm close={this.handleCloseModal}/>;
-
-    } else {
+    } else if (this.state.modal === "Sign Up") {
       component = <SignupForm close={this.handleCloseModal}/>;
-
+    } else if (this.state.modal === "Puppy Form"){
+      component = <PuppyForm close={this.handleCloseModal}/>;
     }
-
     let modal;
 
     if (this.state.modalIsOpen) {
