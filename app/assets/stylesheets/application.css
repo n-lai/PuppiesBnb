@@ -184,19 +184,19 @@ li.errors {
   width: 300px;
   height: 200px;
   background-color: transparent;
-  bottom: 25%;
+  bottom: 25%
   position: fixed;
-  right: 8%;
+  right: 8%
 }
 
 .puppy-basic-info {
   position: fixed;
-  left: 45%;
+  left: 45%
   display: block;
 }
 
 .puppy-details {
-  left: 25%;
+  left: 25%
   position: fixed;
   display: block;
 }
@@ -234,7 +234,7 @@ li.errors {
   vertical-align: middle;
   bottom: 100%;
   color: whitesmoke;
-  left: 0%;
+  left: 0%
 }
 
 #puppy-index-name {
@@ -245,5 +245,5 @@ li.errors {
   display: flex;
   justify-content: space-between;
   position: absolute
-  left: 0%;
+  left: 0%
 }
