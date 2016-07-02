@@ -184,21 +184,21 @@ li.errors {
   width: 300px;
   height: 200px;
   background-color: transparent;
-  bottom: 25%
   position: fixed;
+  bottom: 25%
   right: 8%
 }
 
 .puppy-basic-info {
   position: fixed;
-  left: 45%
   display: block;
+  left: 45%
 }
 
 .puppy-details {
-  left: 25%
   position: fixed;
   display: block;
+  left: 25%
 }
 
 .random {
@@ -232,8 +232,8 @@ li.errors {
   background-color: rgba(0, 0, 0, .8);
   padding: 15px;
   vertical-align: middle;
-  bottom: 100%;
   color: whitesmoke;
+  bottom: 100%;
   left: 0%
 }
 
@@ -244,6 +244,6 @@ li.errors {
 .puppy-index-details {
   display: flex;
   justify-content: space-between;
-  position: absolute
+  position: absolute;
   left: 0%
 }
