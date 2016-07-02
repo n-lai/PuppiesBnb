@@ -35682,23 +35682,28 @@
 	        },
 	        React.createElement(
 	          'span',
-	          { className: 'puppy-index-info', __self: this
-	          },
-	          puppy.name
-	        ),
-	        React.createElement(
-	          'span',
-	          { className: 'puppy-index-info', __self: this
-	          },
-	          puppy.breed
-	        ),
-	        React.createElement(
-	          'span',
-	          { className: 'puppy-index-info', __self: this
+	          { className: 'puppy-index-info', id: 'price-overlay', __self: this
 	          },
 	          '$',
 	          puppy.price,
 	          ' per day'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'puppy-index-details', __self: this
+	          },
+	          React.createElement(
+	            'span',
+	            { className: 'puppy-index-info', id: 'puppy-index-name', __self: this
+	            },
+	            puppy.name
+	          ),
+	          React.createElement(
+	            'span',
+	            { className: 'puppy-index-info', id: 'puppy-index-breed', __self: this
+	            },
+	            puppy.breed
+	          )
 	        )
 	      )
 	    );

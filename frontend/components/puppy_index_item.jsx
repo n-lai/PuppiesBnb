@@ -15,9 +15,11 @@ const PuppyIndexItem = React.createClass({
           <div className='puppy-index-pic'><img src={puppy.image_url}/></div>
         </div>
         <div className='caption'>
-          <span className='puppy-index-info'>{puppy.name}</span>
-          <span className='puppy-index-info'>{puppy.breed}</span>
-          <span className='puppy-index-info'>${puppy.price} per day</span>
+          <span className='puppy-index-info' id='price-overlay'>${puppy.price} per day</span>
+          <div className='puppy-index-details'>
+            <span className='puppy-index-info' id='puppy-index-name'>{puppy.name}</span>
+            <span className='puppy-index-info' id='puppy-index-breed'>{puppy.breed}</span>
+          </div>
         </div>
       </div>
     );

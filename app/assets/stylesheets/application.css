@@ -99,8 +99,8 @@ li.errors {
 
 
 .caption {
-  display: flex;
-  justify-content: space-around;
+  position: relative;
+  bottom: 50%;
 }
 
 .puppy-index-info {
@@ -112,6 +112,7 @@ li.errors {
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  background-color: whitesmoke;
 }
 
 .img-container {
@@ -224,4 +225,25 @@ li.errors {
 
 #searchTextField {
   width: 100%;
+}
+
+#price-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, .8);
+  padding: 15px;
+  vertical-align: middle;
+  bottom: 100%;
+  color: whitesmoke;
+  left: 0%;
+}
+
+#puppy-index-name {
+  font-size: 20px;
+}
+
+.puppy-index-details {
+  display: flex;
+  justify-content: space-between;
+  position: absolute
+  left: 0%;
 }
