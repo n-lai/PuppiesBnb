@@ -15,7 +15,6 @@ class Api::PuppiesController < ApplicationController
     if @puppy.save
       render "api/puppies/show"
     else
-      debugger
       render json: { base: @puppy.errors.full_messages }, status: 422
     end
   end

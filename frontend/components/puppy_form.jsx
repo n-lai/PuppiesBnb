@@ -6,6 +6,7 @@ const ErrorStore = require('../stores/error_store');
 const PuppyActions = require('../actions/session_actions');
 const ErrorActions = require('../actions/error_actions');
 const hashHistory = require('react-router').hashHistory;
+const UploadButton = require('./upload_button');
 
 const PuppyForm = React.createClass({
   contextTypes: {
@@ -13,7 +14,7 @@ const PuppyForm = React.createClass({
   },
 
   getInitialState() {
-    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser.id}
+    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: ""}
   },
 
   componentDidMount() {
@@ -51,8 +52,11 @@ const PuppyForm = React.createClass({
     return (e) => this.setState({ [property]: e.target.value });
   },
 
+  updateUrl(url) {
+    this.setState({ image_url: url });
+  },
+
   _handleSubmit(e) {
-    debugger
     e.preventDefault();
 
     const puppyData = {
@@ -63,14 +67,13 @@ const PuppyForm = React.createClass({
       description: this.state.description,
       temperament: this.state.temperament,
       owner_id: this.state.owner_id,
-      price: parseInt(this.state.price)
+      price: parseInt(this.state.price),
+      image_url: this.state.image_url
+    };
 
-    }
-
+    PuppyAction.createPuppy(puppyData);
+    this.props.close();
   },
-
-
-
 
   render() {
     return (
@@ -123,7 +126,7 @@ const PuppyForm = React.createClass({
             onChange={this.update("description")}
             className='form-input'
           />
-
+        <UploadButton updateUrl={this.updateUrl} />
         <button type='submit' className='login-form-button'>Add Puppy</button>
         </form>
       </div>

@@ -247,3 +247,7 @@ li.errors {
   position: absolute;
   left: 0%;
 }
+
+.upload-form {
+  box-sizing: border-box;
+}

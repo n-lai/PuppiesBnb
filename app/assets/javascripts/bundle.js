@@ -35981,6 +35981,7 @@
 	var PuppyActions = __webpack_require__(2);
 	var ErrorActions = __webpack_require__(258);
 	var hashHistory = __webpack_require__(9).hashHistory;
+	var UploadButton = __webpack_require__(294);
 
 	var PuppyForm = React.createClass({
 	  displayName: 'PuppyForm',
@@ -35990,7 +35991,7 @@
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser.id };
+	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "" };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var that = this;
@@ -36039,8 +36040,10 @@
 	      return _this2.setState(_defineProperty({}, property, e.target.value));
 	    };
 	  },
+	  updateUrl: function updateUrl(url) {
+	    this.setState({ image_url: url });
+	  },
 	  _handleSubmit: function _handleSubmit(e) {
-	    debugger;
 	    e.preventDefault();
 
 	    var puppyData = {
@@ -36051,9 +36054,12 @@
 	      description: this.state.description,
 	      temperament: this.state.temperament,
 	      owner_id: this.state.owner_id,
-	      price: parseInt(this.state.price)
-
+	      price: parseInt(this.state.price),
+	      image_url: this.state.image_url
 	    };
+
+	    PuppyAction.createPuppy(puppyData);
+	    this.props.close();
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -36113,6 +36119,8 @@
 	          className: 'form-input',
 	          __self: this
 	        }),
+	        React.createElement(UploadButton, { updateUrl: this.updateUrl, __self: this
+	        }),
 	        React.createElement(
 	          'button',
 	          { type: 'submit', className: 'login-form-button', __self: this
@@ -36125,6 +36133,42 @@
 	});
 
 	module.exports = PuppyForm;
+
+/***/ },
+/* 293 */,
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+
+	var UploadButton = React.createClass({
+	  displayName: 'UploadButton',
+	  upload: function upload(e) {
+	    e.preventDefault();
+	    cloudinary.openUploadWidget(CLOUDINARY_OPTIONS, function (error, results) {
+	      if (!error) {
+	        this.props.updateUrl(results[0].url);
+	      }
+	    }.bind(this));
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'upload-form', __self: this
+	      },
+	      React.createElement(
+	        'button',
+	        { className: 'signup-form-button', onClick: this.upload, __self: this
+	        },
+	        'Upload Profile Picture'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = UploadButton;
 
 /***/ }
 /******/ ]);
