@@ -1,7 +1,20 @@
 class Api::PuppiesController < ApplicationController
 
   def index
-    render json: Puppy.in_bounds(params[:bounds])
+    @puppies = Puppy.all
+
+    if bound_params
+      @puppies = @puppies.in_bounds(bound_params)
+    end
+
+    if price_params
+      if (Integer(price_params[:maxPrice]) >= 100)
+        @puppies = @puppies.where("price > ?", Integer(price_params[:minPrice]))
+      else
+        @puppies = @puppies.where("price > ? AND price < ?", Integer(price_params[:minPrice]), Integer(price_params[:maxPrice]))
+      end
+    end
+    render json: @puppies
   end
 
   def show
@@ -40,5 +53,13 @@ class Api::PuppiesController < ApplicationController
   private
   def puppy_params
     params.require(:puppy).permit(:name, :lat, :lng, :temperament, :price, :breed, :image_url, :description, :owner_id)
+  end
+
+  def bound_params
+    params[:bounds]
+  end
+
+  def price_params
+    params[:price]
   end
 end

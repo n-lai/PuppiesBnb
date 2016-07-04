@@ -10,15 +10,16 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
+
+
  */
+
 
 html, body {
   height: 100%;
   width: 100%;
 }
- html, body, section, article, h1, h2, h3, h6, p, strong, em, a, select, ul, li, input, textarea, button, img {
+ html, body, section, article, h1, h2, h3, h6, p, strong, em, a, select, ul, li, input,a textarea, button, img {
   margin: 0;
   border: 0;
   padding: 0;
@@ -69,6 +70,16 @@ button {
   margin: 10px 0px;
 }
 
+.puppy-form-input {
+  height: 45px;
+  font-size: 16px;
+  padding:10px;
+  border-radius: 2px;
+  border: 1px solid #c4c4c4;
+  width: 100%;
+  margin: 10px 0px;
+}
+
 .login-form-button, .signup-form-button {
   width: 100%;
   height: 64px;
@@ -95,12 +106,13 @@ li.errors {
 .puppy-index-item {
   box-sizing: border-box;
   display: inline-block;
+  height: 300px;
 }
 
 
 .caption {
   position: relative;
-  bottom: 50%;
+  /* bottom: 50%; */
 }
 
 .puppy-index-info {
@@ -108,7 +120,7 @@ li.errors {
 }
 
 .puppy-index {
-  width: 50%;
+  width: 100%;
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -147,7 +159,7 @@ li.errors {
 }
 
 .map {
-  width: 600px;
+  width: 50%;
   height: 1000px;
 }
 
@@ -233,7 +245,7 @@ li.errors {
   padding: 15px;
   vertical-align: middle;
   color: whitesmoke;
-  bottom: 100%;
+  bottom: 88%;
   left: 0%;
 }
 
@@ -245,9 +257,51 @@ li.errors {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  left: 0%;
+  /* left: 0%; */
+  /* top: 210%; */
+  /* bottom: 25%; */
 }
 
 .upload-form {
   box-sizing: border-box;
+}
+
+.search-params {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.slider {
+  /* margin-top: 10px; */
+  height: 20px;
+  width: 100%;
+  background-color: #ff5a5f;
+  opacity: 0.5px;
+  cursor: pointer;
+}
+
+.my-handle {
+  /*margin-top: 5px;*/
+  z-index: 100;
+  background-color: white;
+  height: 30px;
+  width: 32px;
+  border: 1px solid lightgray;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+#left-handle {
+  margin-left: -10px;
+}
+
+#right-handle {
+  margin-right: -10px;
+}
+
+.index-params {
+  width: 50%;
 }

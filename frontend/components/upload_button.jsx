@@ -13,7 +13,7 @@ const UploadButton = React.createClass({
   render() {
     return (
       <div className='upload-form'>
-        <button className='signup-form-button' onClick={this.upload}>Upload Profile Picture</button>
+        <button className='signup-form-button' onClick={this.upload}>Upload {this.props.buttonName} Picture</button>
       </div>
     );
   }

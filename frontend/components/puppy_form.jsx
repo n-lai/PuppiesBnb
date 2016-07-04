@@ -3,7 +3,7 @@ const Link = require('react-router').Link;
 const PuppyStore = require('../stores/puppy_store');
 const SessionStore = require('../stores/session_store')
 const ErrorStore = require('../stores/error_store');
-const PuppyActions = require('../actions/session_actions');
+const PuppyActions = require('../actions/puppy_actions');
 const ErrorActions = require('../actions/error_actions');
 const hashHistory = require('react-router').hashHistory;
 const UploadButton = require('./upload_button');
@@ -19,6 +19,7 @@ const PuppyForm = React.createClass({
 
   componentDidMount() {
     const that = this;
+    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.geocoder = new google.maps.Geocoder();
     const input = document.getElementById('searchTextField');
@@ -31,14 +32,17 @@ const PuppyForm = React.createClass({
   },
 
   componentWillUnmount() {
+    this.puppyListener.remove();
     this.errorListener.remove();
   },
 
   redirectIfPuppyMade() {
+    debugger
+    this.props.close();
   },
 
   fieldErrors(field) {
-    const errors = ErrorStore.formErrors("signup");
+    const errors = ErrorStore.formErrors("puppy");
     if (!errors[field]) {return; }
 
     const messages = errors[field].map( (errorMsg, i) => {
@@ -71,8 +75,8 @@ const PuppyForm = React.createClass({
       image_url: this.state.image_url
     };
 
-    PuppyAction.createPuppy(puppyData);
-    this.props.close();
+    ErrorActions.clearErrors();
+    PuppyActions.createPuppy(puppyData);
   },
 
   render() {
@@ -85,7 +89,7 @@ const PuppyForm = React.createClass({
             placeholder='Name'
             value={this.state.name}
             onChange={this.update("name")}
-            className='form-input'
+            className='puppy-form-input'
           />
 
           <input
@@ -93,7 +97,7 @@ const PuppyForm = React.createClass({
             placeholder='Breed'
             value={this.state.breed}
             onChange={this.update("breed")}
-            className='form-input'
+            className='puppy-form-input'
           />
 
           <input
@@ -101,7 +105,7 @@ const PuppyForm = React.createClass({
             id='searchTextField'
             type='text'
             placeholder='Enter an Address'
-            className='form-input'
+            className='puppy-form-input'
           />
 
           <input
@@ -109,7 +113,7 @@ const PuppyForm = React.createClass({
             placeholder='Temperament'
             value={this.state.temperament}
             onChange={this.update("temperament")}
-            className='form-input'
+            className='puppy-form-input'
           />
 
           <input
@@ -117,16 +121,16 @@ const PuppyForm = React.createClass({
             placeholder='Price per day'
             value={this.state.price}
             onChange={this.update("price")}
-            className='form-input'
+            className='puppy-form-input'
           />
 
           <textarea
             placeholder='Description'
             value={this.state.description}
             onChange={this.update("description")}
-            className='form-input'
+            className='puppy-form-input'
           />
-        <UploadButton updateUrl={this.updateUrl} />
+        <UploadButton updateUrl={this.updateUrl} buttonName={"Puppy"}/>
         <button type='submit' className='login-form-button'>Add Puppy</button>
         </form>
       </div>

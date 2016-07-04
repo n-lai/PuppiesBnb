@@ -1,9 +1,9 @@
 const PuppyApiUtil = {
-  fetchAllPuppies(bounds, cb) {
+  fetchAllPuppies(params, cb) {
     $.ajax({
       method: 'GET',
       url: '/api/puppies',
-      data: { bounds },
+      data: params,
       success: function(puppies) {
         cb(puppies);
       }
@@ -20,13 +20,15 @@ const PuppyApiUtil = {
     });
   },
 
-  createPuppy(puppy, cb) {
+  createPuppy(puppy, success, error) {
     $.ajax({
       method: 'POST',
       url: '/api/puppies',
       data: { puppy },
-      success: function(puppy) {
-        cb(puppy);
+      success,
+      error(xhr) {
+        const errors = xhr.responseJSON;
+        error("puppy", errors);
       }
     });
   },

@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PuppyStore = require('../stores/puppy_store');
+const FilterStore = require('../stores/filter_store');
 const hashHistory = require('react-router').hashHistory;
 
 const PuppyMap = React.createClass({
@@ -18,31 +19,60 @@ const PuppyMap = React.createClass({
       zoom: 10
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
-    this.listenForMove();
+    this.registerListeners();
     this._onChange();
+
+    this.idleListener = false;
+    this.filterListener = FilterStore.addListener(this.updateParams);
   },
 
   componentWillUnmount() {
     this.puppyListener.remove();
+    this.filterListener.remove();
+    this.idleListener.remove();
   },
 
   componentDidUpdate() {
     this._onChange();
   },
 
-  listenForMove() {
-    const that = this;
-    google.maps.event.addListener(this.map, 'idle', () => {
-      const latLng = this.map.getBounds();
-      const northEast = latLng.getNorthEast();
-      const southWest = latLng.getSouthWest();
+  updateParams() {
+    // if (!this.idleListenerWasSet) {
+    //   this.idleListener = true;
+    //   return;
+    // }
 
-      const bounds = {
-        'northEast': {'lat': northEast.lat(), 'lng': northEast.lng() },
-        'southWest': {'lat': southWest.lat(), 'lng': southWest.lng() }
-      }
-      PuppyActions.fetchAllPuppies(bounds);
-    });
+    const latLng = this.map.getBounds();
+    const northEast = latLng.getNorthEast();
+    const southWest = latLng.getSouthWest();
+
+    const bounds = {
+      'northEast': {'lat': northEast.lat(), 'lng': northEast.lng() },
+      'southWest': {'lat': southWest.lat(), 'lng': southWest.lng() }
+    }
+
+    const params = FilterStore.params();
+    params.bounds = bounds;
+
+    PuppyActions.fetchAllPuppies(params, bounds);
+  },
+
+  registerListeners() {
+    const that = this;
+    // google.maps.event.addListener(this.map, 'idle', () => {
+    //   const latLng = this.map.getBounds();
+    //   const northEast = latLng.getNorthEast();
+    //   const southWest = latLng.getSouthWest();
+    //
+    //   const bounds = {
+    //     'northEast': {'lat': northEast.lat(), 'lng': northEast.lng() },
+    //     'southWest': {'lat': southWest.lat(), 'lng': southWest.lng() }
+    //   }
+    //
+    //   PuppyActions.fetchAllPuppies({}, bounds);
+    // });
+
+    this.idleListener = google.maps.event.addListener(this.map, 'idle', this.updateParams);
 
     google.maps.event.addListener(this.map, 'click', function(event) {
       const location = event.latLng;

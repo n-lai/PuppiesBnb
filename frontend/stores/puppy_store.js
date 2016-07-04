@@ -10,9 +10,9 @@ const _resetAllPuppies = function(puppies) {
 
   puppies.forEach(puppy => {
     _puppies[puppy.id] = puppy;
-    PuppyStore.__emitChange();
   });
 
+  PuppyStore.__emitChange();
 };
 
 const _resetSinglePuppy = function(puppy) {

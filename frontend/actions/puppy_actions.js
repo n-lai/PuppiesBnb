@@ -2,11 +2,12 @@ const PuppyApiUtil = require('../util/puppy_api_util');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const PuppyConstants = require('../constants/puppy_constants');
 const PuppyStore = require('../stores/puppy_store');
-
+const ErrorActions = require('./error_actions');
+const hashHistory = require('react-router').hashHistory;
 
 const PuppyActions = {
-  fetchAllPuppies(bounds) {
-    PuppyApiUtil.fetchAllPuppies(bounds, this.receiveAllPuppies);
+  fetchAllPuppies(params) {
+    PuppyApiUtil.fetchAllPuppies(params, this.receiveAllPuppies);
   },
 
   receiveAllPuppies(puppies) {
@@ -25,10 +26,11 @@ const PuppyActions = {
       actionType: PuppyConstants.PUPPY_RECEIVED,
       puppy: puppy
     });
+
   },
 
-  createPuppy(puppy) {
-    PuppyApiUtil.createPuppy(puppy, this.receivePuppy);
+  createPuppy(puppyData) {
+    PuppyApiUtil.createPuppy(puppyData, this.receivePuppy, ErrorActions.setErrors);
   },
 
   editPuppy(puppy) {

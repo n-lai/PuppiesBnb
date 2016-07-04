@@ -5,6 +5,7 @@ const ErrorStore = require('../stores/error_store');
 const SessionActions = require('../actions/session_actions');
 const ErrorActions = require('../actions/error_actions');
 const hashHistory = require('react-router').hashHistory;
+const UploadButton = require('./upload_button');
 
 const SignupForm = React.createClass({
 
@@ -47,6 +48,10 @@ const SignupForm = React.createClass({
   update(property) {
     return (e) => this.setState({ [property]: e.target.value });
   },
+  
+  updateUrl(url) {
+    this.setState({ image_url: url });
+  },
 
   handleGuestLogin(e) {
     e.preventDefault();
@@ -55,7 +60,7 @@ const SignupForm = React.createClass({
     SessionActions.login({ username: 'guest', password: 'password' });
   },
 
-  handleSubmit(e) {
+  _handleSubmit(e) {
     e.preventDefault();
 
     const userData = {
@@ -75,7 +80,7 @@ const SignupForm = React.createClass({
     return(
         <div>
           { this.fieldErrors("base") }
-          <form onSubmit={this.handleSubmit} className='form'>
+          <form onSubmit={this._handleSubmit} className='form'>
               <input
                 type="text"
                 value={this.state.name}
@@ -108,14 +113,8 @@ const SignupForm = React.createClass({
                 className='form-input'
               />
             <br></br>
-              <input
-                type="text"
-                value={this.state.profile_img_url}
-                placeholder='Profile Picture URL'
-                onChange={this.update("profile_img_url")}
-                className='form-input'
-              />
-            <br></br>
+            <UploadButton updateUrl={this.updateUrl} buttonName={"Profile"}/>
+
             <button className='signup-form-button' type="submit">Sign Up</button>
             <button className='signup-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>
           </form>

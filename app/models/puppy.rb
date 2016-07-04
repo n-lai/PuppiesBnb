@@ -12,16 +12,10 @@ class Puppy < ActiveRecord::Base
     min_lng = bounds['southWest']['lng'].to_f
     max_lng = bounds['northEast']['lng'].to_f
 
-    puppies = Puppy.find_by_sql(<<-SQL)
-      SELECT
-        *
-      FROM
-        puppies
-      WHERE
-        lat BETWEEN #{min_lat} AND #{max_lat}
-      AND
-        lng BETWEEN #{min_lng} AND #{max_lng}
-      SQL
-
+    self.where("lat < ?", max_lat)
+        .where("lat > ?", min_lat)
+        .where("lng > ?", min_lng)
+        .where("lng < ?", max_lng)
   end
+
 end
