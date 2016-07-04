@@ -19,9 +19,6 @@ const SessionActions = {
       actionType: SessionConstants.LOGIN,
       user: user
     });
-    if (SessionStore.currentUser().id) {
-      hashHistory.push("/");
-    }
   },
 
   logout() {
