@@ -33024,143 +33024,20 @@
 	'use strict';
 
 	var React = __webpack_require__(11);
-	var Modal = __webpack_require__(261);
-	var ModalStyles = __webpack_require__(281);
 	var Link = __webpack_require__(9).Link;
-	var SessionStore = __webpack_require__(238);
-	var SessionActions = __webpack_require__(2);
-	var ErrorActions = __webpack_require__(258);
-	var LoginForm = __webpack_require__(237);
-	var SignupForm = __webpack_require__(257);
-	var PuppyForm = __webpack_require__(292);
 	var hashHistory = __webpack_require__(9).hashHistory;
+	var NavBar = __webpack_require__(300);
 
 	var App = React.createClass({
 	  displayName: 'App',
-	  getInitialState: function getInitialState() {
-	    Modal.setAppElement('body');
-	    return { modalIsOpen: false, modal: "" };
-	  },
-	  handleOpenModal: function handleOpenModal(modal) {
-	    this.setState({ modalIsOpen: true, modal: modal });
-	  },
-
-
-	  handleCloseModal: function handleCloseModal() {
-	    this.setState({ modalIsOpen: false });
-	    ErrorActions.clearErrors();
-	  },
-
-	  openSearch: function openSearch() {
-	    hashHistory.push('/api/search');
-	  },
-	  greeting: function greeting() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      return React.createElement(
-	        'hgroup',
-	        { className: 'header-group', __self: this
-	        },
-	        React.createElement(
-	          'h3',
-	          { className: 'header-name', __self: this
-	          },
-	          'Hi, ',
-	          SessionStore.currentUser().name,
-	          '!'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: this.handleOpenModal.bind(this, "Puppy Form"), id: 'puppy-button', __self: this
-	          },
-	          'Add a Puppy'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: this._handleLogout, className: 'logout-button', __self: this
-	          },
-	          'Log Out'
-	        )
-	      );
-	    } else if (!['/login', '/signup'].includes(this.props.location.pathname)) {
-	      return React.createElement(
-	        'nav',
-	        { className: 'login-signup', __self: this
-	        },
-	        React.createElement(
-	          'div',
-	          { className: 'nav-bar-buttons', __self: this
-	          },
-	          React.createElement(
-	            'button',
-	            {
-	              onClick: this.handleOpenModal.bind(this, "Log In"),
-	              id: 'login-button',
-	              __self: this
-	            },
-	            'Log In'
-	          ),
-	          React.createElement(
-	            'button',
-	            {
-	              onClick: this.handleOpenModal.bind(this, "Sign Up"),
-	              id: 'signup-button',
-	              __self: this
-	            },
-	            'Sign Up'
-	          )
-	        )
-	      );
-	    }
-	  },
-	  _handleLogout: function _handleLogout() {
-	    SessionActions.logout();
-	    ErrorActions.clearErrors();
-	    this.setState({ modalIsOpen: false });
-	  },
-	  _handleRoot: function _handleRoot() {
-	    hashHistory.push('/');
-	  },
 	  render: function render() {
-	    var component = void 0;
-	    if (this.state.modal === "Log In") {
-	      component = React.createElement(LoginForm, { close: this.handleCloseModal, __self: this
-	      });
-	    } else if (this.state.modal === "Sign Up") {
-	      component = React.createElement(SignupForm, { close: this.handleCloseModal, __self: this
-	      });
-	    } else if (this.state.modal === "Puppy Form") {
-	      component = React.createElement(PuppyForm, { close: this.handleCloseModal, __self: this
-	      });
-	    }
-	    var modal = void 0;
-
-	    if (this.state.modalIsOpen) {
-	      modal = React.createElement(
-	        Modal,
-	        { isOpen: this.state.modalIsOpen, onRequestClose: this.handleCloseModal, style: ModalStyles, className: 'modal', __self: this
-	        },
-	        component
-	      );
-	    }
-
 	    return React.createElement(
 	      'div',
 	      { className: 'app-container', __self: this
 	      },
-	      React.createElement(
-	        'header',
-	        {
-	          __self: this
-	        },
-	        React.createElement(
-	          'button',
-	          { onClick: this._handleRoot, className: 'logo', __self: this
-	          },
-	          'PuppiesBnb'
-	        ),
-	        this.greeting()
-	      ),
-	      modal,
+	      React.createElement(NavBar, {
+	        __self: this
+	      }),
 	      this.props.children
 	    );
 	  }
@@ -35395,7 +35272,8 @@
 	var ModalStyles = {
 	  overlay: {
 	    position: 'absolute',
-	    background: 'rgba(0, 0, 0, 0.75)'
+	    background: 'rgba(0, 0, 0, 0.75)',
+	    zIndex: '125'
 	  },
 
 	  content: {
@@ -35404,7 +35282,8 @@
 	    top: '8%',
 	    right: '25%',
 	    padding: '20px',
-	    backgroundColor: 'white'
+	    backgroundColor: 'white',
+	    zIndex: '150'
 	  }
 	};
 
@@ -37143,6 +37022,148 @@
 	};
 
 	module.exports = FilterStore;
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var Modal = __webpack_require__(261);
+	var ModalStyles = __webpack_require__(281);
+
+	var LoginForm = __webpack_require__(237);
+	var SignupForm = __webpack_require__(257);
+	var PuppyForm = __webpack_require__(292);
+
+	var SessionStore = __webpack_require__(238);
+	var ErrorActions = __webpack_require__(258);
+
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  getInitialState: function getInitialState() {
+	    Modal.setAppElement('body');
+	    return { modalIsOpen: false, modal: "" };
+	  },
+	  handleOpenModal: function handleOpenModal(modal) {
+	    this.setState({ modalIsOpen: true, modal: modal });
+	  },
+	  handleCloseModal: function handleCloseModal() {
+	    this.setState({ modalIsOpen: false });
+	    ErrorActions.clearErrors();
+	  },
+	  _handleLogout: function _handleLogout() {
+	    SessionActions.logout();
+	    ErrorActions.clearErrors();
+	    this.setState({ modalIsOpen: false });
+	  },
+	  greeting: function greeting() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        'hgroup',
+	        { className: 'header-group', __self: this
+	        },
+	        React.createElement(
+	          'h3',
+	          { className: 'header-name', __self: this
+	          },
+	          'Hi, ',
+	          SessionStore.currentUser().name,
+	          '!'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleOpenModal.bind(this, "Puppy Form"), id: 'puppy-button', __self: this
+	          },
+	          'Add a Puppy'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this._handleLogout, className: 'logout-button', __self: this
+	          },
+	          'Log Out'
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'nav',
+	        { className: 'login-signup', __self: this
+	        },
+	        React.createElement(
+	          'div',
+	          { className: 'nav-bar-buttons', __self: this
+	          },
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal.bind(this, "Log In"),
+	              id: 'login-button',
+	              __self: this
+	            },
+	            'Log In'
+	          ),
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal.bind(this, "Sign Up"),
+	              id: 'signup-button',
+	              __self: this
+	            },
+	            'Sign Up'
+	          )
+	        )
+	      );
+	    }
+	  },
+	  searchBar: function searchBar() {},
+	  render: function render() {
+	    var component = void 0;
+	    if (this.state.modal === "Log In") {
+	      component = React.createElement(LoginForm, { close: this.handleCloseModal, __self: this
+	      });
+	    } else if (this.state.modal === "Sign Up") {
+	      component = React.createElement(SignupForm, { close: this.handleCloseModal, __self: this
+	      });
+	    } else if (this.state.modal === "Puppy Form") {
+	      component = React.createElement(PuppyForm, { close: this.handleCloseModal, __self: this
+	      });
+	    }
+	    var modal = void 0;
+
+	    if (this.state.modalIsOpen) {
+	      modal = React.createElement(
+	        Modal,
+	        { isOpen: this.state.modalIsOpen, onRequestClose: this.handleCloseModal, style: ModalStyles, className: 'modal', __self: this
+	        },
+	        component
+	      );
+	    }
+
+	    return React.createElement(
+	      'div',
+	      {
+	        __self: this
+	      },
+	      React.createElement(
+	        'header',
+	        {
+	          __self: this
+	        },
+	        React.createElement(
+	          'button',
+	          { onClick: this._handleRoot, className: 'logo', __self: this
+	          },
+	          'PuppiesBnb'
+	        ),
+	        this.greeting()
+	      ),
+	      modal
+	    );
+	  }
+	});
+
+	module.exports = NavBar;
 
 /***/ }
 /******/ ]);
