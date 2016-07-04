@@ -36111,6 +36111,13 @@
 	      { className: 'search-params', __self: this
 	      },
 	      React.createElement(
+	        'h1',
+	        {
+	          __self: this
+	        },
+	        'Preferences'
+	      ),
+	      React.createElement(
 	        'ul',
 	        {
 	          __self: this

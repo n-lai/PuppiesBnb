@@ -30,6 +30,7 @@ const FilterParams = React.createClass({
     }
     return (
       <div className='search-params'>
+        <h1>Preferences</h1>
         <ul>
           <li>
             <h3>Popular Breeds:</h3>

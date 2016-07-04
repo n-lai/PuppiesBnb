@@ -14,8 +14,6 @@
 
  */
 
-
-
 html, body {
   height: 100%;
   width: 100%;
@@ -322,7 +320,19 @@ li.errors {
 .search-params li {
   padding: 10px, 0;
   display: flex;
-  justify-content: space-between;
   margin: 10px;
   position: relative;
+}
+
+.breed-dropdown {
+  border: 1px solid #ff5a5f;
+}
+
+li h3 {
+  margin-right: 40px
+}
+
+.search-params h1 {
+  text-align: center;
+  font-size: 25px;
 }
