@@ -37,7 +37,6 @@ const PuppyForm = React.createClass({
   },
 
   redirectIfPuppyMade() {
-    debugger
     this.props.close();
   },
 

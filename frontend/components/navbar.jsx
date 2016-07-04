@@ -6,6 +6,8 @@ const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');
 const PuppyForm = require ('./puppy_form');
 
+const SearchBar = require('./search_bar');
+
 const SessionStore = require('../stores/session_store');
 const ErrorActions = require('../actions/error_actions');
 
@@ -59,9 +61,6 @@ const NavBar = React.createClass({
     }
   },
 
-  searchBar() {
-
-  },
 
   render() {
     let component;
@@ -86,6 +85,7 @@ const NavBar = React.createClass({
       <div>
         <header>
           <button onClick={this._handleRoot} className='logo'>PuppiesBnb</button>
+          <SearchBar />
           { this.greeting() }
         </header>
         {modal}

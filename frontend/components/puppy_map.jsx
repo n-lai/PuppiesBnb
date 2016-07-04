@@ -15,7 +15,7 @@ const PuppyMap = React.createClass({
 
     const mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
     const mapOptions = {
-      center: {lat: 37.7758, lng: -122.435}, // this is SF
+      center: { lat: 37.7758, lng: -122.435 }, // this is SF
       zoom: 10
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
@@ -59,19 +59,6 @@ const PuppyMap = React.createClass({
 
   registerListeners() {
     const that = this;
-    // google.maps.event.addListener(this.map, 'idle', () => {
-    //   const latLng = this.map.getBounds();
-    //   const northEast = latLng.getNorthEast();
-    //   const southWest = latLng.getSouthWest();
-    //
-    //   const bounds = {
-    //     'northEast': {'lat': northEast.lat(), 'lng': northEast.lng() },
-    //     'southWest': {'lat': southWest.lat(), 'lng': southWest.lng() }
-    //   }
-    //
-    //   PuppyActions.fetchAllPuppies({}, bounds);
-    // });
-
     this.idleListener = google.maps.event.addListener(this.map, 'idle', this.updateParams);
 
     google.maps.event.addListener(this.map, 'click', function(event) {

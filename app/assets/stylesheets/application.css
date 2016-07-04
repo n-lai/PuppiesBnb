@@ -112,7 +112,6 @@ li.errors {
 
 .caption {
   position: relative;
-  /* bottom: 50%; */
 }
 
 .puppy-index-info {
@@ -257,9 +256,6 @@ li.errors {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  /* left: 0%; */
-  /* top: 210%; */
-  /* bottom: 25%; */
 }
 
 .upload-form {
@@ -272,7 +268,6 @@ li.errors {
 }
 
 .slider {
-  /* margin-top: 10px; */
   height: 20px;
   width: 100%;
   background-color: #ff5a5f;
@@ -281,7 +276,6 @@ li.errors {
 }
 
 .my-handle {
-  /*margin-top: 5px;*/
   z-index: 100;
   background-color: white;
   height: 30px;
@@ -304,4 +298,22 @@ li.errors {
 
 .index-params {
   width: 50%;
+}
+
+.search-location-bar {
+  height: 20px;
+  font-size: 16px;
+  padding: 10px 0px;
+  /*border-radius: 2px;*/
+  /*border: 1px solid #c4c4c4;*/
+  width: 100%;
+  margin: 10px 0px;
+}
+
+.search-bar-container {
+  flex-grow: 2;
+  box-sizing: border-box;
+  margin: 0px 20px;
+  padding: 10px 0px;
+  border: 3px solid #c4x4x4;
 }

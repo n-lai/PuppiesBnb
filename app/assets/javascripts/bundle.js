@@ -35794,19 +35794,6 @@
 	  },
 	  registerListeners: function registerListeners() {
 	    var that = this;
-	    // google.maps.event.addListener(this.map, 'idle', () => {
-	    //   const latLng = this.map.getBounds();
-	    //   const northEast = latLng.getNorthEast();
-	    //   const southWest = latLng.getSouthWest();
-	    //
-	    //   const bounds = {
-	    //     'northEast': {'lat': northEast.lat(), 'lng': northEast.lng() },
-	    //     'southWest': {'lat': southWest.lat(), 'lng': southWest.lng() }
-	    //   }
-	    //
-	    //   PuppyActions.fetchAllPuppies({}, bounds);
-	    // });
-
 	    this.idleListener = google.maps.event.addListener(this.map, 'idle', this.updateParams);
 
 	    google.maps.event.addListener(this.map, 'click', function (event) {
@@ -35925,7 +35912,6 @@
 	    this.errorListener.remove();
 	  },
 	  redirectIfPuppyMade: function redirectIfPuppyMade() {
-	    debugger;
 	    this.props.close();
 	  },
 	  fieldErrors: function fieldErrors(field) {
@@ -37037,6 +37023,8 @@
 	var SignupForm = __webpack_require__(257);
 	var PuppyForm = __webpack_require__(292);
 
+	var SearchBar = __webpack_require__(301);
+
 	var SessionStore = __webpack_require__(238);
 	var ErrorActions = __webpack_require__(258);
 
@@ -37116,7 +37104,6 @@
 	      );
 	    }
 	  },
-	  searchBar: function searchBar() {},
 	  render: function render() {
 	    var component = void 0;
 	    if (this.state.modal === "Log In") {
@@ -37156,6 +37143,9 @@
 	          },
 	          'PuppiesBnb'
 	        ),
+	        React.createElement(SearchBar, {
+	          __self: this
+	        }),
 	        this.greeting()
 	      ),
 	      modal
@@ -37164,6 +37154,49 @@
 	});
 
 	module.exports = NavBar;
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+
+	var SearchBar = React.createClass({
+	  displayName: 'SearchBar',
+	  getInitialState: function getInitialState() {
+	    return { lat: 37.7758, lng: -122.435 };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var input = document.getElementById('searchTextField');
+	    var autocomplete = new google.maps.places.Autocomplete(input);
+	    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', function () {
+	      var address = autocomplete.getPlace();
+	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
+	    });
+	  },
+	  componentDidUnmount: function componentDidUnmount() {
+	    this.autocompleteListener.remove();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'search-bar-container', __self: this
+	      },
+	      React.createElement('input', {
+	        ref: 'searchField',
+	        id: 'searchTextField',
+	        type: 'text',
+	        placeholder: 'Search By Address',
+	        className: 'search-location-bar',
+	        __self: this
+	      })
+	    );
+	  }
+	});
+
+	module.exports = SearchBar;
 
 /***/ }
 /******/ ]);
