@@ -7,33 +7,34 @@ const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
 const HashHistory = ReactRouter.hashHistory;
 
-const LoginForm = require('./components/login_form');
-const SignupForm = require('./components/signup_form');
-const App = require('./components/app');
+const LandingPage = require('./components/landing_page');
 const Search = require('./components/search');
-
-const SessionApiUtil = require('./util/session_api_util');
 const SessionActions = require('./actions/session_actions');
+const NavBar = require('./components/navbar');
 
-const PuppyStore = require('./stores/puppy_store');
-const PuppyActions = require('./actions/puppy_actions');
 const PuppyIndex = require('./components/puppy_index');
 const PuppyDetail = require('./components/puppy_detail');
+
+const App = React.createClass({
+  render() {
+    return (
+      <div>
+        <NavBar />
+        {this.props.children}
+      </div>
+    )
+  }
+});
 
 const appRouter = (
   <Router history={ HashHistory }>
     <Route path='/' component={ App }>
-      <IndexRoute component={Search} />
+      <IndexRoute component={LandingPage} />
       <Route path='/api/puppies' component={Search}/>
       <Route path='/api/puppies/:puppyId' component={PuppyDetail}/>
     </Route>
   </Router>
 );
-
-window.SessionApiUtil = SessionApiUtil;
-window.SessionActions = SessionActions;
-window.PuppyStore = PuppyStore;
-window.PuppyActions = PuppyActions;
 
 
 document.addEventListener('DOMContentLoaded', () => {

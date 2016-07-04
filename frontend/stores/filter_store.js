@@ -5,6 +5,7 @@ const FilterConstants = require('../constants/filter_constants');
 const FilterStore = new Store(AppDispatcher);
 
 let _params = {
+  location: "",
   price: { minPrice: 0, maxPrice: 100000 }
 };
 

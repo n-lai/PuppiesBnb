@@ -55,18 +55,29 @@
 	var IndexRoute = ReactRouter.IndexRoute;
 	var HashHistory = ReactRouter.hashHistory;
 
-	var LoginForm = __webpack_require__(237);
-	var SignupForm = __webpack_require__(257);
-	var App = __webpack_require__(256);
+	var LandingPage = __webpack_require__(302);
 	var Search = __webpack_require__(289);
-
-	var SessionApiUtil = __webpack_require__(1);
 	var SessionActions = __webpack_require__(2);
+	var NavBar = __webpack_require__(300);
 
-	var PuppyStore = __webpack_require__(282);
-	var PuppyActions = __webpack_require__(284);
 	var PuppyIndex = __webpack_require__(286);
 	var PuppyDetail = __webpack_require__(288);
+
+	var App = React.createClass({
+	  displayName: 'App',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      {
+	        __self: this
+	      },
+	      React.createElement(NavBar, {
+	        __self: this
+	      }),
+	      this.props.children
+	    );
+	  }
+	});
 
 	var appRouter = React.createElement(
 	  Router,
@@ -76,7 +87,7 @@
 	    Route,
 	    { path: '/', component: App, __self: undefined
 	    },
-	    React.createElement(IndexRoute, { component: Search, __self: undefined
+	    React.createElement(IndexRoute, { component: LandingPage, __self: undefined
 	    }),
 	    React.createElement(Route, { path: '/api/puppies', component: Search, __self: undefined
 	    }),
@@ -84,11 +95,6 @@
 	    })
 	  )
 	);
-
-	window.SessionApiUtil = SessionApiUtil;
-	window.SessionActions = SessionActions;
-	window.PuppyStore = PuppyStore;
-	window.PuppyActions = PuppyActions;
 
 	document.addEventListener('DOMContentLoaded', function () {
 	  if (window.currentUser) {
@@ -33018,34 +33024,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(11);
-	var Link = __webpack_require__(9).Link;
-	var hashHistory = __webpack_require__(9).hashHistory;
-	var NavBar = __webpack_require__(300);
-
-	var App = React.createClass({
-	  displayName: 'App',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'app-container', __self: this
-	      },
-	      React.createElement(NavBar, {
-	        __self: this
-	      }),
-	      this.props.children
-	    );
-	  }
-	});
-
-	module.exports = App;
-
-/***/ },
+/* 256 */,
 /* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35707,6 +35686,7 @@
 	var Search = React.createClass({
 	  displayName: 'Search',
 	  render: function render() {
+	    FilterParams.location = window.location;
 	    return React.createElement(
 	      'div',
 	      { className: 'search', __self: this
@@ -35723,6 +35703,8 @@
 	        })
 	      ),
 	      React.createElement(PuppyMap, {
+	        lat: parseFloat(this.props.location.query.lat),
+	        lng: parseFloat(this.props.location.query.lng),
 	        __self: this
 	      })
 	    );
@@ -35740,6 +35722,7 @@
 	var React = __webpack_require__(11);
 	var ReactDOM = __webpack_require__(107);
 	var PuppyStore = __webpack_require__(282);
+	var PuppyActions = __webpack_require__(284);
 	var FilterStore = __webpack_require__(299);
 	var hashHistory = __webpack_require__(9).hashHistory;
 
@@ -35754,14 +35737,20 @@
 
 	    var mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
 	    var mapOptions = {
-	      center: { lat: 37.7758, lng: -122.435 }, // this is SF
-	      zoom: 10
+	      center: { lat: this.props.lat, lng: this.props.lng }, // this is SF
+	      zoom: 11
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    this.registerListeners();
 	    this._onChange();
 
-	    this.idleListener = false;
+	    var that = this;
+
+	    // setTimeout(function() {
+	    // debugger
+	    //  }, 100);
+
+	    this.idleListenerWasSet = false;
 	    this.filterListener = FilterStore.addListener(this.updateParams);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
@@ -35773,11 +35762,12 @@
 	    this._onChange();
 	  },
 	  updateParams: function updateParams() {
+	    // debugger
 	    // if (!this.idleListenerWasSet) {
-	    //   this.idleListener = true;
+	    //   this.idleListenerWasSet = true;
 	    //   return;
 	    // }
-
+	    // debugger
 	    var latLng = this.map.getBounds();
 	    var northEast = latLng.getNorthEast();
 	    var southWest = latLng.getSouthWest();
@@ -35803,6 +35793,12 @@
 	      var coords = { lat: lat, lng: lng };
 
 	      that._handleClick(coords);
+	    });
+
+	    window.autocomplete.addListener('place_changed', function () {
+	      var place = window.autocomplete.getPlace().geometry.location;
+	      that.map.setCenter(place);
+	      that.map.setZoom(12);
 	    });
 	  },
 	  _onChange: function _onChange() {
@@ -36990,6 +36986,7 @@
 	var FilterStore = new Store(AppDispatcher);
 
 	var _params = {
+	  location: "",
 	  price: { minPrice: 0, maxPrice: 100000 }
 	};
 
@@ -37026,6 +37023,7 @@
 	var SearchBar = __webpack_require__(301);
 
 	var SessionStore = __webpack_require__(238);
+	var SessionActions = __webpack_require__(2);
 	var ErrorActions = __webpack_require__(258);
 
 	var NavBar = React.createClass({
@@ -37162,6 +37160,7 @@
 	'use strict';
 
 	var React = __webpack_require__(11);
+	var hashHistory = __webpack_require__(9).hashHistory;
 
 	var SearchBar = React.createClass({
 	  displayName: 'SearchBar',
@@ -37169,34 +37168,69 @@
 	    return { lat: 37.7758, lng: -122.435 };
 	  },
 	  componentDidMount: function componentDidMount() {
+	    var that = this;
 	    var input = document.getElementById('searchTextField');
-	    var autocomplete = new google.maps.places.Autocomplete(input);
-	    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', function () {
-	      var address = autocomplete.getPlace();
+	    window.autocomplete = new google.maps.places.Autocomplete(input);
+	    this.autocompleteListener = google.maps.event.addListener(window.autocomplete, 'place_changed', function () {
+	      var address = window.autocomplete.getPlace();
 	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
+	      hashHistory.push({
+	        pathname: '/api/puppies',
+	        query: { lat: that.state.lat, lng: that.state.lng }
+	      });
+	      document.getElementById('searchTextField').value = '';
 	    });
 	  },
-	  componentDidUnmount: function componentDidUnmount() {
+	  componentWillUnmount: function componentWillUnmount() {
 	    this.autocompleteListener.remove();
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
 	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'search-bar-container', __self: this
 	      },
-	      React.createElement('input', {
-	        ref: 'searchField',
-	        id: 'searchTextField',
-	        type: 'text',
-	        placeholder: 'Search By Address',
-	        className: 'search-location-bar',
-	        __self: this
-	      })
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, __self: this
+	        },
+	        React.createElement('input', {
+	          ref: 'searchField',
+	          id: 'searchTextField',
+	          type: 'text',
+	          placeholder: 'Search By Address',
+	          className: 'search-location-bar',
+	          __self: this
+	        })
+	      )
 	    );
 	  }
 	});
 
 	module.exports = SearchBar;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(11);
+	var Link = __webpack_require__(9).Link;
+	var hashHistory = __webpack_require__(9).hashHistory;
+	var NavBar = __webpack_require__(300);
+
+	var LandingPage = React.createClass({
+	  displayName: 'LandingPage',
+	  render: function render() {
+	    return React.createElement('div', { className: 'landing-page-container', __self: this
+	    });
+	  }
+	});
+
+	module.exports = LandingPage;
 
 /***/ }
 /******/ ]);

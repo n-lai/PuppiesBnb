@@ -9,6 +9,7 @@ const PuppyForm = require ('./puppy_form');
 const SearchBar = require('./search_bar');
 
 const SessionStore = require('../stores/session_store');
+const SessionActions = require('../actions/session_actions');
 const ErrorActions = require('../actions/error_actions');
 
 const NavBar = React.createClass({

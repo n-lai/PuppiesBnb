@@ -3,16 +3,14 @@ const Link = require('react-router').Link;
 const hashHistory = require('react-router').hashHistory;
 const NavBar = require('./navbar');
 
-const App = React.createClass({
+const LandingPage = React.createClass({
 
   render() {
     return (
-      <div className='app-container'>
-        <NavBar />
-        {this.props.children}
+      <div className='landing-page-container'>
       </div>
     );
   }
 });
 
-module.exports = App;
+module.exports = LandingPage;

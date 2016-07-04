@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PuppyStore = require('../stores/puppy_store');
+const PuppyActions = require('../actions/puppy_actions');
 const FilterStore = require('../stores/filter_store');
 const hashHistory = require('react-router').hashHistory;
 
@@ -15,14 +16,20 @@ const PuppyMap = React.createClass({
 
     const mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
     const mapOptions = {
-      center: { lat: 37.7758, lng: -122.435 }, // this is SF
-      zoom: 10
+      center: { lat: this.props.lat, lng: this.props.lng }, // this is SF
+      zoom: 11
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     this.registerListeners();
     this._onChange();
 
-    this.idleListener = false;
+    const that = this;
+
+    // setTimeout(function() {
+      // debugger
+  //  }, 100);
+
+    this.idleListenerWasSet = false;
     this.filterListener = FilterStore.addListener(this.updateParams);
   },
 
@@ -37,11 +44,12 @@ const PuppyMap = React.createClass({
   },
 
   updateParams() {
+    // debugger
     // if (!this.idleListenerWasSet) {
-    //   this.idleListener = true;
+    //   this.idleListenerWasSet = true;
     //   return;
     // }
-
+    // debugger
     const latLng = this.map.getBounds();
     const northEast = latLng.getNorthEast();
     const southWest = latLng.getSouthWest();
@@ -69,6 +77,13 @@ const PuppyMap = React.createClass({
 
       that._handleClick(coords);
     });
+
+    window.autocomplete.addListener('place_changed', function() {
+      var place = window.autocomplete.getPlace().geometry.location;
+      that.map.setCenter(place);
+      that.map.setZoom(12);
+    });
+
 
   },
 

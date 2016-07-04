@@ -5,6 +5,7 @@ const FilterParams = require('./filter_params');
 
 const Search = React.createClass({
   render() {
+    FilterParams.location = window.location;
     return(
       <div className='search'>
         <div className='index-params'>
@@ -12,7 +13,10 @@ const Search = React.createClass({
           <PuppyIndex />
         </div>
 
-        <PuppyMap />
+        <PuppyMap
+          lat={parseFloat(this.props.location.query.lat)}
+          lng={parseFloat(this.props.location.query.lng)}
+        />
       </div>
     );
   }
