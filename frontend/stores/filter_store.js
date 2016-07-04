@@ -6,6 +6,7 @@ const FilterStore = new Store(AppDispatcher);
 
 let _params = {
   location: "",
+  breed: "",
   price: { minPrice: 0, maxPrice: 100000 }
 };
 
@@ -18,6 +19,10 @@ FilterStore.__onDispatch = function(payload) {
     case FilterConstants.PRICES:
       _params.price.minPrice = payload.prices[0];
       _params.price.maxPrice = payload.prices[1];
+      FilterStore.__emitChange();
+      break;
+    case FilterConstants.BREED:
+      _params.breed = payload.breed;
       FilterStore.__emitChange();
       break;
   }

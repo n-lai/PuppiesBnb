@@ -7,11 +7,15 @@ const FilterActions = require('../actions/filter_actions');
 const FilterParams = React.createClass({
   getInitialState() {
     return {
-      lat: 0,
-      lng: 0,
+      breed: "",
       min: 0,
       max: 100
     };
+  },
+
+  updateBreed(e) {
+    this.setState({ breed: e.target.value });
+    FilterActions.updatePuppyBreed(e.target.value);
   },
 
   updatePrices(prices) {
@@ -28,7 +32,22 @@ const FilterParams = React.createClass({
       <div className='search-params'>
         <ul>
           <li>
-            <h3>Filter By Budget</h3>
+            <h3>Popular Breeds:</h3>
+            <select
+              value={this.state.breed}
+              onChange={this.updateBreed}
+              className='breed-dropdown'>
+              <option selected>All</option>
+              <option>Beagle</option>
+              <option>Corgi</option>
+              <option>Golden Retriever</option>
+              <option>German Shepherd</option>
+              <option>Labrador</option>
+              <option>Other</option>
+            </select>
+          </li>
+          <li>
+            <h3>Filter By Budget:</h3>
             <ReactSlider onAfterChange={this.updatePrices} withBars defaultValue={[this.state.min, this.state.max]} className='slider'>
               <div id='left-handle' className='my-handle'>{this.state.min}</div>
               <div id='right-handle' className='my-handle'>{this.state.max + toggleMax}</div>

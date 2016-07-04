@@ -7,6 +7,7 @@ const PuppyActions = require('../actions/puppy_actions');
 const ErrorActions = require('../actions/error_actions');
 const hashHistory = require('react-router').hashHistory;
 const UploadButton = require('./upload_button');
+const SearchBar = require('./search_bar');
 
 const PuppyForm = React.createClass({
   contextTypes: {
@@ -22,9 +23,9 @@ const PuppyForm = React.createClass({
     this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.geocoder = new google.maps.Geocoder();
-    const input = document.getElementById('searchTextField');
+    const input = document.getElementById('puppyTextField');
     const autocomplete = new google.maps.places.Autocomplete(input);
-    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const address = autocomplete.getPlace();
       that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng()})
     });
@@ -34,6 +35,7 @@ const PuppyForm = React.createClass({
   componentWillUnmount() {
     this.puppyListener.remove();
     this.errorListener.remove();
+    this.autocompleteListener.remove();
   },
 
   redirectIfPuppyMade() {
@@ -101,7 +103,7 @@ const PuppyForm = React.createClass({
 
           <input
             ref='searchField'
-            id='searchTextField'
+            id='puppyTextField'
             type='text'
             placeholder='Enter an Address'
             className='puppy-form-input'

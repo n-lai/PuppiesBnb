@@ -35746,10 +35746,6 @@
 
 	    var that = this;
 
-	    // setTimeout(function() {
-	    // debugger
-	    //  }, 100);
-
 	    this.idleListenerWasSet = false;
 	    this.filterListener = FilterStore.addListener(this.updateParams);
 	  },
@@ -35880,6 +35876,7 @@
 	var ErrorActions = __webpack_require__(258);
 	var hashHistory = __webpack_require__(9).hashHistory;
 	var UploadButton = __webpack_require__(294);
+	var SearchBar = __webpack_require__(301);
 
 	var PuppyForm = React.createClass({
 	  displayName: 'PuppyForm',
@@ -35896,9 +35893,9 @@
 	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
 	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.geocoder = new google.maps.Geocoder();
-	    var input = document.getElementById('searchTextField');
+	    var input = document.getElementById('puppyTextField');
 	    var autocomplete = new google.maps.places.Autocomplete(input);
-	    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+	    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', function () {
 	      var address = autocomplete.getPlace();
 	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
 	    });
@@ -35906,6 +35903,7 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.puppyListener.remove();
 	    this.errorListener.remove();
+	    this.autocompleteListener.remove();
 	  },
 	  redirectIfPuppyMade: function redirectIfPuppyMade() {
 	    this.props.close();
@@ -35992,7 +35990,7 @@
 	        }),
 	        React.createElement('input', {
 	          ref: 'searchField',
-	          id: 'searchTextField',
+	          id: 'puppyTextField',
 	          type: 'text',
 	          placeholder: 'Enter an Address',
 	          className: 'puppy-form-input',
@@ -36090,11 +36088,14 @@
 	  displayName: 'FilterParams',
 	  getInitialState: function getInitialState() {
 	    return {
-	      lat: 0,
-	      lng: 0,
+	      breed: "",
 	      min: 0,
 	      max: 100
 	    };
+	  },
+	  updateBreed: function updateBreed(e) {
+	    this.setState({ breed: e.target.value });
+	    FilterActions.updatePuppyBreed(e.target.value);
 	  },
 	  updatePrices: function updatePrices(prices) {
 	    this.setState({ min: prices[0], max: prices[1] });
@@ -36124,7 +36125,76 @@
 	            {
 	              __self: this
 	            },
-	            'Filter By Budget'
+	            'Popular Breeds:'
+	          ),
+	          React.createElement(
+	            'select',
+	            {
+	              value: this.state.breed,
+	              onChange: this.updateBreed,
+	              className: 'breed-dropdown', __self: this
+	            },
+	            React.createElement(
+	              'option',
+	              { selected: true, __self: this
+	              },
+	              'All'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'Beagle'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'Corgi'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'Golden Retriever'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'German Shepherd'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'Labrador'
+	            ),
+	            React.createElement(
+	              'option',
+	              {
+	                __self: this
+	              },
+	              'Other'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          {
+	            __self: this
+	          },
+	          React.createElement(
+	            'h3',
+	            {
+	              __self: this
+	            },
+	            'Filter By Budget:'
 	          ),
 	          React.createElement(
 	            ReactSlider,
@@ -36961,7 +37031,12 @@
 	var AppDispatcher = __webpack_require__(3);
 
 	var FilterActions = {
-	  updatePuppyBreed: function updatePuppyBreed(breed) {},
+	  updatePuppyBreed: function updatePuppyBreed(breed) {
+	    AppDispatcher.dispatch({
+	      actionType: FilterConstants.BREED,
+	      breed: breed
+	    });
+	  },
 	  updatePuppyPrices: function updatePuppyPrices(prices) {
 	    AppDispatcher.dispatch({
 	      actionType: FilterConstants.PRICES,
@@ -36999,6 +37074,7 @@
 
 	var _params = {
 	  location: "",
+	  breed: "",
 	  price: { minPrice: 0, maxPrice: 100000 }
 	};
 
@@ -37011,6 +37087,10 @@
 	    case FilterConstants.PRICES:
 	      _params.price.minPrice = payload.prices[0];
 	      _params.price.maxPrice = payload.prices[1];
+	      FilterStore.__emitChange();
+	      break;
+	    case FilterConstants.BREED:
+	      _params.breed = payload.breed;
 	      FilterStore.__emitChange();
 	      break;
 	  }

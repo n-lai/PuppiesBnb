@@ -79,6 +79,7 @@ button {
   border: 1px solid #c4c4c4;
   width: 100%;
   margin: 10px 0px;
+  box-sizing: border-box;
 }
 
 .login-form-button, .signup-form-button {

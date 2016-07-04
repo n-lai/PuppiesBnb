@@ -25,9 +25,6 @@ const PuppyMap = React.createClass({
 
     const that = this;
 
-    // setTimeout(function() {
-      // debugger
-  //  }, 100);
 
     this.idleListenerWasSet = false;
     this.filterListener = FilterStore.addListener(this.updateParams);

@@ -14,6 +14,17 @@ class Api::PuppiesController < ApplicationController
         @puppies = @puppies.where("price > ? AND price < ?", Integer(price_params[:minPrice]), Integer(price_params[:maxPrice]))
       end
     end
+
+    if breed_params != '' && breed_params != 'All'
+      if (breed_params == 'Other')
+        @puppies = @puppies.where(
+          "breed NOT IN ('german shepherd', 'corgi', 'golden retriever', 'labrador', 'beagle')"
+          )
+      else
+        @puppies = @puppies.where("breed LIKE ?", breed_params.downcase)
+      end
+    end
+
     render json: @puppies
   end
 
@@ -61,5 +72,9 @@ class Api::PuppiesController < ApplicationController
 
   def price_params
     params[:price]
+  end
+
+  def breed_params
+    params[:breed]
   end
 end

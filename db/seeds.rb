@@ -58,7 +58,7 @@ Puppy.create({
     name: 'Duke',
     image_url: 'http://www.golden-retriever.com/wp-content/uploads/2015/07/cute-baby-golden-retriever-puppiescute-puppy-golden-retrievers-photo-23976164-fanpop-pet-care-8teqauxk.jpg',
     temperament: 'hyper',
-    breed: 'golden retreiver',
+    breed: 'golden retriever',
     description: "Extremely friendly, very active, loves to cuddle",
     owner_id: 1,
     price: 75,

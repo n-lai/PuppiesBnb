@@ -5,7 +5,10 @@ const AppDispatcher = require('../dispatcher/dispatcher');
 
 const FilterActions = {
   updatePuppyBreed(breed) {
-
+    AppDispatcher.dispatch({
+      actionType: FilterConstants.BREED,
+      breed: breed
+    });
   },
 
   updatePuppyPrices(prices) {
