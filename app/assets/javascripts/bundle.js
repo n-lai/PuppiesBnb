@@ -36110,27 +36110,39 @@
 	      { className: 'search-params', __self: this
 	      },
 	      React.createElement(
-	        'h3',
+	        'ul',
 	        {
 	          __self: this
 	        },
-	        'Filter By Budget'
-	      ),
-	      React.createElement(
-	        ReactSlider,
-	        { onAfterChange: this.updatePrices, withBars: true, defaultValue: [this.state.min, this.state.max], className: 'slider', __self: this
-	        },
 	        React.createElement(
-	          'div',
-	          { id: 'left-handle', className: 'my-handle', __self: this
+	          'li',
+	          {
+	            __self: this
 	          },
-	          this.state.min
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'right-handle', className: 'my-handle', __self: this
-	          },
-	          this.state.max + toggleMax
+	          React.createElement(
+	            'h3',
+	            {
+	              __self: this
+	            },
+	            'Filter By Budget'
+	          ),
+	          React.createElement(
+	            ReactSlider,
+	            { onAfterChange: this.updatePrices, withBars: true, defaultValue: [this.state.min, this.state.max], className: 'slider', __self: this
+	            },
+	            React.createElement(
+	              'div',
+	              { id: 'left-handle', className: 'my-handle', __self: this
+	              },
+	              this.state.min
+	            ),
+	            React.createElement(
+	              'div',
+	              { id: 'right-handle', className: 'my-handle', __self: this
+	              },
+	              this.state.max + toggleMax
+	            )
+	          )
 	        )
 	      )
 	    );
@@ -37165,46 +37177,47 @@
 	var SearchBar = React.createClass({
 	  displayName: 'SearchBar',
 	  getInitialState: function getInitialState() {
-	    return { lat: 37.7758, lng: -122.435 };
+	    return { text: 'Search By Location' };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    var that = this;
 	    var input = document.getElementById('searchTextField');
 	    window.autocomplete = new google.maps.places.Autocomplete(input);
-	    this.autocompleteListener = google.maps.event.addListener(window.autocomplete, 'place_changed', function () {
-	      var address = window.autocomplete.getPlace();
-	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
-	      hashHistory.push({
-	        pathname: '/api/puppies',
-	        query: { lat: that.state.lat, lng: that.state.lng }
-	      });
-	      document.getElementById('searchTextField').value = '';
-	    });
+	    this.autocompleteListener = google.maps.event.addListener(window.autocomplete, 'place_changed', this._handleSubmit);
+	    document.getElementById('searchTextField').value = '';
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.autocompleteListener.remove();
 	  },
-	  _handleSubmit: function _handleSubmit(e) {
-	    e.preventDefault();
+	  _handleSubmit: function _handleSubmit() {
+	    var address = window.autocomplete.getPlace();
+
+	    if (!address) {
+	      return;
+	    }
+
+	    var coords = {
+	      lat: address.geometry.location.lat(),
+	      lng: address.geometry.location.lng()
+	    };
+
+	    hashHistory.push({
+	      pathname: '/api/puppies',
+	      query: coords
+	    });
 	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'search-bar-container', __self: this
 	      },
-	      React.createElement(
-	        'form',
-	        { onSubmit: this._handleSubmit, __self: this
-	        },
-	        React.createElement('input', {
-	          ref: 'searchField',
-	          id: 'searchTextField',
-	          type: 'text',
-	          placeholder: 'Search By Address',
-	          className: 'search-location-bar',
-	          __self: this
-	        })
-	      )
+	      React.createElement('input', {
+	        ref: 'searchField',
+	        id: 'searchTextField',
+	        type: 'text',
+	        placeholder: this.state.text,
+	        className: 'search-location-bar',
+	        __self: this
+	      })
 	    );
 	  }
 	});

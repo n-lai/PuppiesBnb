@@ -26,11 +26,15 @@ const FilterParams = React.createClass({
     }
     return (
       <div className='search-params'>
-        <h3>Filter By Budget</h3>
-        <ReactSlider onAfterChange={this.updatePrices} withBars defaultValue={[this.state.min, this.state.max]} className='slider'>
-          <div id='left-handle' className='my-handle'>{this.state.min}</div>
-          <div id='right-handle' className='my-handle'>{this.state.max + toggleMax}</div>
-        </ReactSlider>
+        <ul>
+          <li>
+            <h3>Filter By Budget</h3>
+            <ReactSlider onAfterChange={this.updatePrices} withBars defaultValue={[this.state.min, this.state.max]} className='slider'>
+              <div id='left-handle' className='my-handle'>{this.state.min}</div>
+              <div id='right-handle' className='my-handle'>{this.state.max + toggleMax}</div>
+            </ReactSlider>
+          </li>
+        </ul>
       </div>
     );
   }
