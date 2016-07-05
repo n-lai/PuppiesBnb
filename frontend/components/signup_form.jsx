@@ -30,8 +30,11 @@ const SignupForm = React.createClass({
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
       this.props.close();
-      this.context.router.push("/");
     }
+    hashHistory.push({
+      pathname: '/api/puppies',
+      query: { lat: 37.7749, lng: -122.4194 }
+    });
   },
 
   fieldErrors(field) {
@@ -48,7 +51,7 @@ const SignupForm = React.createClass({
   update(property) {
     return (e) => this.setState({ [property]: e.target.value });
   },
-  
+
   updateUrl(url) {
     this.setState({ image_url: url });
   },

@@ -52,7 +52,7 @@ User.create({
 #     lng: -122.254846
 #   })
 
-puppy_species = ['german_shepherd', 'golden_retriever', 'corgi', 'labrador', 'beagle', 'doberman_pinscher', 'toy_poodle', 'maltese', 'yorkshire_terrier', 'husky']
+puppy_species = ['german shepherd', 'golden_retriever', 'corgi', 'labrador', 'beagle', 'doberman_pinscher', 'toy_poodle', 'maltese', 'yorkshire_terrier', 'husky']
 
 temperament = ['active', 'neutral', 'passive']
 
@@ -65,70 +65,70 @@ description = [
 ]
 
 image_urls = {
-  german_shepherd: [
+  'german shepherd' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741103/rn5iBh-ARszvIsb-QqkDJANrEPcVeGT7lYHIePP5ay1MwoueiK77goSO93S1pnr0ZA_h900_ifh4ni.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741040/163_dr8ymw.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467739323/whitepuppy-5_czr4gr.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467736788/12-Week-Black-German-Shepherd-Puppy_ikldmm.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467676346/eaa850615c4ec815a80211e1fc79cb57_ariifc.jpg'
    ],
-  golden_retriever: [
+  'golden retriever' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741232/Golden-Retriever-Puppy_o2y1mc.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741188/latest_iacnhy.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741172/maxresdefault_mxkgo6.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467737991/maxresdefault_yzhehg.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467676393/cute-baby-golden-retriever-puppiescute-puppy-golden-retrievers-photo-23976164-fanpop-pet-care-8teqauxk_ot93us.jpg'
    ],
-  corgi: [
+  'corgi' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467740952/Pembroke-Welsh-Corgi-Puppies-Lying-Down_zjkokg.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467739566/8526274448_de5a7c894e_b_mgn6ta.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467736870/SqxETOr_blbhga.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467676379/97fc0a5c0f407b3ee217602b0c556ee5_oeojrh.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467676277/DSCN0520_lv89yb.jpg'
    ],
-  labrador: [
+  'labrador' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741286/happy-labrador_u6w7pn.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741307/Labrador-Retriever-Puppy_unqbog.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741358/labrador-puppy_rgdupe.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741398/yellow-labrador-puppy-garden_kusm03.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741421/labrador-retrievers-most-popular-purebred-in-america_o3giml.jpg'
    ],
-  beagle: [
+  'beagle'=> [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741491/shutterstock_167095736_hm9bvh.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741483/185065-849x565-beagle-puppy-on-the-beach_lichoq.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741473/2651-fe45ba4415c9e5f9bf891ad1951a2ebe_rqtty5.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467739494/l-Adorable-cute-beagle-puppy-in-hands_o5urds.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467738132/i5yrGuU_xk2ehv.jpg'
    ],
-  doberman_pinscher: [
+  'doberman_pinscher' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741751/Doberman-Pinscher-Beagle-Mix-Puppy-Pictures_swab0z.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741728/2562263721_e8d175cbd5_y9wwwb.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741721/doberman-pinscher-puppy-photo_rwmbns.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741680/doberman-doberman-pinscher-puppies-breed_nf3ylc.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741639/shutterstock_111725009_lrveqf.jpg'
    ],
-  toy_poodle: [
+  'toy poodle' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741845/coffee_poodle03.jpg_w450_yjchje.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741833/article-2305310-192703C7000005DC-123_634x560_donoaw.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741805/brown-toy-poodle-puppies_ivxmvg.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741795/poodle-328-b_vewbvs.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741790/poodle-toy-poodle-puppy-shoot-breed_bwtjrt.jpg'
    ],
-  maltese: [
+  'maltese' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741872/Maltese_v6fs6q.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741916/latest_fzzjjr.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741909/lovely_white_puppy_dog_83181_k78ife.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741897/8589130485031-maltese-puppy-wallpaper-hd_pj0gty.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741883/Cuddly-Fluffy-Maltese-Puppy-cute-puppies-13986010-700-525_in3rsk.jpg'
    ],
-  yorkshire_terrier: [
+  'yorkshire terrier' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467742037/22_zjx7jp.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741991/yorkshire_terrier_puppy_2-1680x1050_xuzd0p.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741972/yorkshire-terrier-puppy-1239-2560x1600_yne8s9.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741958/425530-Kycb_ff4i64.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467741944/yorkshire-yorkshire-terrier-puppies-boy-left-warrington-breed_ahhxt8.jpg'
    ],
-  husky: [
+  'husky' => [
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467742201/Husky-Puppy_u6nhrj.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467742328/husky-puppy-waldek-dabrowski_y3t1qv.jpg',
     'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467742269/happy-husky-pup_e09cei.jpg',

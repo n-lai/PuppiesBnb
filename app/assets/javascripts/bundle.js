@@ -35301,8 +35301,11 @@
 	  redirectIfLoggedIn: function redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      this.props.close();
-	      this.context.router.push("/");
 	    }
+	    hashHistory.push({
+	      pathname: '/api/puppies',
+	      query: { lat: 37.7749, lng: -122.4194 }
+	    });
 	  },
 	  fieldErrors: function fieldErrors(field) {
 	    var _this = this;

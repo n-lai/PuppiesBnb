@@ -255,8 +255,9 @@ li.errors {
 
 .puppy-index-details {
   display: flex;
-  justify-content: space-between;
   position: absolute;
+  width: 100%;
+  padding: 5px 0 0 10px;
 }
 
 .upload-form {
