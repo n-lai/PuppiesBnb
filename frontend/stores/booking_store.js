@@ -44,4 +44,18 @@ BookingStore.all = function() {
   return bookings;
 };
 
+BookingStore.booked = function(puppyId) {
+  let hasBooked = false;
+
+  for (let id in _bookings) {
+    if (_bookings.hasOwnProperty(id)) {
+      if (_bookings[id].puppy_id === puppyId) {
+        hasBooked = true;
+      }
+    }
+  }
+
+  hasBooked = true;
+};
+
 module.exports = BookingStore;

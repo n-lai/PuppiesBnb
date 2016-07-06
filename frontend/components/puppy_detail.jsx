@@ -1,16 +1,21 @@
 const React = require('react');
 const PuppyStore = require('../stores/puppy_store');
 const PuppyActions = require('../actions/puppy_actions');
+const BookingForm = require('./booking_form.jsx');
+const BookingStore = require('../stores/booking_store');
+const SessionStore = require('../stores/session_store');
 
 const PuppyDetail = React.createClass({
   getInitialState() {
     const puppyId = parseInt(this.props.params.puppyId);
     const potentialPuppy = PuppyStore.find(puppyId) || {};
-    return { puppy: potentialPuppy }
+    return { puppy: potentialPuppy, user: SessionStore.currentUser() }
   },
 
   componentDidMount() {
     this.puppyListener = PuppyStore.addListener(this._onChange);
+    this.userListener = SessionStore.addListener(this._onLogin);
+    this.bookingListener = BookingStore.addListener(this._onBookingSuccess);
     PuppyActions.fetchPuppy(parseInt(this.props.params.puppyId));
   },
 
@@ -20,12 +25,22 @@ const PuppyDetail = React.createClass({
 
   componentWillUnmount() {
     this.puppyListener.remove();
+    this.userListener.remove();
+    this.bookingListener.remove();
   },
 
   _onChange() {
     const puppyId = parseInt(this.props.params.puppyId);
     const potentialPuppy = PuppyStore.find(puppyId) || {};
     this.setState({ puppy: potentialPuppy });
+  },
+
+  _onLogin() {
+    this.setState({ user: SessionStore.currentUser() });
+  },
+
+  _onBookingSuccess() {
+    console.log('success');
   },
 
   render() {
@@ -42,7 +57,9 @@ const PuppyDetail = React.createClass({
               <h2 className='puppy-detail-name'>{puppy.name}</h2>
               <h3 className='puppy-detail-breed'>{puppy.breed}</h3>
             </div>
-            <div className='booking-form'></div>
+            <div className='booking-form-container'>
+              <BookingForm puppy={this.state.puppy}/>
+            </div>
           </div>
         </div>
 

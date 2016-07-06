@@ -1,6 +1,7 @@
 const AppDispatcher = require('../dispatcher/dispatcher');
 const BookingConstants = require('../constants/booking_constants');
 const BookingApiUtil = require('../util/booking_api_util');
+const ErrorActions = require('./error_actions');
 
 const BookingActions = {
   fetchAllBookings(id) {
@@ -12,6 +13,10 @@ const BookingActions = {
       actionType: BookingConstants.BOOKINGS_RECEIVED,
       bookings: bookings
     });
+  },
+
+  createBooking(bookingData, success) {
+    BookingApiUtil.createBooking(bookingData, success, ErrorActions.setErrors)
   },
 
   deleteBooking(id) {
