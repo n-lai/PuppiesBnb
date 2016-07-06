@@ -15,6 +15,14 @@ const NavBar = require('./components/navbar');
 const PuppyIndex = require('./components/puppy_index');
 const PuppyDetail = require('./components/puppy_detail');
 
+const BookingActions = require('./actions/booking_actions');
+const BookingApiUtil = require('./util/booking_api_util');
+const BookingStore = require('./stores/booking_store');
+
+window.bookingStore = BookingStore;
+window.bookingActions = BookingActions;
+window.BookingApiUtil = BookingApiUtil;
+
 const App = React.createClass({
   render() {
     return (

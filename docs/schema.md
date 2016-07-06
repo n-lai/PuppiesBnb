@@ -24,7 +24,7 @@ description | text      | not null
 rating      | integer   | not null
 
 
-## rentals
+## bookings
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key

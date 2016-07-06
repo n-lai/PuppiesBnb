@@ -63,6 +63,14 @@
 	var PuppyIndex = __webpack_require__(294);
 	var PuppyDetail = __webpack_require__(299);
 
+	var BookingActions = __webpack_require__(300);
+	var BookingApiUtil = __webpack_require__(302);
+	var BookingStore = __webpack_require__(303);
+
+	window.bookingStore = BookingStore;
+	window.bookingActions = BookingActions;
+	window.BookingApiUtil = BookingApiUtil;
+
 	var App = React.createClass({
 	  displayName: 'App',
 	  render: function render() {
@@ -37331,6 +37339,150 @@
 	});
 
 	module.exports = PuppyDetail;
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(255);
+	var BookingConstants = __webpack_require__(301);
+	var BookingApiUtil = __webpack_require__(302);
+
+	var BookingActions = {
+	  fetchAllBookings: function fetchAllBookings(id) {
+	    BookingApiUtil.fetchUserBookings(id, this.receiveBookings);
+	  },
+	  receiveBookings: function receiveBookings(bookings) {
+	    AppDispatcher.dispatch({
+	      actionType: BookingConstants.BOOKINGS_RECEIVED,
+	      bookings: bookings
+	    });
+	  },
+	  deleteBooking: function deleteBooking(id) {
+	    BookingApiUtil.deleteBooking(id, this.removeBooking);
+	  },
+	  removeBooking: function removeBooking(booking) {
+	    AppDispatcher.dispatch({
+	      actionType: BookingConstants.BOOKING_REMOVED,
+	      booking: booking
+	    });
+	  }
+	};
+
+	module.exports = BookingActions;
+
+/***/ },
+/* 301 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var BookingConstants = {
+	  BOOKINGS_RECEIVED: 'BOOKINGS_RECEIVED',
+	  BOOKING_REMOVED: 'BOOKING_REMOVED'
+	};
+
+	module.exports = BookingConstants;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var BookingApiUtil = {
+	  fetchUserBookings: function fetchUserBookings(id, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/bookings-renter',
+	      data: { renter_id: id },
+	      success: function success(response) {
+	        cb(response);
+	      }
+	    });
+	  },
+	  createBooking: function createBooking(booking, cb, _error) {
+	    $.ajax({
+	      method: 'POST',
+	      url: '/api/bookings',
+	      data: { booking: booking },
+	      success: function success(response) {
+	        cb(response);
+	      },
+	      error: function error(xhr) {
+	        var errors = xhr.responseJSON;
+	        _error('booking', errors);
+	      }
+	    });
+	  },
+	  deleteBooking: function deleteBooking(id, cb) {
+	    $.ajax({
+	      method: 'DELETE',
+	      url: '/api/bookings/' + id,
+	      success: function success(response) {
+	        cb(response);
+	      }
+	    });
+	  }
+	};
+
+	module.exports = BookingApiUtil;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(255);
+	var Store = __webpack_require__(259).Store;
+	var BookingConstants = __webpack_require__(301);
+
+	var BookingStore = new Store(AppDispatcher);
+
+	var _bookings = {};
+
+	var _resetAllBookings = function _resetAllBookings(bookings) {
+	  _bookings = {};
+
+	  bookings.forEach(function (booking) {
+	    _bookings[booking.id] = booking;
+	  });
+
+	  BookingStore.__emitChange();
+	};
+
+	var _removeBooking = function _removeBooking(booking) {
+	  delete _bookings[booking.id];
+	  BookingStore.__emitChange();
+	};
+
+	BookingStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case BookingConstants.BOOKINGS_RECEIVED:
+	      _resetAllBookings(payload.bookings);
+	      break;
+	    case BookingConstants.BOOKING_REMOVED:
+	      _removeBooking(payload.booking);
+	      break;
+	  }
+	};
+
+	BookingStore.all = function () {
+	  var bookings = [];
+
+	  for (var id in _bookings) {
+	    if (_bookings.hasOwnProperty(id)) {
+	      bookings.push(_bookings[id]);
+	    }
+	  }
+
+	  return bookings;
+	};
+
+	module.exports = BookingStore;
 
 /***/ }
 /******/ ]);

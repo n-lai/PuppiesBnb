@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     resource :user, only: [:create]
     resource :session, only: [:create, :destroy, :show]
     resources :puppies, except: [:edit, :new]
+    resources :bookings, only: [:create, :destroy]
+    get 'bookings-renter' => 'bookings#renter_index'
   end
 end

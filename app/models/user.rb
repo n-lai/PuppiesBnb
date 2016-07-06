@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
     foreign_key: :owner_id,
     class_name: 'Puppy'
 
+  has_many :bookings,
+    primary_key: :id,
+    foreign_key: :renter_id,
+    class_name: 'Booking'
+
   attr_reader :password
 
   def self.generate_session_token
