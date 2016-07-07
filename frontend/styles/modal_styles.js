@@ -6,9 +6,10 @@ const ModalStyles = {
   },
 
   content: {
-    position: 'fixed',
+    maxWidth: '40.5em',
+    position: 'absolute',
     left: '25%',
-    top: '8%',
+    top: '10%',
     right: '25%',
     padding: '20px',
     backgroundColor: 'white',

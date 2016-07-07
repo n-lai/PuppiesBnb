@@ -28118,9 +28118,10 @@
 	  },
 
 	  content: {
-	    position: 'fixed',
+	    maxWidth: '40.5em',
+	    position: 'absolute',
 	    left: '25%',
-	    top: '8%',
+	    top: '10%',
 	    right: '25%',
 	    padding: '20px',
 	    backgroundColor: 'white',
@@ -37324,21 +37325,21 @@
 	    var _this = this;
 
 	    var puppy = this.state.puppy;
-	    var puppyImage = puppy.image_url;
 
+	    if (Object.keys(puppy).length === 0 && puppy.constructor === Object) {
+	      return React.createElement('div', {
+	        __self: this
+	      });
+	    }
+
+	    var breed = puppy.breed.replace(/_/, ' ');
+	    var puppyImage = puppy.image_url;
 	    var style = {
 	      backgroundImage: 'url(' + puppyImage + ')',
 	      backgroundRepeat: 'no-repeat',
 	      backgroundSize: 'cover',
 	      backgroundPosition: 'center'
-
 	    };
-
-	    if (puppy === undefined) {
-	      return React.createElement('div', {
-	        __self: this
-	      });
-	    }
 
 	    return React.createElement(
 	      'div',
@@ -37383,7 +37384,7 @@
 	              'h3',
 	              { className: 'puppy-detail-breed', __self: this
 	              },
-	              puppy.breed
+	              breed
 	            )
 	          )
 	        ),
@@ -37415,6 +37416,41 @@
 	              })
 	            );
 	          }),
+	          React.createElement(
+	            'div',
+	            {
+	              __self: this
+	            },
+	            React.createElement(
+	              'h1',
+	              {
+	                __self: this
+	              },
+	              'prices'
+	            ),
+	            React.createElement(
+	              'span',
+	              {
+	                __self: this
+	              },
+	              'Per Week: $',
+	              puppy.price * 7
+	            ),
+	            React.createElement('br', {
+	              __self: this
+	            }),
+	            React.createElement(
+	              'span',
+	              {
+	                __self: this
+	              },
+	              'Per Month: $',
+	              puppy.price * 30
+	            ),
+	            React.createElement('hr', {
+	              __self: this
+	            })
+	          ),
 	          React.createElement(
 	            'h1',
 	            {

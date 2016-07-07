@@ -46,17 +46,19 @@ const PuppyDetail = React.createClass({
 
   render() {
     const puppy = this.state.puppy;
-    const puppyImage = puppy.image_url;
 
+    if (Object.keys(puppy).length === 0 && puppy.constructor === Object) {
+      return <div></div>;
+    }
+
+    const breed = puppy.breed.replace(/_/, ' ');
+    const puppyImage = puppy.image_url;
     const style = {
       backgroundImage: 'url(' + puppyImage + ')',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-
     };
-
-    if (puppy === undefined ) { return <div></div>; }
 
     return(
       <div className='puppy-detail-container'>
@@ -68,12 +70,11 @@ const PuppyDetail = React.createClass({
           </div>
         </div>
 
-
         <div className='puppy-detail-bottom'>
           <div className='puppy-details-header'>
             <div className='puppy-basic-info'>
               <h2 className='puppy-detail-name'>{puppy.name}</h2>
-              <h3 className='puppy-detail-breed'>{puppy.breed}</h3>
+              <h3 className='puppy-detail-breed'>{breed}</h3>
             </div>
           </div>
 
@@ -87,6 +88,14 @@ const PuppyDetail = React.createClass({
                 </div>
               );
             })}
+            <div>
+              <h1>prices</h1>
+              <span>Per Week: ${puppy.price * 7}</span>
+              <br></br>
+              <span>Per Month: ${puppy.price * 30}</span>
+              <hr/>
+            </div>
+
             <h1>reviews </h1>
 
           </div>
