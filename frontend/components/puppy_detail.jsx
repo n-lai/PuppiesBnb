@@ -3,6 +3,7 @@ const PuppyStore = require('../stores/puppy_store');
 const PuppyActions = require('../actions/puppy_actions');
 const BookingForm = require('./booking_form');
 const ReviewForm = require('./review_form');
+const Review = require('./review');
 const BookingStore = require('../stores/booking_store');
 const SessionStore = require('../stores/session_store');
 
@@ -60,6 +61,16 @@ const PuppyDetail = React.createClass({
       backgroundPosition: 'center',
     };
 
+    const reviews = puppy.reviews || [];
+
+    let reviewText = 'no reviews yet';
+
+    if (reviews.length > 0) {
+      reviewText = reviews.map(review => {
+        return <Review key={review.id} review={review} />;
+      });
+    }
+
     return(
       <div className='puppy-detail-container'>
         <div className='puppy-image-container' style={style}>
@@ -94,9 +105,12 @@ const PuppyDetail = React.createClass({
               <br></br>
               <span>Per Month: ${puppy.price * 30}</span>
               <hr/>
+
+              <h1>reviews</h1>
+              <span>{ reviewText }</span>
+              <hr/>
             </div>
 
-            <h1>reviews </h1>
 
           </div>
 

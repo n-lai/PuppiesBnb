@@ -1,9 +1,7 @@
 const React = require('react');
 const ReactSlider = require('react-slider');
 const HashHistory = require('react-router').hashHistory;
-
 const FilterActions = require('../actions/filter_actions');
-
 const FilterParams = React.createClass({
   getInitialState() {
     return {
@@ -50,10 +48,10 @@ const FilterParams = React.createClass({
           </li>
           <li>
             <h3>Filter By Budget:</h3>
-            <ReactSlider onAfterChange={this.updatePrices} withBars defaultValue={[this.state.min, this.state.max]} className='slider'>
-              <div id='left-handle' className='my-handle'>{this.state.min}</div>
-              <div id='right-handle' className='my-handle'>{this.state.max + toggleMax}</div>
-            </ReactSlider>
+              <ReactSlider onAfterChange={this.updatePrices} withBars defaultValue={[this.state.min, this.state.max]} className='slider'>
+                <div id='left-handle' className='my-handle'>{this.state.min}</div>
+                <div id='right-handle' className='my-handle'>{this.state.max + toggleMax}</div>
+              </ReactSlider>
           </li>
         </ul>
       </div>

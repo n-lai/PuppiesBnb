@@ -38,6 +38,8 @@ const BookingForm = React.createClass({
   },
 
   redirectOnSuccess() {
+    this.setState({ formatSubmit: ['booked', 'Booked!'] });
+    document.getElementById('booking-submit-button').disabled = true;
     alert('Congrats, you have booked this puppy!')
   },
 

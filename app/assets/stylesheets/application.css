@@ -151,10 +151,7 @@ li.errors {
   width: 100%;
   background-color: rgba(232, 232, 232, 0.6);
   text-align: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-
+  position: relative;
 }
 
 .puppy-image-container img {
@@ -383,6 +380,15 @@ div .booking-form-dates {
   border: none;
 }
 
+.booking-form-booked {
+  width: 100%;
+  background-color: grey;
+  padding: 15px;
+  color: white;
+  margin-top: 0;
+  border: none;
+}
+
 .puppy-details div h1, .puppy-details h1 {
   font-size: 20px;
   padding: 10px;
@@ -413,6 +419,9 @@ hr {
 
 .booking-form-holder {
   position: absolute;
-  top: 72.5%;
+  top: 90%;
   left: 70%;
+}
+.rheo-slider {
+  width: 100%;
 }

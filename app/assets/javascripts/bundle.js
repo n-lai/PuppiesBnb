@@ -36301,9 +36301,7 @@
 	var React = __webpack_require__(1);
 	var ReactSlider = __webpack_require__(297);
 	var HashHistory = __webpack_require__(168).hashHistory;
-
 	var FilterActions = __webpack_require__(298);
-
 	var FilterParams = React.createClass({
 	  displayName: 'FilterParams',
 	  getInitialState: function getInitialState() {
@@ -37286,6 +37284,7 @@
 	var PuppyActions = __webpack_require__(287);
 	var BookingForm = __webpack_require__(304);
 	var ReviewForm = __webpack_require__(412);
+	var Review = __webpack_require__(416);
 	var BookingStore = __webpack_require__(303);
 	var SessionStore = __webpack_require__(254);
 
@@ -37340,6 +37339,17 @@
 	      backgroundSize: 'cover',
 	      backgroundPosition: 'center'
 	    };
+
+	    var reviews = puppy.reviews || [];
+
+	    var reviewText = 'no reviews yet';
+
+	    if (reviews.length > 0) {
+	      reviewText = reviews.map(function (review) {
+	        return React.createElement(Review, { key: review.id, review: review, __self: _this
+	        });
+	      });
+	    }
 
 	    return React.createElement(
 	      'div',
@@ -37449,14 +37459,24 @@
 	            ),
 	            React.createElement('hr', {
 	              __self: this
-	            })
-	          ),
-	          React.createElement(
-	            'h1',
-	            {
+	            }),
+	            React.createElement(
+	              'h1',
+	              {
+	                __self: this
+	              },
+	              'reviews'
+	            ),
+	            React.createElement(
+	              'span',
+	              {
+	                __self: this
+	              },
+	              reviewText
+	            ),
+	            React.createElement('hr', {
 	              __self: this
-	            },
-	            'reviews '
+	            })
 	          )
 	        ),
 	        React.createElement(
@@ -37677,6 +37697,8 @@
 	    document.getElementById('booking-submit-button').disabled = true;
 	  },
 	  redirectOnSuccess: function redirectOnSuccess() {
+	    this.setState({ formatSubmit: ['booked', 'Booked!'] });
+	    document.getElementById('booking-submit-button').disabled = true;
 	    alert('Congrats, you have booked this puppy!');
 	  },
 	  updateStartDate: function updateStartDate(date) {
@@ -52143,6 +52165,52 @@
 	});
 
 	module.exports = ReviewForm;
+
+/***/ },
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Review = React.createClass({
+	  displayName: 'Review',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      {
+	        __self: this
+	      },
+	      React.createElement(
+	        'ul',
+	        {
+	          __self: this
+	        },
+	        React.createElement(
+	          'li',
+	          {
+	            __self: this
+	          },
+	          'Rating: ',
+	          this.props.rating
+	        ),
+	        React.createElement(
+	          'li',
+	          {
+	            __self: this
+	          },
+	          this.props.description
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Review;
 
 /***/ }
 /******/ ]);
