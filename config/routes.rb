@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     resources :puppies, except: [:edit, :new]
     resources :bookings, only: [:create, :destroy]
     get 'bookings-renter' => 'bookings#renter_index'
+    resources :reviews, only: [:create, :destroy]
   end
 end

@@ -26007,6 +26007,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(168).hashHistory;
 	var Modal = __webpack_require__(232);
 	var ModalStyles = __webpack_require__(252);
 
@@ -26037,6 +26038,10 @@
 	    SessionActions.logout();
 	    ErrorActions.clearErrors();
 	    this.setState({ modalIsOpen: false });
+	  },
+	  _handleRoot: function _handleRoot() {
+	    debugger;
+	    HashHistory.push('/');
 	  },
 	  greeting: function greeting() {
 	    if (SessionStore.isUserLoggedIn()) {
@@ -26121,8 +26126,7 @@
 
 	    return React.createElement(
 	      'div',
-	      {
-	        __self: this
+	      { className: 'app', __self: this
 	      },
 	      React.createElement(
 	        'header',
@@ -35783,6 +35787,9 @@
 	      actionType: PuppyConstants.PUPPY_REMOVED,
 	      puppy: puppy
 	    });
+	  },
+	  createReview: function createReview(review) {
+	    PuppyApiUtil.createReview(review, this.receivePuppy);
 	  }
 	};
 
@@ -35842,6 +35849,17 @@
 	      url: '/api/puppies' + id,
 	      success: function success(puppy) {
 	        cb(puppy);
+	      }
+	    });
+	  },
+	  createReview: function createReview(review, cb) {
+	    debugger;
+	    $.ajax({
+	      method: 'POST',
+	      url: '/api/reviews',
+	      data: { review: review },
+	      success: function success(response) {
+	        cb(response);
 	      }
 	    });
 	  }
@@ -37248,6 +37266,7 @@
 	var PuppyStore = __webpack_require__(285);
 	var PuppyActions = __webpack_require__(287);
 	var BookingForm = __webpack_require__(304);
+	var ReviewForm = __webpack_require__(412);
 	var BookingStore = __webpack_require__(303);
 	var SessionStore = __webpack_require__(254);
 
@@ -37301,11 +37320,18 @@
 	        { className: 'puppy-image-container', __self: this
 	        },
 	        React.createElement('img', { src: puppy.image_url, __self: this
-	        })
+	        }),
+	        React.createElement(
+	          'div',
+	          { className: 'booking-form-container', __self: this
+	          },
+	          React.createElement(BookingForm, { puppy: this.state.puppy, __self: this
+	          })
+	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'random', __self: this
+	        { className: 'puppy-detail-bottom', __self: this
 	        },
 	        React.createElement(
 	          'div',
@@ -37327,30 +37353,51 @@
 	              },
 	              puppy.breed
 	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'booking-form-container', __self: this
-	            },
-	            React.createElement(BookingForm, { puppy: this.state.puppy, __self: this
-	            })
 	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'puppy-details', __self: this
-	        },
-	        ['temperament', 'description'].map(function (attr) {
-	          return React.createElement(
-	            'p',
-	            { key: attr, __self: _this
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'puppy-details', __self: this
+	          },
+	          ['temperament', 'description'].map(function (attr) {
+	            return React.createElement(
+	              'div',
+	              {
+	                __self: _this
+	              },
+	              React.createElement(
+	                'h1',
+	                {
+	                  __self: _this
+	                },
+	                attr
+	              ),
+	              React.createElement(
+	                'span',
+	                { key: attr, __self: _this
+	                },
+	                puppy[attr]
+	              ),
+	              React.createElement('hr', {
+	                __self: _this
+	              })
+	            );
+	          }),
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
 	            },
-	            attr,
-	            ': ',
-	            puppy[attr]
-	          );
-	        })
+	            'reviews '
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'review-form-container', __self: this
+	          },
+	          React.createElement(ReviewForm, { puppy: this.state.puppy, __self: this
+	          })
+	        )
 	      )
 	    );
 	  }
@@ -37540,7 +37587,7 @@
 	var BookingForm = React.createClass({
 	  displayName: 'BookingForm',
 	  getInitialState: function getInitialState() {
-	    return { startDate: moment(), endDate: moment(), formatSubmit: ['open', 'Book This Puppy'] };
+	    return { startDate: null, endDate: null, formatSubmit: ['open', 'Book This Puppy'] };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(props) {
 	    this.setState({ bookings: this.props.bookings });
@@ -37561,7 +37608,9 @@
 	    this.setState({ formatSubmit: ['booked', 'Booked!'] });
 	    document.getElementById('booking-submit-button').disabled = true;
 	  },
-	  redirectOnSuccess: function redirectOnSuccess() {},
+	  redirectOnSuccess: function redirectOnSuccess() {
+	    alert('Congrats, you have booked this puppy!');
+	  },
 	  updateStartDate: function updateStartDate(date) {
 	    var currentEnd = this.state.endDate;
 
@@ -37584,7 +37633,7 @@
 	    e.preventDefault();
 
 	    var user = SessionStore.currentUser();
-	    debugger;
+
 	    if (Object.keys(user).length === 0 && user.constructor === Object) {
 	      alert('You must be logged in to book a puppy');
 	      return;
@@ -51898,6 +51947,134 @@
 
 	}));
 
+
+/***/ },
+/* 412 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(254);
+	var PuppyActions = __webpack_require__(287);
+
+	var ReviewForm = React.createClass({
+	  displayName: 'ReviewForm',
+	  getInitialState: function getInitialState() {
+	    return { description: "", rating: null };
+	  },
+	  update: function update(property) {
+	    var _this = this;
+
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
+
+	    var user = SessionStore.currentUser();
+	    debugger;
+	    var reviewData = {
+	      description: this.state.description,
+	      rating: parseInt(this.state.rating),
+	      puppy_id: this.props.puppy.id,
+	      user_id: user.id
+	    };
+
+	    PuppyActions.createReview(reviewData);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'review-form', __self: this
+	      },
+	      React.createElement(
+	        'h1',
+	        {
+	          __self: this
+	        },
+	        'Submit a Review:'
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, __self: this
+	        },
+	        React.createElement(
+	          'select',
+	          {
+	            value: this.state.rating,
+	            onChange: this.update('rating'),
+	            className: 'rating-dropdown', __self: this
+	          },
+	          React.createElement(
+	            'option',
+	            { disabled: true, selected: true, __self: this
+	            },
+	            'Select Your Rating'
+	          ),
+	          React.createElement(
+	            'option',
+	            {
+	              __self: this
+	            },
+	            '1'
+	          ),
+	          React.createElement(
+	            'option',
+	            {
+	              __self: this
+	            },
+	            '2'
+	          ),
+	          React.createElement(
+	            'option',
+	            {
+	              __self: this
+	            },
+	            '3'
+	          ),
+	          React.createElement(
+	            'option',
+	            {
+	              __self: this
+	            },
+	            '4'
+	          ),
+	          React.createElement(
+	            'option',
+	            {
+	              __self: this
+	            },
+	            '5'
+	          )
+	        ),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement('textarea', {
+	          placeholder: 'Write your review here',
+	          value: this.state.description,
+	          onChange: this.update('description'),
+	          __self: this
+	        }),
+	        React.createElement('br', {
+	          __self: this
+	        }),
+	        React.createElement(
+	          'button',
+	          { type: 'submit', __self: this
+	          },
+	          'Submit Review'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ReviewForm;
 
 /***/ }
 /******/ ]);

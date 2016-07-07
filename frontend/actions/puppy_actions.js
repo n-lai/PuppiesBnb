@@ -46,6 +46,10 @@ const PuppyActions = {
       actionType: PuppyConstants.PUPPY_REMOVED,
       puppy: puppy
     });
+  },
+
+  createReview(review) {
+    PuppyApiUtil.createReview(review, this.receivePuppy);
   }
 };
 

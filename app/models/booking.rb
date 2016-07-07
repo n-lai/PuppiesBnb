@@ -16,14 +16,16 @@ class Booking < ActiveRecord::Base
 
   def start_date_validation
     if self.start_date < Date.today
-      errors.add(:start_date, "Start has to be after current date")
+      errors.add(:start_date, 'Start has to be after current date')
     end
   end
 
   def end_date_validation
     if self.end_date < self.start_date
-      errors.add(:end_date, "End Date has to be after start date")
+      errors.add(:end_date, 'End Date has to be after start date')
     end
   end
+
+
 
 end

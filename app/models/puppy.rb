@@ -11,6 +11,11 @@ class Puppy < ActiveRecord::Base
     foreign_key: :puppy_id,
     class_name: 'Booking'
 
+  has_many :reviews,
+    primary_key: :id,
+    foreign_key: :puppy_id,
+    class_name: 'Review'
+
   def self.in_bounds(bounds)
     min_lat = bounds['southWest']['lat'].to_f
     max_lat = bounds['northEast']['lat'].to_f

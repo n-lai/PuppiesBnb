@@ -11,7 +11,7 @@ const BookingActions = require('../actions/booking_actions');
 
 const BookingForm = React.createClass({
   getInitialState() {
-    return { startDate: moment(), endDate: moment(), formatSubmit: ['open', 'Book This Puppy'] };
+    return { startDate: null, endDate: null, formatSubmit: ['open', 'Book This Puppy'] };
   },
 
   componentWillReceiveProps(props) {
@@ -38,6 +38,7 @@ const BookingForm = React.createClass({
   },
 
   redirectOnSuccess() {
+    alert('Congrats, you have booked this puppy!')
   },
 
   updateStartDate(date) {
@@ -65,7 +66,7 @@ const BookingForm = React.createClass({
     e.preventDefault();
 
     const user = SessionStore.currentUser();
-    debugger
+
     if (Object.keys(user).length === 0 && user.constructor === Object) {
       alert('You must be logged in to book a puppy');
       return;

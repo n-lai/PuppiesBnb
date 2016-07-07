@@ -1,7 +1,8 @@
 const React = require('react');
 const PuppyStore = require('../stores/puppy_store');
 const PuppyActions = require('../actions/puppy_actions');
-const BookingForm = require('./booking_form.jsx');
+const BookingForm = require('./booking_form');
+const ReviewForm = require('./review_form');
 const BookingStore = require('../stores/booking_store');
 const SessionStore = require('../stores/session_store');
 
@@ -50,24 +51,38 @@ const PuppyDetail = React.createClass({
       <div className='puppy-detail-container'>
         <div className='puppy-image-container'>
           <img src={puppy.image_url} />
+          <div className='booking-form-container'>
+            <BookingForm puppy={this.state.puppy}/>
+          </div>
         </div>
-        <div className='random'>
+
+        <div className='puppy-detail-bottom'>
           <div className='puppy-details-header'>
             <div className='puppy-basic-info'>
               <h2 className='puppy-detail-name'>{puppy.name}</h2>
               <h3 className='puppy-detail-breed'>{puppy.breed}</h3>
             </div>
-            <div className='booking-form-container'>
-              <BookingForm puppy={this.state.puppy}/>
-            </div>
+          </div>
+
+          <div className='puppy-details'>
+            {['temperament', 'description' ].map((attr) => {
+              return (
+                <div>
+                  <h1>{attr}</h1>
+                  <span key={attr}>{puppy[attr]}</span>
+                  <hr/>
+                </div>
+              );
+            })}
+            <h1>reviews </h1>
+
+          </div>
+
+          <div className='review-form-container'>
+            <ReviewForm puppy={this.state.puppy} />
           </div>
         </div>
 
-        <div className='puppy-details'>
-          {['temperament', 'description' ].map((attr) => {
-            return <p key={attr}>{attr}: {puppy[attr]}</p>;
-          })}
-        </div>
       </div>
     );
   }

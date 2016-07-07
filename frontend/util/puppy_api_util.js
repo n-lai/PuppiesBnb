@@ -52,6 +52,18 @@ const PuppyApiUtil = {
         cb(puppy);
       }
     });
+  },
+
+  createReview(review, cb) {
+    debugger
+    $.ajax({
+      method: 'POST',
+      url: '/api/reviews',
+      data: { review },
+      success(response) {
+        cb(response);
+      }
+    });
   }
 };
 

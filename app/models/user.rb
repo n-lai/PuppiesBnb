@@ -15,6 +15,11 @@ class User < ActiveRecord::Base
     foreign_key: :renter_id,
     class_name: 'Booking'
 
+  has_many :reviews,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: 'Review'
+
   attr_reader :password
 
   def self.generate_session_token

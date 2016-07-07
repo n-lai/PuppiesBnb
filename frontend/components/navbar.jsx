@@ -1,4 +1,5 @@
 const React = require('react');
+const HashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
 
@@ -33,6 +34,10 @@ const NavBar = React.createClass({
     this.setState({ modalIsOpen: false });
   },
 
+  _handleRoot() {
+    debugger
+    HashHistory.push('/');
+  },
 
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
@@ -83,7 +88,7 @@ const NavBar = React.createClass({
     }
 
     return (
-      <div>
+      <div className='app'>
         <header>
           <button onClick={this._handleRoot} className='logo'>PuppiesBnb</button>
           <SearchBar />
