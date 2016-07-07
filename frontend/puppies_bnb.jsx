@@ -35,7 +35,7 @@ window.PuppyStore = PuppyStore;
 const App = React.createClass({
   render() {
     return (
-      <div>
+      <div className='root'>
         <NavBar />
         {this.props.children}
       </div>
