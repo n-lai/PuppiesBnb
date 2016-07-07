@@ -35871,7 +35871,6 @@
 	    });
 	  },
 	  createReview: function createReview(review, cb) {
-	    debugger;
 	    $.ajax({
 	      method: 'POST',
 	      url: '/api/reviews',
@@ -36030,12 +36029,6 @@
 	    this._onChange();
 	  },
 	  updateParams: function updateParams() {
-	    // debugger
-	    // if (!this.idleListenerWasSet) {
-	    //   this.idleListenerWasSet = true;
-	    //   return;
-	    // }
-	    // debugger
 	    var latLng = this.map.getBounds();
 	    var northEast = latLng.getNorthEast();
 	    var southWest = latLng.getSouthWest();
@@ -36274,13 +36267,13 @@
 	          },
 	          React.createElement(
 	            'span',
-	            { className: 'puppy-index-info', id: 'puppy-index-name', __self: this
+	            { className: 'puppy-index-name', __self: this
 	            },
 	            puppy.name
 	          ),
 	          React.createElement(
 	            'span',
-	            { className: 'puppy-index-info', id: 'puppy-index-breed', __self: this
+	            { className: 'puppy-index-breed', __self: this
 	            },
 	            puppy.breed.replace(/_/g, " ")
 	          )
@@ -37348,7 +37341,6 @@
 	    };
 
 	    var reviews = puppy.reviews || [];
-
 	    var reviewText = 'no reviews yet';
 
 	    if (reviews.length > 0) {
@@ -52060,7 +52052,17 @@
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
 	  getInitialState: function getInitialState() {
-	    return { description: "", rating: null };
+	    return { description: "", rating: 'Please select a rating' };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.puppyListener = PuppyStore.addListener(this._clearOnSuccess);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
+	  },
+	  _clearOnSuccess: function _clearOnSuccess() {
+	    this.setState({ description: "", rating: 'Please select a rating' });
+	    document.getElementById('select-form').removeAttribute('selected');
 	  },
 	  update: function update(property) {
 	    var _this = this;
@@ -52072,13 +52074,10 @@
 	  _handleSubmit: function _handleSubmit(e) {
 	    e.preventDefault();
 
-	    var user = SessionStore.currentUser();
-	    debugger;
 	    var reviewData = {
 	      description: this.state.description,
 	      rating: parseInt(this.state.rating),
-	      puppy_id: this.props.puppy.id,
-	      user_id: user.id
+	      puppy_id: this.props.puppy.id
 	    };
 
 	    PuppyActions.createReview(reviewData);
@@ -52103,46 +52102,42 @@
 	          {
 	            value: this.state.rating,
 	            onChange: this.update('rating'),
-	            className: 'rating-dropdown', __self: this
+	            className: 'rating-dropdown',
+	            id: 'select-form', __self: this
 	          },
 	          React.createElement(
 	            'option',
-	            { disabled: true, selected: true, __self: this
+	            { disabled: true, value: 'Please select a rating', __self: this
 	            },
-	            'Select Your Rating'
+	            'Please select a rating'
 	          ),
 	          React.createElement(
 	            'option',
-	            {
-	              __self: this
+	            { value: '1', __self: this
 	            },
 	            '1'
 	          ),
 	          React.createElement(
 	            'option',
-	            {
-	              __self: this
+	            { value: '2', __self: this
 	            },
 	            '2'
 	          ),
 	          React.createElement(
 	            'option',
-	            {
-	              __self: this
+	            { value: '3', __self: this
 	            },
 	            '3'
 	          ),
 	          React.createElement(
 	            'option',
-	            {
-	              __self: this
+	            { value: '4', __self: this
 	            },
 	            '4'
 	          ),
 	          React.createElement(
 	            'option',
-	            {
-	              __self: this
+	            { value: '5', __self: this
 	            },
 	            '5'
 	          )
@@ -52189,8 +52184,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      {
-	        __self: this
+	      { className: 'review', __self: this
 	      },
 	      React.createElement(
 	        'ul',
@@ -52199,20 +52193,21 @@
 	        },
 	        React.createElement(
 	          'li',
-	          {
-	            __self: this
+	          { className: 'rating', __self: this
 	          },
 	          'Rating: ',
-	          this.props.rating
+	          this.props.review.rating
 	        ),
 	        React.createElement(
 	          'li',
-	          {
-	            __self: this
+	          { className: 'description', __self: this
 	          },
-	          this.props.description
+	          this.props.review.description
 	        )
-	      )
+	      ),
+	      React.createElement('hr', {
+	        __self: this
+	      })
 	    );
 	  }
 	});

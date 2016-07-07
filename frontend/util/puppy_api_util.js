@@ -65,7 +65,6 @@ const PuppyApiUtil = {
   },
 
   createReview(review, cb) {
-    debugger
     $.ajax({
       method: 'POST',
       url: '/api/reviews',

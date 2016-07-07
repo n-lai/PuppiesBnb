@@ -69,7 +69,6 @@ const PuppyDetail = React.createClass({
     };
 
     const reviews = puppy.reviews || [];
-
     let reviewText = 'no reviews yet';
 
     if (reviews.length > 0) {

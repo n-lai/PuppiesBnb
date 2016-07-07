@@ -4,7 +4,20 @@ const PuppyActions = require('../actions/puppy_actions');
 
 const ReviewForm = React.createClass({
   getInitialState() {
-    return ({ description: "", rating: null });
+    return ({ description: "", rating: 'Please select a rating' });
+  },
+
+  componentDidMount() {
+    this.puppyListener = PuppyStore.addListener(this._clearOnSuccess);
+  },
+
+  componentWillUnmount() {
+    this.puppyListener.remove();
+  },
+
+  _clearOnSuccess() {
+    this.setState({ description: "", rating: 'Please select a rating' });
+    document.getElementById('select-form').removeAttribute('selected');
   },
 
   update(property) {
@@ -14,13 +27,10 @@ const ReviewForm = React.createClass({
   _handleSubmit(e) {
     e.preventDefault();
 
-    const user = SessionStore.currentUser();
-    debugger
     const reviewData = {
       description: this.state.description,
       rating: parseInt(this.state.rating),
       puppy_id: this.props.puppy.id,
-      user_id: user.id
     };
 
     PuppyActions.createReview(reviewData);
@@ -34,13 +44,14 @@ const ReviewForm = React.createClass({
           <select
             value={this.state.rating}
             onChange={this.update('rating')}
-            className='rating-dropdown'>
-            <option disabled selected>Select Your Rating</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            className='rating-dropdown'
+            id='select-form'>
+            <option disabled value='Please select a rating'>Please select a rating</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
           </select>
           <br></br>
           <textarea

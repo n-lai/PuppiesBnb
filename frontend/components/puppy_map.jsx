@@ -41,12 +41,6 @@ const PuppyMap = React.createClass({
   },
 
   updateParams() {
-    // debugger
-    // if (!this.idleListenerWasSet) {
-    //   this.idleListenerWasSet = true;
-    //   return;
-    // }
-    // debugger
     const latLng = this.map.getBounds();
     const northEast = latLng.getNorthEast();
     const southWest = latLng.getSouthWest();

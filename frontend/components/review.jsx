@@ -3,11 +3,12 @@ const React = require('react');
 const Review = React.createClass({
   render() {
     return (
-      <div>
+      <div className='review'>
         <ul>
-          <li>Rating: {this.props.rating}</li>
-          <li>{this.props.description}</li>
+          <li className='rating'>Rating: {this.props.review.rating}</li>
+          <li className='description'>{this.props.review.description}</li>
         </ul>
+        <hr/>
       </div>
     )
   }

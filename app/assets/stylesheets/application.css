@@ -115,8 +115,8 @@ li.errors {
   position: relative;
 }
 
-.puppy-index-info {
-  padding: 20px;
+.puppy-index-breed {
+  padding-left: 75px;
 }
 
 .puppy-index {
@@ -395,12 +395,30 @@ div .booking-form-dates {
 }
 
 .puppy-details div span {
-  padding-left: 20px
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.review {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.review ul {
+  padding: 10px 0;
 }
 
 hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  margin: 15px 0 15px 0;
+}
+
+.review hr {
+  width: 100%;
   border-color: #eee;
-  margin: 30px 0;
+  margin: 0;
 }
 
 
@@ -439,4 +457,12 @@ hr {
 
 .rating-dropdown {
   border: 1px solid #ff5a5f;
+}
+
+.rating {
+ text-align: right;
+}
+
+.description {
+  padding: 10px;
 }
