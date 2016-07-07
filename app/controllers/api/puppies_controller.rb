@@ -3,6 +3,10 @@ class Api::PuppiesController < ApplicationController
   def index
     @puppies = Puppy.all
 
+    if params[:user]
+      @puppies = Puppy.where(owner_id: params[:user].to_i)
+    end
+
     if bound_params
       @puppies = @puppies.in_bounds(bound_params)
     end
@@ -15,8 +19,8 @@ class Api::PuppiesController < ApplicationController
       end
     end
 
-    if breed_params != '' && breed_params != 'All'
-      if (breed_params == 'Other')
+    if breed_params != '' && breed_params != 'all' && !breed_params.nil?
+      if (breed_params == 'other')
         @puppies = @puppies.where(
           "breed NOT IN ('german shepherd', 'corgi', 'golden retriever', 'labrador', 'beagle')"
           )

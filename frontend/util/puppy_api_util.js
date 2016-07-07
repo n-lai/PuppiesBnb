@@ -10,6 +10,16 @@ const PuppyApiUtil = {
     });
   },
 
+  fetchUserPuppies(id, cb) {
+    $.ajax({
+      method: 'GET',
+      url: '/api/puppies?user=' + id,
+      success(response) {
+        cb(response);
+      }
+    });
+  },
+
   fetchPuppy(id, cb) {
     $.ajax({
       method: 'GET',

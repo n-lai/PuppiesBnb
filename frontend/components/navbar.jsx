@@ -35,7 +35,6 @@ const NavBar = React.createClass({
   },
 
   _handleRoot() {
-    debugger
     HashHistory.push('/');
   },
 

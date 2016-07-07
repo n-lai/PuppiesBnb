@@ -39,6 +39,7 @@ const SessionApiUtil = {
       }
     });
   }
+
 };
 
 module.exports = SessionApiUtil;

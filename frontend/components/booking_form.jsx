@@ -15,7 +15,7 @@ const BookingForm = React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    this.setState( { bookings: this.props.bookings} );
+    this.setState( { bookings: this.props.bookings } );
     if (this.userHasBooked()) {
       this.disableForm();
     } else {

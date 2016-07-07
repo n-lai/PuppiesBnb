@@ -18,7 +18,7 @@ const PuppyIndexItem = React.createClass({
           <span className='puppy-index-info' id='price-overlay'>${puppy.price} per day</span>
           <div className='puppy-index-details'>
             <span className='puppy-index-info' id='puppy-index-name'>{puppy.name}</span>
-            <span className='puppy-index-info' id='puppy-index-breed'>{puppy.breed}</span>
+            <span className='puppy-index-info' id='puppy-index-breed'>{puppy.breed.replace(/_/g, " ")}</span>
           </div>
         </div>
       </div>

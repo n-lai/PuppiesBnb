@@ -14,8 +14,9 @@ const FilterParams = React.createClass({
   },
 
   updateBreed(e) {
-    this.setState({ breed: e.target.value });
-    FilterActions.updatePuppyBreed(e.target.value);
+    let breed = e.target.value
+    this.setState({ breed: breed });
+    FilterActions.updatePuppyBreed(breed);
   },
 
   updatePrices(prices) {

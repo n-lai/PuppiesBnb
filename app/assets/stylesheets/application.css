@@ -151,7 +151,10 @@ li.errors {
   width: 100%;
   background-color: rgba(232, 232, 232, 0.6);
   text-align: center;
-  position: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
 }
 
 .puppy-image-container img {
@@ -182,9 +185,7 @@ li.errors {
 }
 
 .puppy-details-header {
-  position: relative;
   display: flex;
-  height: 100px;
   justify-content: space-between;
 }
 
@@ -197,29 +198,25 @@ li.errors {
 
 .booking-form-container {
   width: 300px;
-  position: absolute;
   top: 90%;
   right: 7%;
-  border: 1px solid #eee;}
+}
 
 .puppy-basic-info {
-  position: fixed;
   display: block;
-  left: 45%;
+  text-align: center;
+  width: 100%
 }
 
 .puppy-details {
-  position: fixed;
   display: block;
-  left: 25%;
-  width: 50%;
+  width: 100%;
 }
 
 .puppy-detail-bottom {
   display: flex;
   top: 58%;
-  position: absolute;
-  width: 100%;
+  max-width: 40.5em;
   margin: 0 auto;
   flex-direction: column;
   justify-content: center;
@@ -330,7 +327,6 @@ li.errors {
   padding: 10px, 0;
   display: flex;
   margin: 10px;
-  position: relative;
 }
 
 .breed-dropdown {
@@ -347,7 +343,6 @@ li h3 {
 }
 
 .booking-form {
-  border: 1px solid #eee;
   background-color: white;
   box-sizing: border-box;
 }
@@ -374,10 +369,6 @@ div .booking-form-dates {
   text-align: center;
 }
 
-.booking-form-open {
-
-}
-
 .booking-form-dates p {
   padding: 20px 0;
   font-weight: bold;
@@ -388,6 +379,8 @@ div .booking-form-dates {
   background-color: #ff5a5f;
   padding: 15px;
   color: white;
+  margin-top: 0;
+  border: none;
 }
 
 .puppy-details div h1, .puppy-details h1 {
@@ -405,11 +398,6 @@ hr {
   margin: 30px 0;
 }
 
-.puppy-detail-bottom::after {
-  content: "";
-  display: block;
-  clear: both;
-}
 
 .app {
   z-index: 300;
@@ -421,4 +409,10 @@ hr {
 .puppy-detail-container {
   padding-top: 62px;
   padding-bottom: 62px;
+}
+
+.booking-form-holder {
+  position: absolute;
+  top: 72.5%;
+  left: 70%;
 }

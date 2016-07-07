@@ -10,6 +10,10 @@ const PuppyActions = {
     PuppyApiUtil.fetchAllPuppies(params, this.receiveAllPuppies);
   },
 
+  fetchUserPuppies(id) {
+    PuppyApiUtil.fetchUserPuppies(id, this.receiveAllPuppies);
+  },
+
   receiveAllPuppies(puppies) {
     AppDispatcher.dispatch({
       actionType: PuppyConstants.PUPPIES_RECEIVED,

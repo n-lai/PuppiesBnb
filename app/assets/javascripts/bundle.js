@@ -67,9 +67,15 @@
 	var BookingApiUtil = __webpack_require__(302);
 	var BookingStore = __webpack_require__(303);
 
+	var PuppyActions = __webpack_require__(287);
+	var PuppyStore = __webpack_require__(285);
+
 	window.bookingStore = BookingStore;
 	window.bookingActions = BookingActions;
 	window.BookingApiUtil = BookingApiUtil;
+
+	window.PuppyActions = PuppyActions;
+	window.PuppyStore = PuppyStore;
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26040,7 +26046,6 @@
 	    this.setState({ modalIsOpen: false });
 	  },
 	  _handleRoot: function _handleRoot() {
-	    debugger;
 	    HashHistory.push('/');
 	  },
 	  greeting: function greeting() {
@@ -35758,6 +35763,9 @@
 	  fetchAllPuppies: function fetchAllPuppies(params) {
 	    PuppyApiUtil.fetchAllPuppies(params, this.receiveAllPuppies);
 	  },
+	  fetchUserPuppies: function fetchUserPuppies(id) {
+	    PuppyApiUtil.fetchUserPuppies(id, this.receiveAllPuppies);
+	  },
 	  receiveAllPuppies: function receiveAllPuppies(puppies) {
 	    AppDispatcher.dispatch({
 	      actionType: PuppyConstants.PUPPIES_RECEIVED,
@@ -35809,6 +35817,15 @@
 	      data: params,
 	      success: function success(puppies) {
 	        cb(puppies);
+	      }
+	    });
+	  },
+	  fetchUserPuppies: function fetchUserPuppies(id, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies?user=' + id,
+	      success: function success(response) {
+	        cb(response);
 	      }
 	    });
 	  },
@@ -36264,7 +36281,7 @@
 	            'span',
 	            { className: 'puppy-index-info', id: 'puppy-index-breed', __self: this
 	            },
-	            puppy.breed
+	            puppy.breed.replace(/_/g, " ")
 	          )
 	        )
 	      )
@@ -36296,8 +36313,9 @@
 	    };
 	  },
 	  updateBreed: function updateBreed(e) {
-	    this.setState({ breed: e.target.value });
-	    FilterActions.updatePuppyBreed(e.target.value);
+	    var breed = e.target.value;
+	    this.setState({ breed: breed });
+	    FilterActions.updatePuppyBreed(breed);
 	  },
 	  updatePrices: function updatePrices(prices) {
 	    this.setState({ min: prices[0], max: prices[1] });
@@ -37306,27 +37324,41 @@
 	    var _this = this;
 
 	    var puppy = this.state.puppy;
+	    var puppyImage = puppy.image_url;
+
+	    var style = {
+	      backgroundImage: 'url(' + puppyImage + ')',
+	      backgroundRepeat: 'no-repeat',
+	      backgroundSize: 'cover',
+	      backgroundPosition: 'center'
+
+	    };
+
 	    if (puppy === undefined) {
 	      return React.createElement('div', {
 	        __self: this
 	      });
 	    }
+
 	    return React.createElement(
 	      'div',
 	      { className: 'puppy-detail-container', __self: this
 	      },
 	      React.createElement(
 	        'div',
-	        { className: 'puppy-image-container', __self: this
+	        { className: 'puppy-image-container', style: style, __self: this
 	        },
-	        React.createElement('img', { src: puppy.image_url, __self: this
-	        }),
 	        React.createElement(
 	          'div',
-	          { className: 'booking-form-container', __self: this
+	          { className: 'booking-form-holder', __self: this
 	          },
-	          React.createElement(BookingForm, { puppy: this.state.puppy, __self: this
-	          })
+	          React.createElement(
+	            'div',
+	            { className: 'booking-form-container', __self: this
+	            },
+	            React.createElement(BookingForm, { puppy: this.state.puppy, __self: this
+	            })
+	          )
 	        )
 	      ),
 	      React.createElement(

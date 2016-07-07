@@ -19,9 +19,16 @@ const BookingActions = require('./actions/booking_actions');
 const BookingApiUtil = require('./util/booking_api_util');
 const BookingStore = require('./stores/booking_store');
 
+const PuppyActions = require('./actions/puppy_actions');
+const PuppyStore = require('./stores/puppy_store');
+
+
 window.bookingStore = BookingStore;
 window.bookingActions = BookingActions;
 window.BookingApiUtil = BookingApiUtil;
+
+window.PuppyActions = PuppyActions;
+window.PuppyStore = PuppyStore;
 
 const App = React.createClass({
   render() {

@@ -46,15 +46,28 @@ const PuppyDetail = React.createClass({
 
   render() {
     const puppy = this.state.puppy;
+    const puppyImage = puppy.image_url;
+
+    const style = {
+      backgroundImage: 'url(' + puppyImage + ')',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+
+    };
+
     if (puppy === undefined ) { return <div></div>; }
+
     return(
       <div className='puppy-detail-container'>
-        <div className='puppy-image-container'>
-          <img src={puppy.image_url} />
-          <div className='booking-form-container'>
-            <BookingForm puppy={this.state.puppy}/>
+        <div className='puppy-image-container' style={style}>
+          <div className='booking-form-holder'>
+            <div className='booking-form-container'>
+              <BookingForm puppy={this.state.puppy}/>
+            </div>
           </div>
         </div>
+
 
         <div className='puppy-detail-bottom'>
           <div className='puppy-details-header'>
