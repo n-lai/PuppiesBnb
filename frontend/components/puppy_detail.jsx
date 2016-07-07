@@ -1,10 +1,17 @@
 const React = require('react');
+const Modal = require('react-modal');
+const ModalStyles = require('../styles/modal_styles');
+
 const PuppyStore = require('../stores/puppy_store');
 const PuppyActions = require('../actions/puppy_actions');
+const PuppyForm = require ('./puppy_form');
+
 const BookingForm = require('./booking_form');
+const BookingStore = require('../stores/booking_store');
+
 const ReviewForm = require('./review_form');
 const Review = require('./review');
-const BookingStore = require('../stores/booking_store');
+
 const SessionStore = require('../stores/session_store');
 
 const PuppyDetail = React.createClass({

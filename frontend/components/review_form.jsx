@@ -29,7 +29,7 @@ const ReviewForm = React.createClass({
   render() {
     return (
       <div className='review-form'>
-        <h1>Submit a Review:</h1>
+        <h1 id='review-h1'>submit a review:</h1>
         <form onSubmit={this._handleSubmit}>
           <select
             value={this.state.rating}
@@ -44,12 +44,13 @@ const ReviewForm = React.createClass({
           </select>
           <br></br>
           <textarea
+            className='form-input'
             placeholder='Write your review here'
             value={this.state.description}
             onChange={this.update('description')}
           />
           <br></br>
-          <button type='submit'>Submit Review</button>
+          <button className='review-button' type='submit'>Submit Review</button>
         </form>
       </div>
     )

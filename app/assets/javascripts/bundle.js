@@ -28112,7 +28112,7 @@
 
 	var ModalStyles = {
 	  overlay: {
-	    position: 'absolute',
+	    position: 'fixed',
 	    background: 'rgba(0, 0, 0, 0.75)',
 	    zIndex: '125'
 	  },
@@ -37280,12 +37280,19 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var Modal = __webpack_require__(232);
+	var ModalStyles = __webpack_require__(252);
+
 	var PuppyStore = __webpack_require__(285);
 	var PuppyActions = __webpack_require__(287);
+	var PuppyForm = __webpack_require__(284);
+
 	var BookingForm = __webpack_require__(304);
+	var BookingStore = __webpack_require__(303);
+
 	var ReviewForm = __webpack_require__(412);
 	var Review = __webpack_require__(416);
-	var BookingStore = __webpack_require__(303);
+
 	var SessionStore = __webpack_require__(254);
 
 	var PuppyDetail = React.createClass({
@@ -52083,10 +52090,9 @@
 	      },
 	      React.createElement(
 	        'h1',
-	        {
-	          __self: this
+	        { id: 'review-h1', __self: this
 	        },
-	        'Submit a Review:'
+	        'submit a review:'
 	      ),
 	      React.createElement(
 	        'form',
@@ -52145,6 +52151,7 @@
 	          __self: this
 	        }),
 	        React.createElement('textarea', {
+	          className: 'form-input',
 	          placeholder: 'Write your review here',
 	          value: this.state.description,
 	          onChange: this.update('description'),
@@ -52155,7 +52162,7 @@
 	        }),
 	        React.createElement(
 	          'button',
-	          { type: 'submit', __self: this
+	          { className: 'review-button', type: 'submit', __self: this
 	          },
 	          'Submit Review'
 	        )

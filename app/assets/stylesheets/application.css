@@ -66,7 +66,6 @@ button {
   padding:10px;
   border-radius: 2px;
   border: 1px solid #c4c4c4;
-  width: 100%;
   margin: 10px 0px;
 }
 
@@ -389,7 +388,7 @@ div .booking-form-dates {
   border: none;
 }
 
-.puppy-details div h1, .puppy-details h1 {
+.puppy-details div h1, .puppy-details h1, #review-h1 {
   font-size: 20px;
   padding: 10px;
   font-weight: bold;
@@ -422,6 +421,22 @@ hr {
   top: 90%;
   left: 70%;
 }
-.rheo-slider {
-  width: 100%;
+
+.review-form {
+}
+
+.review-form form{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.review-button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 15px;
+}
+
+.rating-dropdown {
+  border: 1px solid #ff5a5f;
 }

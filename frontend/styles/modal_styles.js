@@ -1,6 +1,6 @@
 const ModalStyles = {
   overlay: {
-    position: 'absolute',
+    position: 'fixed',
     background: 'rgba(0, 0, 0, 0.75)',
     zIndex: '125'
   },
