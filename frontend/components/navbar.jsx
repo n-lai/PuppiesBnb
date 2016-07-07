@@ -45,6 +45,7 @@ const NavBar = React.createClass({
           <h3 className='header-name'>Hi, {SessionStore.currentUser().name}!</h3>
           <button onClick={this.handleOpenModal.bind(this, "Puppy Form")} id='puppy-button'>Add a Puppy</button>
           <button onClick={this._handleLogout} className='logout-button'>Log Out</button>
+          <button onClick={this._redirectToAccount}>Account</button>
         </hgroup>
       );
     } else {

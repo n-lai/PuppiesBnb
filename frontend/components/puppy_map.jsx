@@ -16,18 +16,13 @@ const PuppyMap = React.createClass({
 
     const mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
     const mapOptions = {
-      center: { lat: this.props.lat, lng: this.props.lng }, // this is SF
+      center: { lat: this.props.lat, lng: this.props.lng },
       zoom: 11
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     this.registerListeners();
+    this.filterListener = FilterStore.addListener(this._callbacks);
     this._onChange();
-
-    const that = this;
-
-
-    this.idleListenerWasSet = false;
-    this.filterListener = FilterStore.addListener(this.updateParams);
   },
 
   componentWillUnmount() {
@@ -74,8 +69,11 @@ const PuppyMap = React.createClass({
       that.map.setCenter(place);
       that.map.setZoom(12);
     });
+  },
 
-
+  _callbacks() {
+    this.updateParams();
+    this._onChange();
   },
 
   _onChange() {
@@ -87,12 +85,15 @@ const PuppyMap = React.createClass({
       }
     });
 
+
     PuppyStore.all().forEach(puppy => {
       if (!currentPuppyIds.includes(puppy.id)) {
         const location = { lat: puppy['lat'], lng: puppy['lng'] }
         this.addMarker(location, this.map, puppy.id);
       }
     });
+
+    this.setState({ markers: this.state.markers })
   },
 
   _handleClick(coords) {

@@ -19,13 +19,13 @@ class Api::PuppiesController < ApplicationController
       end
     end
 
-    if breed_params != '' && breed_params != 'all' && !breed_params.nil?
-      if (breed_params == 'other')
+    if (breed_params != '' && breed_params != 'All') && !breed_params.nil?
+      if (breed_params == 'Other')
         @puppies = @puppies.where(
-          "breed NOT IN ('german shepherd', 'corgi', 'golden retriever', 'labrador', 'beagle')"
+          "breed NOT IN ('german_shepherd', 'corgi', 'golden_retriever', 'labrador', 'beagle')"
           )
       else
-        @puppies = @puppies.where("breed LIKE ?", breed_params.downcase)
+        @puppies = @puppies.where("breed LIKE ?", breed_params.downcase.tr(' ', '_'))
       end
     end
 

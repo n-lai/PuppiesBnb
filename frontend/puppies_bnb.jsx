@@ -22,6 +22,8 @@ const BookingStore = require('./stores/booking_store');
 const PuppyActions = require('./actions/puppy_actions');
 const PuppyStore = require('./stores/puppy_store');
 
+const PuppyListings = require('./components/puppy_listings');
+
 
 window.bookingStore = BookingStore;
 window.bookingActions = BookingActions;
@@ -47,6 +49,7 @@ const appRouter = (
       <IndexRoute component={LandingPage} />
       <Route path='/api/puppies' component={Search}/>
       <Route path='/api/puppies/:puppyId' component={PuppyDetail}/>
+      <Route path='/api/user/puppies' component={PuppyListings}/>
     </Route>
   </Router>
 );

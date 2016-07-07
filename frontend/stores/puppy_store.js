@@ -47,7 +47,6 @@ PuppyStore.all = function() {
       puppies.push(_puppies[id]);
     }
   }
-
   return puppies;
 };
 

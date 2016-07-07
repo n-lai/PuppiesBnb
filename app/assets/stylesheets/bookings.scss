@@ -39,7 +39,7 @@ div .booking-form-dates {
   background-color: #ff5a5f;
   padding: 15px;
   color: white;
-  margin-top: 0;
+  margin: 0;
   border: none;
 }
 
@@ -48,7 +48,7 @@ div .booking-form-dates {
   background-color: grey;
   padding: 15px;
   color: white;
-  margin-top: 0;
+  margin: 0;
   border: none;
 }
 
@@ -56,4 +56,10 @@ div .booking-form-dates {
   position: absolute;
   top: 90%;
   left: 70%;
+  box-shadow: 2px 1px 7px rgba(0, 0, 0, 0.5);
+}
+
+.date-dropdown {
+  width: 100%;
+  cursor: pointer;
 }

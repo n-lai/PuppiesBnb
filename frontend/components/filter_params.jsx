@@ -24,9 +24,11 @@ const FilterParams = React.createClass({
 
   render() {
     let toggleMax = '';
+
     if (this.state.max === 100) {
       toggleMax = '+';
     }
+    
     return (
       <div className='search-params'>
         <h1>Preferences</h1>

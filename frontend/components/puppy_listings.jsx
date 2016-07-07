@@ -7,7 +7,7 @@ const PuppyForm = require ('./puppy_form');
 const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
 
-
+const PuppyListingItem = require('./puppy_listing_item');
 
 const PuppyListings = React.createClass({
   getInitialState() {
@@ -55,11 +55,21 @@ const PuppyListings = React.createClass({
 
     return (
       <div>
-        <button
-          onClick={this.handleOpenModal}
-          id='puppy-form'
-          >Add a Puppy</button>
-        {modal}
+        <div className='sidebar'>
+          <button
+            onClick={this.handleOpenModal}
+            id='puppy-form'
+            >Add a Puppy</button>
+          {modal}
+        </div>
+
+        <div>
+          {this.state.puppies.map(puppy => {
+            return (
+              <PuppyListingItem puppy={puppy} key={puppy.id}/>
+            );
+          })}
+        </div>
       </div>
     );
   }
