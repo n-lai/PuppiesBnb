@@ -1,3 +1,51 @@
 // Place all the styles related to the reviews controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.review-form form{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.review-button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 15px;
+}
+
+.rating-dropdown {
+  border: 1px solid #ff5a5f;
+}
+
+.rating {
+ text-align: right;
+}
+
+.description {
+  padding: 10px;
+}
+
+.review {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.review ul {
+  padding: 10px 0;
+}
+
+.review hr {
+  width: 100%;
+  border-color: #eee;
+  margin: 0;
+}
+
+.review-form-input {
+  height: 64px;
+  font-size: 16px;
+  padding:10px;
+  border-radius: 2px;
+  border: 1px solid #c4c4c4;
+  margin: 10px 0px;
+}

@@ -1,3 +1,122 @@
 // Place all the styles related to the puppies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.puppy-index-item {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 300px;
+}
+
+.caption {
+  position: relative;
+}
+
+.puppy-index-breed {
+  padding-left: 75px;
+}
+
+.puppy-index {
+  width: 100%;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: whitesmoke;
+}
+
+.img-container {
+  max-width: 340px;
+  max-height: 250px;
+  overflow: hidden;
+
+}
+
+.puppy-index-pic {
+  height: 300px;
+}
+
+.puppy-index-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.puppy-image-container {
+  height: 500px;
+  width: 100%;
+  background-color: rgba(232, 232, 232, 0.6);
+  text-align: center;
+  position: relative;
+}
+
+.puppy-image-container img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.puppy-details-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.puppy-detail-name {
+  margin-bottom: 10px;
+}
+
+.puppy-basic-info {
+  display: block;
+  text-align: center;
+  width: 100%
+}
+
+.puppy-details {
+  display: block;
+  width: 100%;
+}
+
+.puppy-detail-bottom {
+  display: flex;
+  top: 58%;
+  max-width: 40.5em;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#price-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, .8);
+  padding: 15px;
+  vertical-align: middle;
+  color: whitesmoke;
+  bottom: 88%;
+  left: 0%;
+}
+
+#puppy-index-name {
+  font-size: 20px;
+}
+
+.puppy-index-details {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  padding: 5px 0 0 10px;
+}
+
+.puppy-details div h1, .puppy-details h1, #review-h1 {
+  font-size: 20px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.puppy-details div span {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.puppy-detail-container {
+  padding-top: 62px;
+  padding-bottom: 62px;
+}

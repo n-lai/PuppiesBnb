@@ -55,7 +55,7 @@ const ReviewForm = React.createClass({
           </select>
           <br></br>
           <textarea
-            className='form-input'
+            className='review-form-input'
             placeholder='Write your review here'
             value={this.state.description}
             onChange={this.update('description')}
