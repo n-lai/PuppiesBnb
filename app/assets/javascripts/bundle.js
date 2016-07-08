@@ -26003,9 +26003,23 @@
 	var SessionStore = __webpack_require__(254);
 	var NavBar = __webpack_require__(231);
 	var Slider = __webpack_require__(419);
+	var FeaturedPlaces = __webpack_require__(439);
 
 	var LandingPage = React.createClass({
 	  displayName: 'LandingPage',
+	  componentWillMount: function componentWillMount() {
+	    this.cities = {
+	      'San Francisco': [37.7749, -122.4194, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000417/a-new-moroccan-restaurant-is-coming-to-san-francisco-_1107_40019880_1_14103245_500_bshn3x.jpg'],
+	      'Paris': [48.855449, 2.341032, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg'],
+	      'Seoul': [37.546509, 126.986107, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000764/Seoul-Free-Easy_icpcsz.jpg'],
+	      'Amsterdam': [52.365725, 4.895174, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000954/amsterdam2-sq_g7l4ti.jpg'],
+	      'Barcelona': [41.399093, 2.160331, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000791/barcelona-second_e2zpou.jpg'],
+	      'Sydney': [-33.897160, 151.205064, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000823/Sydney-Harbour-Bridge-Getty-Image-AA039819-500x500_d76yvy.jpg'],
+	      'Tokyo': [35.716201, 139.713125, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000850/tumblr_mm2gp6qJhl1re7fvvo1_500-5877_eqkblq.jpg'],
+	      'New York': [40.740533, -73.998207, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg'],
+	      'London': [51.511602, -0.135464, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000916/Tower_bridge_London_Twilight_-_November_2006_zssunr.jpg']
+	    };
+	  },
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this._redirect);
 	  },
@@ -26018,11 +26032,18 @@
 	      query: { lat: 37.7749, lng: -122.4194 }
 	    });
 	  },
+	  _handleClick: function _handleClick(city) {
+	    hashHistory.push({
+	      pathname: '/api/puppies',
+	      query: { lat: this.cities[city][0], lng: this.cities[city][1] }
+	    });
+	  },
 	  _handleGuestLogin: function _handleGuestLogin(e) {
 	    e.preventDefault();
 	    SessionActions.login({ username: 'guest', password: 'password' });
 	  },
 	  render: function render() {
+	    var _this = this;
 
 	    var settings = {
 	      infinite: true,
@@ -26063,47 +26084,83 @@
 	      backgroundPosition: 'center'
 	    };
 
+	    var city1 = {
+	      backgroundImage: 'url(http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg)',
+	      backgroundRepeat: 'no-repeat',
+	      backgroundSize: 'cover',
+	      backgroundPosition: 'center'
+	    };
+
 	    return React.createElement(
 	      'div',
 	      { className: 'landing-page-container', __self: this
 	      },
 	      React.createElement(
-	        Slider,
-	        _extends({ className: 'slick-container' }, settings, {
-	          __self: this
-	        }),
-	        React.createElement('div', { className: 'slick-image', style: style1, __self: this
-	        }),
-	        React.createElement('div', { className: 'slick-image', style: style2, __self: this
-	        }),
-	        React.createElement('div', { className: 'slick-image', style: style3, __self: this
-	        }),
-	        React.createElement('div', { className: 'slick-image', style: style4, __self: this
-	        })
+	        'div',
+	        { className: 'landing-page-carousel', __self: this
+	        },
+	        React.createElement(
+	          Slider,
+	          _extends({ className: 'slick-container' }, settings, {
+	            __self: this
+	          }),
+	          React.createElement('div', { className: 'slick-image', style: style1, __self: this
+	          }),
+	          React.createElement('div', { className: 'slick-image', style: style2, __self: this
+	          }),
+	          React.createElement('div', { className: 'slick-image', style: style3, __self: this
+	          }),
+	          React.createElement('div', { className: 'slick-image', style: style4, __self: this
+	          })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'landing-page-header', __self: this
+	          },
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
+	            },
+	            'Be Happy'
+	          ),
+	          React.createElement(
+	            'span',
+	            {
+	              __self: this
+	            },
+	            'Rent a puppy and experience all the joy without the commitment'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: this._handleGuestLogin, className: 'landing-login-button', __self: this
+	            },
+	            'Guest Log In'
+	          )
+	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'landing-page-header', __self: this
+	        { className: 'landing-page-features', __self: this
 	        },
 	        React.createElement(
 	          'h1',
 	          {
 	            __self: this
 	          },
-	          'Be Happy'
+	          'Featured Cities'
 	        ),
+	        React.createElement('hr', {
+	          __self: this
+	        }),
 	        React.createElement(
-	          'span',
-	          {
-	            __self: this
+	          'div',
+	          { className: 'cities-index', __self: this
 	          },
-	          'Rent a puppy and experience all the joy without the commitment'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: this._handleGuestLogin, className: 'landing-login-button', __self: this
-	          },
-	          'Guest Log In'
+	          Object.keys(this.cities).map(function (city) {
+	            return React.createElement(FeaturedPlaces, { key: city, action: _this._handleClick, city: city, imgUrl: _this.cities[city][2], __self: _this
+	            });
+	          })
 	        )
 	      )
 	    );
@@ -54457,6 +54514,49 @@
 		return new MediaQueryDispatch();
 
 	}));
+
+/***/ },
+/* 439 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var FeaturedPlaces = React.createClass({
+	  displayName: 'FeaturedPlaces',
+	  _handleClick: function _handleClick() {
+	    this.props.action(this.props.city);
+	  },
+	  render: function render() {
+	    var style = {
+	      backgroundImage: 'url(' + this.props.imgUrl + ')',
+	      backgroundRepeat: 'no-repeat',
+	      backgroundSize: 'cover',
+	      backgroundPosition: 'center'
+	    };
+
+	    return React.createElement(
+	      'div',
+	      { className: 'featured-cities', style: style, onClick: this._handleClick, __self: this
+	      },
+	      React.createElement(
+	        'div',
+	        { className: 'featured-cities-header', __self: this
+	        },
+	        React.createElement(
+	          'h1',
+	          {
+	            __self: this
+	          },
+	          this.props.city
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FeaturedPlaces;
 
 /***/ }
 /******/ ]);
