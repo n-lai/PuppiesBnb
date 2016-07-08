@@ -35702,8 +35702,8 @@
 	      image_url: this.state.image_url
 	    };
 
-	    ErrorActions.clearErrors();
 	    PuppyActions.createPuppy(puppyData);
+	    ErrorActions.clearErrors();
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -36108,11 +36108,6 @@
 
 	var PuppyMap = React.createClass({
 	  displayName: 'PuppyMap',
-
-	  // getInitialState() {
-	  //     return { markers: [] };
-	  // },
-
 	  componentDidMount: function componentDidMount() {
 	    this.infowindow = new google.maps.InfoWindow();
 	    this.markers = [];

@@ -6,10 +6,7 @@ const FilterStore = require('../stores/filter_store');
 const hashHistory = require('react-router').hashHistory;
 
 const PuppyMap = React.createClass({
-  // getInitialState() {
-  //     return { markers: [] };
-  // },
-
+  
   componentDidMount(){
     this.infowindow = new google.maps.InfoWindow();
     this.markers = [];

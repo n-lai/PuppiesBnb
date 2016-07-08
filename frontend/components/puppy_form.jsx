@@ -76,8 +76,8 @@ const PuppyForm = React.createClass({
       image_url: this.state.image_url
     };
 
-    ErrorActions.clearErrors();
     PuppyActions.createPuppy(puppyData);
+    ErrorActions.clearErrors();
   },
 
   render() {
