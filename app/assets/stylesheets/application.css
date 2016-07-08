@@ -291,3 +291,31 @@ hr {
 .root {
   height: 100%;
 }
+
+.landing-page-header {
+  position: absolute;
+  position: absolute;
+  top: 46%;
+  left: 35%;
+  display: flex;
+  color: white;
+  flex-direction: column;
+}
+
+.landing-page-header h1{
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.landing-page-header span {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.landing-login-button {
+  color: white;
+  background-color: #ff5a5f;
+  padding: 15px 0;
+  border: none;
+}

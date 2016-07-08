@@ -25999,11 +25999,29 @@
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var SessionActions = __webpack_require__(280);
+	var SessionStore = __webpack_require__(254);
 	var NavBar = __webpack_require__(231);
 	var Slider = __webpack_require__(419);
 
 	var LandingPage = React.createClass({
 	  displayName: 'LandingPage',
+	  componentDidMount: function componentDidMount() {
+	    this.sessionListener = SessionStore.addListener(this._redirect);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionListener.remove();
+	  },
+	  _redirect: function _redirect() {
+	    hashHistory.push({
+	      pathname: '/api/puppies',
+	      query: { lat: 37.7749, lng: -122.4194 }
+	    });
+	  },
+	  _handleGuestLogin: function _handleGuestLogin(e) {
+	    e.preventDefault();
+	    SessionActions.login({ username: 'guest', password: 'password' });
+	  },
 	  render: function render() {
 
 	    var settings = {
@@ -26062,6 +26080,31 @@
 	        }),
 	        React.createElement('div', { className: 'slick-image', style: style4, __self: this
 	        })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'landing-page-header', __self: this
+	        },
+	        React.createElement(
+	          'h1',
+	          {
+	            __self: this
+	          },
+	          'Be Happy'
+	        ),
+	        React.createElement(
+	          'span',
+	          {
+	            __self: this
+	          },
+	          'Rent a puppy and experience all the joy without the commitment'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this._handleGuestLogin, className: 'landing-login-button', __self: this
+	          },
+	          'Guest Log In'
+	        )
 	      )
 	    );
 	  }

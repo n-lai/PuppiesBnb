@@ -53,9 +53,11 @@ div .booking-form-dates {
 }
 
 .booking-form-holder {
-  position: absolute;
-  top: 90%;
-  left: 70%;
+  position: relative;
+  top: 91.5%;
+  left: 75%;
+  // left: 75%;
+  // top: 53vh;
   box-shadow: 2px 1px 7px rgba(0, 0, 0, 0.5);
 }
 
