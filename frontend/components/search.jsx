@@ -5,6 +5,9 @@ const FilterParams = require('./filter_params');
 
 const Search = React.createClass({
   render() {
+    $(document).ready(function(){
+        $(this).scrollTop(0);
+    });
     FilterParams.location = window.location;
     return(
       <div className='search'>

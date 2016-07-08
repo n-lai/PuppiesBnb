@@ -63,21 +63,7 @@
 	var PuppyIndex = __webpack_require__(294);
 	var PuppyDetail = __webpack_require__(299);
 
-	var BookingActions = __webpack_require__(300);
-	var BookingApiUtil = __webpack_require__(302);
-	var BookingStore = __webpack_require__(303);
-
-	var PuppyActions = __webpack_require__(287);
-	var PuppyStore = __webpack_require__(285);
-
 	var PuppyListings = __webpack_require__(417);
-
-	window.bookingStore = BookingStore;
-	window.bookingActions = BookingActions;
-	window.BookingApiUtil = BookingApiUtil;
-
-	window.PuppyActions = PuppyActions;
-	window.PuppyStore = PuppyStore;
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -36126,6 +36112,9 @@
 	var Search = React.createClass({
 	  displayName: 'Search',
 	  render: function render() {
+	    $(document).ready(function () {
+	      $(this).scrollTop(0);
+	    });
 	    FilterParams.location = window.location;
 	    return React.createElement(
 	      'div',
