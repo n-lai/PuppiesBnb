@@ -120,13 +120,9 @@ li.errors {
   padding: 7px;
 }
 
-
-
-
-
 .map {
   width: 40%;
-  height: 1000px;
+  height: calc(100% - 62px);
   margin-left: 10px;
 }
 
@@ -135,6 +131,7 @@ li.errors {
   justify-content: space-between;
   margin: 0px 25px;
   padding-top: 62px;
+  height: 100%;
 }
 
 .map-picture {
@@ -334,4 +331,39 @@ hr {
   background-color: #ff5a5f;
   padding: 15px 0;
   border: none;
+}
+
+.user-puppies {
+  padding-top: 62px;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  margin: 0 25px;
+}
+
+.sidebar {
+  width: 30%;
+  background-color: white;
+}
+
+.main-content {
+  width: 70%;
+  background-color: whitesmoke;
+  text-align: center
+}
+
+.main-content h1 {
+  font-size: 35px;
+  margin: 5px 0 5px 0;
+  font-weight: bold;
+}
+
+.main-content hr {
+  margin-bottom: 20px;
+}
+
+.user-puppies-index {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

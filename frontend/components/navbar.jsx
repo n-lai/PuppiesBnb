@@ -34,6 +34,10 @@ const NavBar = React.createClass({
     this.setState({ modalIsOpen: false });
   },
 
+  _redirectToAccount() {
+    HashHistory.push('/api/user/puppies');
+  },
+
   _handleRoot() {
     HashHistory.push('/');
   },

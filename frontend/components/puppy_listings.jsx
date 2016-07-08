@@ -12,7 +12,7 @@ const PuppyListingItem = require('./puppy_listing_item');
 const PuppyListings = React.createClass({
   getInitialState() {
     Modal.setAppElement('body');
-    return { puppies: {}, currentUser: null, modalIsOpen: false };
+    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false };
   },
 
   handleOpenModal() {
@@ -26,8 +26,7 @@ const PuppyListings = React.createClass({
 
   componentDidMount() {
     this.puppyListener = PuppyStore.addListener(this.getPuppies);
-    this.userListener = SessionStore.addListener(this.getUserPuppies);
-    this.setState({ currentUser: SessionStore.currentUser() });
+    this.getUserPuppies();
   },
 
   componentWillUnmount() {
@@ -43,6 +42,13 @@ const PuppyListings = React.createClass({
   },
 
   render() {
+
+    const puppies = this.state.puppies;
+
+    if (Object.keys(puppies).length === 0 && puppies.constructor === Object) {
+      return <div>No Puppies Here</div>;
+    }
+
     let modal;
 
     if (this.state.modalIsOpen) {
@@ -54,7 +60,7 @@ const PuppyListings = React.createClass({
     }
 
     return (
-      <div>
+      <div className='user-puppies'>
         <div className='sidebar'>
           <button
             onClick={this.handleOpenModal}
@@ -63,12 +69,16 @@ const PuppyListings = React.createClass({
           {modal}
         </div>
 
-        <div>
-          {this.state.puppies.map(puppy => {
-            return (
-              <PuppyListingItem puppy={puppy} key={puppy.id}/>
-            );
-          })}
+        <div className='main-content'>
+          <h1>Your Puppies</h1>
+          <hr/>
+          <div className='user-puppies-index'>
+            {this.state.puppies.map(puppy => {
+              return (
+                <PuppyIndexItem puppy={puppy} key={puppy.id}/>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

@@ -26151,6 +26151,9 @@
 	    ErrorActions.clearErrors();
 	    this.setState({ modalIsOpen: false });
 	  },
+	  _redirectToAccount: function _redirectToAccount() {
+	    HashHistory.push('/api/user/puppies');
+	  },
 	  _handleRoot: function _handleRoot() {
 	    HashHistory.push('/');
 	  },
@@ -52340,7 +52343,7 @@
 	  displayName: 'PuppyListings',
 	  getInitialState: function getInitialState() {
 	    Modal.setAppElement('body');
-	    return { puppies: {}, currentUser: null, modalIsOpen: false };
+	    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false };
 	  },
 	  handleOpenModal: function handleOpenModal() {
 	    this.setState({ modalIsOpen: true });
@@ -52350,8 +52353,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this.getPuppies);
-	    this.userListener = SessionStore.addListener(this.getUserPuppies);
-	    this.setState({ currentUser: SessionStore.currentUser() });
+	    this.getUserPuppies();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.puppyListener.remove();
@@ -52364,6 +52366,18 @@
 	  },
 	  render: function render() {
 	    var _this = this;
+
+	    var puppies = this.state.puppies;
+
+	    if (Object.keys(puppies).length === 0 && puppies.constructor === Object) {
+	      return React.createElement(
+	        'div',
+	        {
+	          __self: this
+	        },
+	        'No Puppies Here'
+	      );
+	    }
 
 	    var modal = void 0;
 
@@ -52380,8 +52394,7 @@
 
 	    return React.createElement(
 	      'div',
-	      {
-	        __self: this
+	      { className: 'user-puppies', __self: this
 	      },
 	      React.createElement(
 	        'div',
@@ -52400,13 +52413,27 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        {
-	          __self: this
+	        { className: 'main-content', __self: this
 	        },
-	        this.state.puppies.map(function (puppy) {
-	          return React.createElement(PuppyListingItem, { puppy: puppy, key: puppy.id, __self: _this
-	          });
-	        })
+	        React.createElement(
+	          'h1',
+	          {
+	            __self: this
+	          },
+	          'Your Puppies'
+	        ),
+	        React.createElement('hr', {
+	          __self: this
+	        }),
+	        React.createElement(
+	          'div',
+	          { className: 'user-puppies-index', __self: this
+	          },
+	          this.state.puppies.map(function (puppy) {
+	            return React.createElement(PuppyIndexItem, { puppy: puppy, key: puppy.id, __self: _this
+	            });
+	          })
+	        )
 	      )
 	    );
 	  }
