@@ -35418,7 +35418,7 @@
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return { username: "", password: "", name: "", email: "", profile_img_url: "" };
+	    return { username: "", password: "", name: "", email: "", profile_img_url: "", buttonText: ['blank', 'Upload Profile Picture'] };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.signupListener = SessionStore.addListener(this.redirectIfLoggedIn);
@@ -35470,7 +35470,7 @@
 	    };
 	  },
 	  updateUrl: function updateUrl(url) {
-	    this.setState({ image_url: url });
+	    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
 	  },
 	  handleGuestLogin: function handleGuestLogin(e) {
 	    e.preventDefault();
@@ -35547,7 +35547,7 @@
 	        React.createElement('br', {
 	          __self: this
 	        }),
-	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonName: "Profile", __self: this
+	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonText: this.state.buttonText, __self: this
 	        }),
 	        React.createElement(
 	          'button',
@@ -35593,11 +35593,9 @@
 	      },
 	      React.createElement(
 	        'button',
-	        { className: 'signup-form-button', onClick: this.upload, __self: this
+	        { className: 'upload-button-' + this.props.buttonText[0], onClick: this.upload, __self: this
 	        },
-	        'Upload ',
-	        this.props.buttonName,
-	        ' Picture'
+	        this.props.buttonText[1]
 	      )
 	    );
 	  }
@@ -35632,7 +35630,7 @@
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "" };
+	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "", buttonText: ['blank', 'Upload Puppy Picture'] };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var that = this;
@@ -35687,7 +35685,7 @@
 	    };
 	  },
 	  updateUrl: function updateUrl(url) {
-	    this.setState({ image_url: url });
+	    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
 	  },
 	  _handleSubmit: function _handleSubmit(e) {
 	    e.preventDefault();
@@ -35765,7 +35763,7 @@
 	          className: 'puppy-form-input',
 	          __self: this
 	        }),
-	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonName: "Puppy", __self: this
+	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonText: this.state.buttonText, __self: this
 	        }),
 	        React.createElement(
 	          'button',
@@ -36110,12 +36108,14 @@
 
 	var PuppyMap = React.createClass({
 	  displayName: 'PuppyMap',
-	  getInitialState: function getInitialState() {
-	    return { markers: [] };
-	  },
+
+	  // getInitialState() {
+	  //     return { markers: [] };
+	  // },
+
 	  componentDidMount: function componentDidMount() {
-	    this.puppyListener = PuppyStore.addListener(this._onChange);
 	    this.infowindow = new google.maps.InfoWindow();
+	    this.markers = [];
 
 	    var mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
 	    var mapOptions = {
@@ -36124,7 +36124,10 @@
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    this.registerListeners();
-	    this.filterListener = FilterStore.addListener(this.updateParams);
+	    this._onChange();
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    debugger;
 	    this._onChange();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
@@ -36146,10 +36149,13 @@
 	    params.bounds = bounds;
 
 	    PuppyActions.fetchAllPuppies(params, bounds);
+	    this._onChange();
 	  },
 	  registerListeners: function registerListeners() {
 	    var that = this;
 	    this.idleListener = google.maps.event.addListener(this.map, 'idle', this.updateParams);
+	    this.puppyListener = PuppyStore.addListener(this._onChange);
+	    this.filterListener = FilterStore.addListener(this.updateParams);
 
 	    google.maps.event.addListener(this.map, 'click', function (event) {
 	      var location = event.latLng;
@@ -36169,15 +36175,18 @@
 	  _onChange: function _onChange() {
 	    var _this = this;
 
-	    var currentPuppyIds = this.state.markers.map(function (marker) {
+	    var removeMarkers = [];
+
+	    var currentPuppyIds = this.markers.map(function (marker) {
 	      return marker.puppyId;
 	    });
 	    var newPuppyIds = PuppyStore.all().map(function (puppy) {
 	      return puppy.id;
 	    });
-	    this.state.markers.forEach(function (marker) {
+
+	    this.markers.forEach(function (marker) {
 	      if (!newPuppyIds.includes(marker.puppyId)) {
-	        _this.removeMarker(marker);
+	        removeMarkers.push(marker);
 	      }
 	    });
 
@@ -36188,13 +36197,13 @@
 	      }
 	    });
 
-	    this.setState({ markers: this.state.markers });
+	    removeMarkers.forEach(this.removeMarker);
 	  },
 	  _handleClick: function _handleClick(coords) {},
 	  removeMarker: function removeMarker(marker) {
-	    var idx = this.state.markers.indexOf(marker);
-	    this.state.markers[idx].setMap(null);
-	    this.state.markers.splice(idx, 1);
+	    var idx = this.markers.indexOf(marker);
+	    this.markers[idx].setMap(null);
+	    this.markers.splice(idx, 1);
 	  },
 	  addMarker: function addMarker(location, map, puppyId) {
 	    var _this2 = this;
@@ -36219,7 +36228,7 @@
 	      });
 	    });
 
-	    this.state.markers.push(marker);
+	    this.markers.push(marker);
 	  },
 	  render: function render() {
 	    return React.createElement('div', { className: 'map', ref: 'map', __self: this

@@ -14,7 +14,7 @@ const SignupForm = React.createClass({
   },
 
   getInitialState() {
-    return { username: "", password: "", name: "", email: "", profile_img_url: "" };
+    return { username: "", password: "", name: "", email: "", profile_img_url: "", buttonText: ['blank', 'Upload Profile Picture'] };
   },
 
   componentDidMount() {
@@ -53,7 +53,7 @@ const SignupForm = React.createClass({
   },
 
   updateUrl(url) {
-    this.setState({ image_url: url });
+    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
   },
 
   handleGuestLogin(e) {
@@ -116,7 +116,7 @@ const SignupForm = React.createClass({
                 className='form-input'
               />
             <br></br>
-            <UploadButton updateUrl={this.updateUrl} buttonName={"Profile"}/>
+            <UploadButton updateUrl={this.updateUrl} buttonText={this.state.buttonText}/>
 
             <button className='signup-form-button' type="submit">Sign Up</button>
             <button className='signup-form-button' onClick={this.handleGuestLogin}>Guest Log In</button>

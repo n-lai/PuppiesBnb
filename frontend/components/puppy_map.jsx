@@ -6,13 +6,13 @@ const FilterStore = require('../stores/filter_store');
 const hashHistory = require('react-router').hashHistory;
 
 const PuppyMap = React.createClass({
-  getInitialState() {
-      return { markers: [] };
-  },
+  // getInitialState() {
+  //     return { markers: [] };
+  // },
 
   componentDidMount(){
-    this.puppyListener = PuppyStore.addListener(this._onChange);
     this.infowindow = new google.maps.InfoWindow();
+    this.markers = [];
 
     const mapDOMNode = ReactDOM.findDOMNode(this.refs.map);
     const mapOptions = {
@@ -21,7 +21,11 @@ const PuppyMap = React.createClass({
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     this.registerListeners();
-    this.filterListener = FilterStore.addListener(this.updateParams);
+    this._onChange();
+  },
+
+  componentDidUpdate() {
+    debugger
     this._onChange();
   },
 
@@ -45,11 +49,14 @@ const PuppyMap = React.createClass({
     params.bounds = bounds;
 
     PuppyActions.fetchAllPuppies(params, bounds);
+    this._onChange();
   },
 
   registerListeners() {
     const that = this;
     this.idleListener = google.maps.event.addListener(this.map, 'idle', this.updateParams);
+    this.puppyListener = PuppyStore.addListener(this._onChange);
+    this.filterListener = FilterStore.addListener(this.updateParams);
 
     google.maps.event.addListener(this.map, 'click', function(event) {
       const location = event.latLng;
@@ -68,14 +75,16 @@ const PuppyMap = React.createClass({
   },
 
   _onChange() {
-    const currentPuppyIds = this.state.markers.map(marker => marker.puppyId);
+    const removeMarkers = [];
+
+    const currentPuppyIds = this.markers.map(marker => marker.puppyId);
     const newPuppyIds = PuppyStore.all().map(puppy => puppy.id);
-    this.state.markers.forEach(marker => {
+
+    this.markers.forEach(marker => {
       if (!newPuppyIds.includes(marker.puppyId)) {
-        this.removeMarker(marker);
+        removeMarkers.push(marker);
       }
     });
-
 
     PuppyStore.all().forEach(puppy => {
       if (!currentPuppyIds.includes(puppy.id)) {
@@ -84,16 +93,16 @@ const PuppyMap = React.createClass({
       }
     });
 
-    this.setState({ markers: this.state.markers })
+    removeMarkers.forEach(this.removeMarker);
   },
 
   _handleClick(coords) {
   },
 
   removeMarker(marker) {
-    const idx = this.state.markers.indexOf(marker);
-    this.state.markers[idx].setMap(null);
-    this.state.markers.splice(idx, 1);
+    const idx = this.markers.indexOf(marker);
+    this.markers[idx].setMap(null);
+    this.markers.splice(idx, 1);
   },
 
   addMarker(location, map, puppyId) {
@@ -122,7 +131,7 @@ const PuppyMap = React.createClass({
 
     });
 
-    this.state.markers.push(marker);
+    this.markers.push(marker);
   },
 
 

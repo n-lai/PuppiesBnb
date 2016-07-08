@@ -89,6 +89,21 @@ button {
   margin: 10px 0px;
 }
 
+.upload-button-blank {
+  width: 100%;
+  height: 64px;
+  color: white;
+  background-color: #FF5A5F;
+  margin: 10px 0px;
+}
+
+.upload-button-success {
+  width: 100%;
+  height: 64px;
+  color: green;
+  margin: 10px 0px;
+}
+
 .form {
  box-sizing: border-box;
 }

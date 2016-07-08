@@ -15,7 +15,7 @@ const PuppyForm = React.createClass({
   },
 
   getInitialState() {
-    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: ""}
+    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "", buttonText: ['blank', 'Upload Puppy Picture']}
   },
 
   componentDidMount() {
@@ -58,7 +58,7 @@ const PuppyForm = React.createClass({
   },
 
   updateUrl(url) {
-    this.setState({ image_url: url });
+    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
   },
 
   _handleSubmit(e) {
@@ -131,7 +131,7 @@ const PuppyForm = React.createClass({
             onChange={this.update("description")}
             className='puppy-form-input'
           />
-        <UploadButton updateUrl={this.updateUrl} buttonName={"Puppy"}/>
+        <UploadButton updateUrl={this.updateUrl} buttonText={this.state.buttonText}/>
         <button type='submit' className='login-form-button'>Add Puppy</button>
         </form>
       </div>
