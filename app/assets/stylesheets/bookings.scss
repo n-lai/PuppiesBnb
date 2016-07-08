@@ -5,6 +5,8 @@
 .booking-form {
   background-color: white;
   box-sizing: border-box;
+  box-shadow: 2px 1px 7px rgba(0, 0, 0, 0.5);
+
 }
 
 .booking-form h1 {
@@ -53,12 +55,9 @@ div .booking-form-dates {
 }
 
 .booking-form-holder {
-  position: relative;
-  top: 91.5%;
+  position: absolute;
+  bottom: -172px;
   left: 75%;
-  // left: 75%;
-  // top: 53vh;
-  box-shadow: 2px 1px 7px rgba(0, 0, 0, 0.5);
 }
 
 .date-dropdown {
