@@ -21,7 +21,7 @@ const PuppyMap = React.createClass({
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     this.registerListeners();
-    this.filterListener = FilterStore.addListener(this._callbacks);
+    this.filterListener = FilterStore.addListener(this.updateParams);
     this._onChange();
   },
 
@@ -29,10 +29,6 @@ const PuppyMap = React.createClass({
     this.puppyListener.remove();
     this.filterListener.remove();
     this.idleListener.remove();
-  },
-
-  componentDidUpdate() {
-    this._onChange();
   },
 
   updateParams() {
@@ -69,11 +65,6 @@ const PuppyMap = React.createClass({
       that.map.setCenter(place);
       that.map.setZoom(12);
     });
-  },
-
-  _callbacks() {
-    this.updateParams();
-    this._onChange();
   },
 
   _onChange() {

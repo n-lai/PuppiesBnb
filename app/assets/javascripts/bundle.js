@@ -36124,16 +36124,13 @@
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    this.registerListeners();
-	    this.filterListener = FilterStore.addListener(this._callbacks);
+	    this.filterListener = FilterStore.addListener(this.updateParams);
 	    this._onChange();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.puppyListener.remove();
 	    this.filterListener.remove();
 	    this.idleListener.remove();
-	  },
-	  componentDidUpdate: function componentDidUpdate() {
-	    this._onChange();
 	  },
 	  updateParams: function updateParams() {
 	    var latLng = this.map.getBounds();
@@ -36168,10 +36165,6 @@
 	      that.map.setCenter(place);
 	      that.map.setZoom(12);
 	    });
-	  },
-	  _callbacks: function _callbacks() {
-	    this.updateParams();
-	    this._onChange();
 	  },
 	  _onChange: function _onChange() {
 	    var _this = this;
