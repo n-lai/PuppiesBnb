@@ -1,112 +1,54 @@
 # PuppiesBnb
 
-[PuppiesBnb link][heroku]
+[PuppiesBnb live][heroku]
 
-[heroku]: https://puppiesbnbapp.herokuapp.com/
+[heroku]: www.puppiesbnb.us
 
-## Minimum Viable Product
+PuppiesBnb is a full-stack web application inspired by AirBnb.  It utilizes Ruby on Rails on the backend, a PostgreSQL database, and React.js with a Flux architectural framework on the frontend.  
 
-PuppiesBnb is a web application inspired by AirBnb that will be build using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+## Features & Implementation
 
-- [ ] Hosting on Heroku
-- [ ] New account creation, login, and guest/demo login
-- [ ] A production README, replacing this README
-- [ ] Puppies
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Bookings
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Puppies Search (by location & availability)
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Puppy Reviews
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
+### Puppy Rendering
 
-## Design Docs
-* [View Wireframes][views]
-* [React Components][components]
-* [Flux Cycles][flux-cycles]
-* [API endpoints][api-endpoints]
-* [DB schema][schema]
+  Puppies are stored in the database through a `puppies` table that contains the columns `name`, `temperament`, `image_url`, `description`, `price`, `breed`, `owner_id`,`lat`, and `lng`. The users and puppies table are joined through `owner_id`. `PuppyIndexItem` and `PuppyDetails` use `image_url` to render a picture of each puppy. `PuppyIndexItem` also contains basic details about the puppy, such as name, price, and breed. `PuppyDetails` contain more in depth information about the puppy. In addition to name, price, and breed, it also informs the user of the puppy's temperament, and has a description field where the user describes their puppy.
 
-[views]: docs/views.md
-[components]: docs/components.md
-[flux-cycles]: docs/flux-cycles.md
-[api-endpoints]: docs/api-endpoints.md
-[schema]: docs/schema.md
+![image of puppy index][puppy-detail]
 
-## Implementation Timeline
+[puppy-detail]: docs/puppy_index.png
 
-### Phase 1: Backend setup and Front End User Authentication (2 days, W1 We 6pm)
+`PuppiesIndex` render method:
 
-**Objective:** Functioning rails project with Authentication
+```javascript
+render () {
+  return ({this.state.puppies.map(puppy => {
+    return <PuppyIndexItem key={puppy.id} puppy={puppy} />
+  }
+}
+```
+### Search
 
-- [ ] Host on Heroku
-- [ ] Rails User JSON API
-- [ ] Front-end authentication
-- [ ] Guest Demo Login
-- [ ] Style front-end authentication
+Search utilizes the Google Maps API and uses the puppy's `lat` and `lng` attributes to create a marker on the map. The search bar is implemented with Google Places API - specifically, Place Autocomplete. A listener is set on the autocomplete bar and after a user types in an address or a city, the latitude and longitude are extracted from the address information and sent as params to the map component. The map component then generates of a viewport based on those coordinates and creates a marker for each of the puppies that have `lat` and `lng` that fall into viewport.
 
-### Phase 2: Puppies Model, Seed Data, Puppy Components (1 day, W1 Th 6pm)
+### Bookings
 
-**Objective:** Puppies can be created, read, edited and destroyed through
-the API.
+Bookings are stored in the database through a `bookings` join table that contains the columns `start_date`, `end_date`, `puppy_id`, and `renter_id`. Bookings belong to both the puppy and user that is renting.
 
-- [ ] Puppy CRUD JSON API
-- [ ] Some Puppy Seed Data
-- [ ] Puppy Index Component
-- [ ] Puppy Index Item Component
-- [ ] Puppy Detail Component
+Every time `PuppyDetail` is rendered, the `BookingForm` is also rendered. Users are only allowed to book a puppy if they are logged in (regulated by the `SessionStore`) and puppies are booked by the selection of a start date and end date.
 
-### Phase 3: Map, Filters, NavBar, and Search Components (2 days, W2 M 6pm)
+### Reviews
 
-**Objective:** Puppies can be searched according to location and availability and filtered according to temperament
+Reviews are stored in the database through a `reviews` table that contains the columns `puppy_id`, `user_id`, `description`, and `rating`. Reviews belong to both the puppy and the user that wrote it. Owners of the puppies cannot review the puppies that belong to them.
 
-- [ ] Map Component
-- [ ] Filters Component
-- [ ] Style Map and Filters
-- [ ] NavBar Component
-- [ ] Search Component
+On the frontend, the `PuppyDetails` component renders `ReviewsIndex` which is composed of all of the puppy's reviews. Each review is rendered with the `Review` component. There is no need for a `ReviewStore` because the reviews are dependent on the individual puppy so it is taken care of every time `fetchPuppy(id)`is called.
 
-### Phase 4: Profile, Booking, Review, and ReviewIndex Components (1 day, W2 Tu 6pm)
+## Future Directions for the Project
 
-**Objective:** Puppies can be booked and reviewed.
+In addition to the features already implemented, I plan to continue work on this project.  The next steps for AirBnb are outlined below.
 
-- [ ] Profile Component
-- [ ] Style Profile
-- [ ] Booking Component
-- [ ] Style Bookings
-- [ ] Review Component
-- [ ] ReviewIndex Component
-- [ ] Style Reviews
-- [ ] Full Puppy Seed Data
+### User/Host Profiles
 
-### Phase 5: Landing Page (1 day, W2 We 6pm)
+As of now, user accounts are very basic and only show the puppies that the user owns. In the future, I plan to allow the user to edit the puppy through the account page. In addition to this, I am also planning on building a bookings page so that the user can see information about the puppies that he's booked (ex: start date, end date, address) There will be a NavBar for the user to switch between his own profile, bookings, and puppies pages.
 
-**Objective:** Landing page will have carousel of puppy pictures and a guest login button in the middle.
+### Direct Messaging
 
-- [ ] Landing Page
-- [ ] Style Landing Page
-
-### Phase 6: Puppy Hosting (1 days, W2 Th 12pm)
-
-**Objective:** Puppies can be hosted by the user.
-
-- [ ] Update profile component so that users can become hosts
-- [ ] Style profile page
-
-
-### Bonus Features (TBD)
-- [ ] Messaging
-
-[phase-one]: docs/phases/phase1.md
-[phase-two]: docs/phases/phase2.md
-[phase-three]: docs/phases/phase3.md
-[phase-four]: docs/phases/phase4.md
-[phase-five]: docs/phases/phase5.md
+Another feature I would like to implement is messaging, allowing for the user to contact and communicate with puppy hosts.

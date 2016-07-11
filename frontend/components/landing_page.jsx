@@ -17,7 +17,7 @@ const LandingPage = React.createClass({
       'Barcelona': [41.399093, 2.160331, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000791/barcelona-second_e2zpou.jpg'],
       'Sydney': [-33.897160, 151.205064, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000823/Sydney-Harbour-Bridge-Getty-Image-AA039819-500x500_d76yvy.jpg'],
       'Tokyo': [35.716201, 139.713125, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000850/tumblr_mm2gp6qJhl1re7fvvo1_500-5877_eqkblq.jpg'],
-      'New York': [40.740533, -73.998207, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg'],
+      'New York': [40.740533, -73.998207, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468022846/New-York-Top-of-the-rock-black-white_pplbvr.jpg'],
       'London': [51.511602, -0.135464, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000916/Tower_bridge_London_Twilight_-_November_2006_zssunr.jpg']
     };
 
