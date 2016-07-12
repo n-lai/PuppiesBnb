@@ -1,6 +1,7 @@
 const React = require('react');
 const SessionStore = require('../stores/session_store');
 const PuppyActions = require('../actions/puppy_actions');
+const PuppyStore = require('../stores/puppy_store');
 
 const ReviewForm = React.createClass({
   getInitialState() {

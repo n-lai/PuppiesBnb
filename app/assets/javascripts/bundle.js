@@ -52202,6 +52202,7 @@
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(254);
 	var PuppyActions = __webpack_require__(287);
+	var PuppyStore = __webpack_require__(285);
 
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
