@@ -10,7 +10,6 @@ const SearchBar = React.createClass({
     const input = document.getElementById('searchTextField');
     window.autocomplete = new google.maps.places.Autocomplete(input);
     this.autocompleteListener = google.maps.event.addListener(window.autocomplete, 'place_changed', this._handleSubmit)
-    document.getElementById('searchTextField').value = '';
   },
 
   componentWillUnmount() {
@@ -33,7 +32,6 @@ const SearchBar = React.createClass({
       pathname: '/api/puppies',
       query: coords
     });
-
   },
 
   render() {

@@ -5,6 +5,7 @@ const PuppyIndexItem = React.createClass({
   _handleClick() {
     const puppyId = this.props.puppy.id;
     hashHistory.push('/api/puppies/' + puppyId);
+    document.getElementById('searchTextField').value = ''
   },
 
   render() {

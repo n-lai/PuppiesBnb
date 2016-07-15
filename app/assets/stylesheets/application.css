@@ -124,6 +124,7 @@ li.errors {
   width: 40%;
   height: calc(100% - 62px);
   margin-left: 10px;
+  position: fixed;
 }
 
 .search {
@@ -141,6 +142,12 @@ li.errors {
 
 .map-puppy-name {
   text-align: center;
+}
+
+.map-box {
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 
 .booking-form-container {

@@ -5,7 +5,7 @@ const FilterActions = require('../actions/filter_actions');
 const FilterParams = React.createClass({
   getInitialState() {
     return {
-      breed: "",
+      breed: "All",
       min: 0,
       max: 100
     };
@@ -38,13 +38,13 @@ const FilterParams = React.createClass({
               value={this.state.breed}
               onChange={this.updateBreed}
               className='breed-dropdown'>
-              <option selected>All</option>
-              <option>Beagle</option>
-              <option>Corgi</option>
-              <option>Golden Retriever</option>
-              <option>German Shepherd</option>
-              <option>Labrador</option>
-              <option>Other</option>
+              <option value='All'>All</option>
+              <option value='Beagle'>Beagle</option>
+              <option value='Corgi'>Corgi</option>
+              <option value='Golden Retriever'>Golden Retriever</option>
+              <option value='German Shepherd'>German Shepherd</option>
+              <option value='Labrador'>Labrador</option>
+              <option value='Other'>Other</option>
             </select>
           </li>
           <li>

@@ -16,10 +16,12 @@ const Search = React.createClass({
           <PuppyIndex />
         </div>
 
-        <PuppyMap
-          lat={parseFloat(this.props.location.query.lat)}
-          lng={parseFloat(this.props.location.query.lng)}
-        />
+        <div className='map-box'>
+          <PuppyMap
+            lat={parseFloat(this.props.location.query.lat)}
+            lng={parseFloat(this.props.location.query.lng)}
+            />
+        </div>
       </div>
     );
   }
