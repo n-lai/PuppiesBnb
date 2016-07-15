@@ -2,6 +2,8 @@ const React = require('react');
 const HashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
+const Select = require('react-select');
+import 'react-select/dist/react-select.css';
 
 const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');

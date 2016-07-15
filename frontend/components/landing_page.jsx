@@ -8,6 +8,7 @@ const Slider = require('react-slick');
 const FeaturedPlaces = require('./featured_places');
 
 const LandingPage = React.createClass({
+
   componentWillMount() {
     this.cities = {
       'San Francisco': [37.7749, -122.4194, 'http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000417/a-new-moroccan-restaurant-is-coming-to-san-francisco-_1107_40019880_1_14103245_500_bshn3x.jpg'],
@@ -52,6 +53,11 @@ const LandingPage = React.createClass({
   },
 
   render() {
+    let hidden = "";
+
+    if (SessionStore.isUserLoggedIn()) {
+    hidden = 'hidden';
+    }
 
     const settings = {
       infinite: true,
@@ -111,7 +117,7 @@ const LandingPage = React.createClass({
           <div className='landing-page-header'>
             <h1>Be Happy</h1>
             <span>Rent a puppy and experience all the joy without the commitment</span>
-            <button onClick={this._handleGuestLogin} className='landing-login-button'>Guest Log In</button>
+            <button id='guest-button' onClick={this._handleGuestLogin} className='landing-login-button' hidden={hidden}>Guest Log In</button>
           </div>
         </div>
 

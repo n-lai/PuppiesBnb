@@ -21,6 +21,10 @@ const PuppyIndex = React.createClass({
   },
 
   render() {
+    if (Object.keys(this.state.puppies).length === 0) {
+      return <div className='missing-puppies'><h1>Sorry, this city doesn't have puppies up for rental yet. Try looking in New York or San Francisco!</h1></div>
+    }
+
     return (
       <div className='puppy-index'>
         {
