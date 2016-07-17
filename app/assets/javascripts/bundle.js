@@ -56070,29 +56070,34 @@
 	          this.props.puppy.name
 	        ),
 	        React.createElement(
-	          'p',
-	          {
-	            __self: this
+	          'div',
+	          { className: 'puppy-listing-info-details', __self: this
 	          },
-	          'Breed: ',
-	          this.props.puppy.breed
-	        ),
-	        React.createElement(
-	          'p',
-	          {
-	            __self: this
-	          },
-	          'Temperament: ',
-	          this.props.puppy.temperament
-	        ),
-	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.props.removePuppy.bind(null, this.props.puppy),
-	            id: 'remove-puppy-button',
-	            __self: this
-	          },
-	          'Remove Puppy'
+	          React.createElement(
+	            'p',
+	            {
+	              __self: this
+	            },
+	            'Breed: ',
+	            this.props.puppy.breed.replace(/_/g, " ")
+	          ),
+	          React.createElement(
+	            'p',
+	            {
+	              __self: this
+	            },
+	            'Temperament: ',
+	            this.props.puppy.temperament
+	          ),
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.props.removePuppy.bind(null, this.props.puppy),
+	              id: 'remove-puppy-button',
+	              __self: this
+	            },
+	            'Remove Puppy'
+	          )
 	        )
 	      )
 	    );

@@ -16,12 +16,14 @@ const PuppyListingItem = React.createClass({
         </div>
         <div className='puppy-listing-info'>
           <h1>{this.props.puppy.name}</h1>
-          <p>Breed: {this.props.puppy.breed}</p>
-          <p>Temperament: {this.props.puppy.temperament}</p>
-          <button
-            onClick={this.props.removePuppy.bind(null, this.props.puppy)}
-            id='remove-puppy-button'
-            >Remove Puppy</button>
+          <div className='puppy-listing-info-details'>
+            <p>Breed: {this.props.puppy.breed.replace(/_/g, " ")}</p>
+            <p>Temperament: {this.props.puppy.temperament}</p>
+            <button
+              onClick={this.props.removePuppy.bind(null, this.props.puppy)}
+              id='remove-puppy-button'
+              >Remove Puppy</button>
+          </div>
         </div>
       </div>
 

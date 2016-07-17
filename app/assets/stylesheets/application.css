@@ -353,6 +353,7 @@ hr {
   justify-content: space-between;
   height: 100%;
   margin: 0 25px;
+  position: fixed;
 }
 
 .sidebar {
@@ -363,12 +364,13 @@ hr {
 .main-content {
   width: 70%;
   background-color: whitesmoke;
-  text-align: center
+  text-align: center;
+  padding-top: 10px;
+  overflow: scroll;
 }
 
 .main-content h1 {
   font-size: 35px;
-  margin: 5px 0 5px 0;
   font-weight: bold;
 }
 
