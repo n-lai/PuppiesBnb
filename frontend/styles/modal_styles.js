@@ -6,13 +6,13 @@ const ModalStyles = {
   },
 
   content: {
-    maxWidth: '40.5em',
     position: 'absolute',
-    left: '25%',
-    top: '10%',
-    right: '25%',
+    left: '50%',
+    top: '55%',
     padding: '20px',
     backgroundColor: 'white',
+    transform: 'translate(-50%,-50%)',
+    width: '30%',
     zIndex: '150'
   }
 };

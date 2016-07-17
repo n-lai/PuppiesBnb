@@ -35231,13 +35231,13 @@
 	  },
 
 	  content: {
-	    maxWidth: '40.5em',
 	    position: 'absolute',
-	    left: '25%',
-	    top: '10%',
-	    right: '25%',
+	    left: '50%',
+	    top: '55%',
 	    padding: '20px',
 	    backgroundColor: 'white',
+	    transform: 'translate(-50%,-50%)',
+	    width: '30%',
 	    zIndex: '150'
 	  }
 	};
@@ -37223,6 +37223,7 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(168).hashHistory;
 	var Link = __webpack_require__(168).Link;
 	var PuppyStore = __webpack_require__(293);
 	var SessionStore = __webpack_require__(238);
@@ -37245,7 +37246,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var that = this;
-	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+	    // this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
 	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.geocoder = new google.maps.Geocoder();
 	    var input = document.getElementById('puppyTextField');
@@ -37256,12 +37257,13 @@
 	    });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    this.puppyListener.remove();
+	    // this.puppyListener.remove();
 	    this.errorListener.remove();
 	    this.autocompleteListener.remove();
 	  },
 	  redirectIfPuppyMade: function redirectIfPuppyMade() {
 	    this.props.close();
+	    HashHistory.push('/api/user/puppies');
 	  },
 	  fieldErrors: function fieldErrors(field) {
 	    var _this = this;
@@ -37313,7 +37315,7 @@
 	      image_url: this.state.image_url
 	    };
 
-	    PuppyActions.createPuppy(puppyData);
+	    PuppyActions.createPuppy(puppyData, this.redirectIfPuppyMade);
 	    ErrorActions.clearErrors();
 	  },
 	  render: function render() {
@@ -37502,8 +37504,8 @@
 	      puppy: puppy
 	    });
 	  },
-	  createPuppy: function createPuppy(puppyData) {
-	    PuppyApiUtil.createPuppy(puppyData, this.receivePuppy, ErrorActions.setErrors);
+	  createPuppy: function createPuppy(puppyData, success) {
+	    PuppyApiUtil.createPuppy(puppyData, success, ErrorActions.setErrors);
 	  },
 	  editPuppy: function editPuppy(puppy) {
 	    PuppyApiUtil.updatePuppy(puppy, this.receivePuppy);
@@ -39880,8 +39882,12 @@
 	  getInitialState: function getInitialState() {
 	    return { puppies: PuppyStore.all() };
 	  },
+	  componentWillMount: function componentWillMount() {
+	    this.missingPuppies = '';
+	  },
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this._handleChange);
+	    this.missingPuppies = "Sorry, this city doesn't have puppies up for rental yet. Try looking in New York or San Francisco!";
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.puppyListener.remove();
@@ -39902,7 +39908,7 @@
 	          {
 	            __self: this
 	          },
-	          'Sorry, this city doesn\'t have puppies up for rental yet. Try looking in New York or San Francisco!'
+	          this.missingPuppies
 	        )
 	      );
 	    }
@@ -41061,7 +41067,7 @@
 	            'div',
 	            { className: 'booking-form-container', __self: this
 	            },
-	            React.createElement(BookingForm, { puppy: this.state.puppy, __self: this
+	            React.createElement(BookingForm, { key: 'book-' + this.state.puppy.id, puppy: this.state.puppy, __self: this
 	            })
 	          )
 	        )
@@ -41099,8 +41105,7 @@
 	          ['temperament', 'description'].map(function (attr) {
 	            return React.createElement(
 	              'div',
-	              {
-	                __self: _this
+	              { key: attr + _this.state.puppy.id, __self: _this
 	              },
 	              React.createElement(
 	                'h1',
@@ -41177,7 +41182,7 @@
 	          'div',
 	          { className: 'review-form-container', __self: this
 	          },
-	          React.createElement(ReviewForm, { puppy: this.state.puppy, __self: this
+	          React.createElement(ReviewForm, { key: 'review-' + this.state.puppy.id, puppy: this.state.puppy, __self: this
 	          })
 	        )
 	      )

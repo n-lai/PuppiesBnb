@@ -1,4 +1,5 @@
 const React = require('react');
+const HashHistory = require('react-router').hashHistory;
 const Link = require('react-router').Link;
 const PuppyStore = require('../stores/puppy_store');
 const SessionStore = require('../stores/session_store')
@@ -20,7 +21,7 @@ const PuppyForm = React.createClass({
 
   componentDidMount() {
     const that = this;
-    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+    // this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.geocoder = new google.maps.Geocoder();
     const input = document.getElementById('puppyTextField');
@@ -33,13 +34,14 @@ const PuppyForm = React.createClass({
   },
 
   componentWillUnmount() {
-    this.puppyListener.remove();
+    // this.puppyListener.remove();
     this.errorListener.remove();
     this.autocompleteListener.remove();
   },
 
   redirectIfPuppyMade() {
     this.props.close();
+    HashHistory.push('/api/user/puppies');
   },
 
   fieldErrors(field) {
@@ -76,7 +78,7 @@ const PuppyForm = React.createClass({
       image_url: this.state.image_url
     };
 
-    PuppyActions.createPuppy(puppyData);
+    PuppyActions.createPuppy(puppyData, this.redirectIfPuppyMade);
     ErrorActions.clearErrors();
   },
 

@@ -33,8 +33,8 @@ const PuppyActions = {
 
   },
 
-  createPuppy(puppyData) {
-    PuppyApiUtil.createPuppy(puppyData, this.receivePuppy, ErrorActions.setErrors);
+  createPuppy(puppyData, success) {
+    PuppyApiUtil.createPuppy(puppyData, success, ErrorActions.setErrors);
   },
 
   editPuppy(puppy) {

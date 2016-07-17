@@ -82,7 +82,7 @@ const PuppyDetail = React.createClass({
         <div className='puppy-image-container' style={style}>
           <div className='booking-form-holder'>
             <div className='booking-form-container'>
-              <BookingForm puppy={this.state.puppy}/>
+              <BookingForm key={'book-' + this.state.puppy.id} puppy={this.state.puppy}/>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ const PuppyDetail = React.createClass({
           <div className='puppy-details'>
             {['temperament', 'description' ].map((attr) => {
               return (
-                <div>
+                <div key={attr + this.state.puppy.id}>
                   <h1>{attr}</h1>
                   <span key={attr}>{puppy[attr]}</span>
                   <hr/>
@@ -121,7 +121,7 @@ const PuppyDetail = React.createClass({
           </div>
 
           <div className='review-form-container'>
-            <ReviewForm puppy={this.state.puppy} />
+            <ReviewForm key={'review-' + this.state.puppy.id} puppy={this.state.puppy} />
           </div>
         </div>
 
