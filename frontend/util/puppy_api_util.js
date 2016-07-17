@@ -57,7 +57,7 @@ const PuppyApiUtil = {
   deletePuppy(id, cb) {
     $.ajax({
       method: 'DELETE',
-      url: '/api/puppies' + id,
+      url: '/api/puppies/' + id,
       success: function(puppy) {
         cb(puppy);
       }

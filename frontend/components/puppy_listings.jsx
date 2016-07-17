@@ -41,6 +41,10 @@ const PuppyListings = React.createClass({
     PuppyActions.fetchUserPuppies(this.state.currentUser.id);
   },
 
+  removePuppy(puppy) {
+    PuppyActions.deletePuppy(puppy.id);
+  },
+
   render() {
 
     const puppies = this.state.puppies;
@@ -75,7 +79,7 @@ const PuppyListings = React.createClass({
           <div className='user-puppies-index'>
             {this.state.puppies.map(puppy => {
               return (
-                <PuppyIndexItem puppy={puppy} key={puppy.id}/>
+                <PuppyListingItem puppy={puppy} key={puppy.id} removePuppy={this.removePuppy} />
               );
             })}
           </div>

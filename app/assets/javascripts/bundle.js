@@ -37586,7 +37586,7 @@
 	  deletePuppy: function deletePuppy(id, cb) {
 	    $.ajax({
 	      method: 'DELETE',
-	      url: '/api/puppies' + id,
+	      url: '/api/puppies/' + id,
 	      success: function success(puppy) {
 	        cb(puppy);
 	      }
@@ -55954,6 +55954,9 @@
 	  getUserPuppies: function getUserPuppies() {
 	    PuppyActions.fetchUserPuppies(this.state.currentUser.id);
 	  },
+	  removePuppy: function removePuppy(puppy) {
+	    PuppyActions.deletePuppy(puppy.id);
+	  },
 	  render: function render() {
 	    var _this = this;
 
@@ -56020,7 +56023,7 @@
 	          { className: 'user-puppies-index', __self: this
 	          },
 	          this.state.puppies.map(function (puppy) {
-	            return React.createElement(PuppyIndexItem, { puppy: puppy, key: puppy.id, __self: _this
+	            return React.createElement(PuppyListingItem, { puppy: puppy, key: puppy.id, removePuppy: _this.removePuppy, __self: _this
 	            });
 	          })
 	        )
@@ -56042,30 +56045,54 @@
 	var PuppyListingItem = React.createClass({
 	  displayName: 'PuppyListingItem',
 	  render: function render() {
+	    var style = {
+	      backgroundImage: 'url(' + this.props.puppy.image_url + ')',
+	      backgroundRepeat: 'no-repeat',
+	      backgroundSize: 'cover',
+	      backgroundPosition: 'center'
+	    };
+
 	    return React.createElement(
 	      'div',
 	      { className: 'puppy-listing-item', __self: this
 	      },
+	      React.createElement('div', { className: 'puppy-listing-img-container', style: style, __self: this
+	      }),
 	      React.createElement(
-	        'header',
-	        {
-	          __self: this
+	        'div',
+	        { className: 'puppy-listing-info', __self: this
 	        },
-	        this.props.puppy.name
-	      ),
-	      React.createElement(
-	        'section',
-	        {
-	          __self: this
-	        },
-	        React.createElement('img', { onClick: this.redirect, className: 'puppy-listing-item-pic', src: this.props.puppy.image_url, __self: this
-	        }),
 	        React.createElement(
-	          'span',
+	          'h1',
 	          {
 	            __self: this
 	          },
+	          this.props.puppy.name
+	        ),
+	        React.createElement(
+	          'p',
+	          {
+	            __self: this
+	          },
+	          'Breed: ',
 	          this.props.puppy.breed
+	        ),
+	        React.createElement(
+	          'p',
+	          {
+	            __self: this
+	          },
+	          'Temperament: ',
+	          this.props.puppy.temperament
+	        ),
+	        React.createElement(
+	          'button',
+	          {
+	            onClick: this.props.removePuppy.bind(null, this.props.puppy),
+	            id: 'remove-puppy-button',
+	            __self: this
+	          },
+	          'Remove Puppy'
 	        )
 	      )
 	    );

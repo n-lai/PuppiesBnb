@@ -1,18 +1,30 @@
 const React = require('react');
 
 const PuppyListingItem = React.createClass({
+
   render() {
+    const style = {
+      backgroundImage: 'url(' + this.props.puppy.image_url + ')',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+
     return (
       <div className='puppy-listing-item'>
-        <header>
-          {this.props.puppy.name}
-        </header>
-        <section>
-          <img onClick={this.redirect} className='puppy-listing-item-pic' src={this.props.puppy.image_url} />
-          <span>{this.props.puppy.breed}</span>
-        </section>
+        <div className='puppy-listing-img-container' style={style}>
+        </div>
+        <div className='puppy-listing-info'>
+          <h1>{this.props.puppy.name}</h1>
+          <p>Breed: {this.props.puppy.breed}</p>
+          <p>Temperament: {this.props.puppy.temperament}</p>
+          <button
+            onClick={this.props.removePuppy.bind(null, this.props.puppy)}
+            id='remove-puppy-button'
+            >Remove Puppy</button>
+        </div>
       </div>
-    
+
     );
   }
 });
