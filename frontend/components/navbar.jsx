@@ -2,7 +2,6 @@ const React = require('react');
 const HashHistory = require('react-router').hashHistory;
 const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
-const Select = require('react-select');
 
 const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');
@@ -35,9 +34,10 @@ const NavBar = React.createClass({
     this.setState({ modalIsOpen: false });
   },
 
-  _redirectToAccount() {
+  _handleYourPuppiesClick() {
     HashHistory.push('/api/user/puppies');
   },
+
 
   _handleRoot() {
     document.getElementById('searchTextField').value = '';
@@ -48,10 +48,15 @@ const NavBar = React.createClass({
     if (SessionStore.isUserLoggedIn()) {
       return (
         <hgroup className='header-group'>
-          <h3 className='header-name'>Hi, {SessionStore.currentUser().name}!</h3>
-          <button onClick={this.handleOpenModal.bind(this, "Puppy Form")} id='puppy-button'>Add a Puppy</button>
-          <button onClick={this._handleLogout} className='logout-button'>Log Out</button>
-          <button onClick={this._redirectToAccount}>Account</button>
+          <div className='nav-bar-user' id='user-button'>
+            <img src={SessionStore.currentUser().profile_img_url} />
+            <span>{SessionStore.currentUser().name}</span>
+            <ul className='user-menu'>
+              <li onClick={this._handleYourPuppiesClick}>Your Puppies</li>
+              <li onClick={this._handleYourBookingsClick}>Your Bookings</li>
+              <li onClick={this._handleLogout}>Log Out</li>
+            </ul>
+          </div>
         </hgroup>
       );
     } else {

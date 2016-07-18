@@ -445,3 +445,64 @@ hr {
 .missing-puppies h1 {
   font-size: 25px;
 }
+
+.user-menu {
+  display: none;
+  position: absolute;
+  right: 0%;
+  top: 62px;
+}
+
+#user-button:hover .user-menu {
+  display: block;
+
+}
+
+.nav-bar-user {
+  display: flex;
+}
+
+.nav-bar-user img {
+  width: 50px;
+  height: 50px;
+  padding-top: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.nav-bar-user img:hover {
+  opacity: 0.7;
+  transition: 0.5s ease;
+}
+
+.nav-bar-user span {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.nav-bar-user span:hover {
+  opacity: 0.7;
+  transition: 0.5s ease;
+  background-color: lightgrey;
+}
+
+.user-menu li {
+  width: 200px;
+  padding: 20px;
+  background-color: white;
+  border-bottom: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  text-align: center;
+  cursor: pointer;
+}
+
+.user-menu li:hover {
+  background-color: lightgrey;
+  transition: 0.5s ease;
+
+}
+
+.user-menu li:first-child {
+  border-top: 1px solid grey;
+}
