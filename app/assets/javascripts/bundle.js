@@ -56041,9 +56041,14 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(168).hashHistory;
 
 	var PuppyListingItem = React.createClass({
 	  displayName: 'PuppyListingItem',
+	  redirectToPuppy: function redirectToPuppy() {
+	    var puppyId = this.props.puppy.id;
+	    HashHistory.push('/api/puppies/' + puppyId);
+	  },
 	  render: function render() {
 	    var style = {
 	      backgroundImage: 'url(' + this.props.puppy.image_url + ')',
@@ -56056,7 +56061,7 @@
 	      'div',
 	      { className: 'puppy-listing-item', __self: this
 	      },
-	      React.createElement('div', { className: 'puppy-listing-img-container', style: style, __self: this
+	      React.createElement('div', { className: 'puppy-listing-img-container', style: style, onClick: this.redirectToPuppy, __self: this
 	      }),
 	      React.createElement(
 	        'div',

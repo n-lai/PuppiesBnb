@@ -1,6 +1,11 @@
 const React = require('react');
+const HashHistory = require('react-router').hashHistory
 
 const PuppyListingItem = React.createClass({
+  redirectToPuppy() {
+    const puppyId = this.props.puppy.id;
+    HashHistory.push('/api/puppies/' + puppyId);
+  },
 
   render() {
     const style = {
@@ -12,7 +17,7 @@ const PuppyListingItem = React.createClass({
 
     return (
       <div className='puppy-listing-item'>
-        <div className='puppy-listing-img-container' style={style}>
+        <div className='puppy-listing-img-container' style={style} onClick={this.redirectToPuppy}>
         </div>
         <div className='puppy-listing-info'>
           <h1>{this.props.puppy.name}</h1>

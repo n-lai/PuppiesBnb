@@ -9,6 +9,12 @@
 .puppy-listing-img-container {
   width: 50%;
   height: 100%;
+  cursor: pointer;
+}
+
+.puppy-listing-img-container:hover {
+  opacity: 0.7;
+  transition: 0.5s ease;
 }
 
 .puppy-listing-info {
