@@ -64,6 +64,7 @@
 	var PuppyDetail = __webpack_require__(327);
 
 	var PuppyListings = __webpack_require__(442);
+	var UserBookings = __webpack_require__(444);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -95,6 +96,8 @@
 	    React.createElement(Route, { path: '/api/puppies/:puppyId', component: PuppyDetail, __self: undefined
 	    }),
 	    React.createElement(Route, { path: '/api/user/puppies', component: PuppyListings, __self: undefined
+	    }),
+	    React.createElement(Route, { path: '/api/user/bookings', component: UserBookings, __self: undefined
 	    })
 	  )
 	);
@@ -33147,6 +33150,9 @@
 	  _handleYourPuppiesClick: function _handleYourPuppiesClick() {
 	    HashHistory.push('/api/user/puppies');
 	  },
+	  _handleYourBookingsClick: function _handleYourBookingsClick() {
+	    HashHistory.push('/api/user/bookings');
+	  },
 	  _handleRoot: function _handleRoot() {
 	    document.getElementById('searchTextField').value = '';
 	    HashHistory.push('/');
@@ -54626,6 +54632,166 @@
 	});
 
 	module.exports = PuppyListingItem;
+
+/***/ },
+/* 444 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(238);
+	var BookingStore = __webpack_require__(436);
+	var BookingActions = __webpack_require__(438);
+
+	var BookingIndexItem = __webpack_require__(445);
+
+	var UserBookings = React.createClass({
+	  displayName: 'UserBookings',
+	  getInitialState: function getInitialState() {
+	    return { bookings: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.bookingsListener = BookingStore.addListener(this._getBookings);
+	    BookingActions.fetchAllBookings(SessionStore.currentUser().id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.bookingsListener.remove();
+	  },
+	  _getBookings: function _getBookings() {
+	    this.setState({ bookings: BookingStore.all() });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    if (this.state.bookings.length > 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'user-bookings', __self: this
+	        },
+	        React.createElement('div', { className: 'sidebar', __self: this
+	        }),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content', __self: this
+	          },
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
+	            },
+	            'Your Bookings'
+	          ),
+	          React.createElement('hr', {
+	            __self: this
+	          }),
+	          React.createElement(
+	            'ul',
+	            { className: 'user-bookings-index', __self: this
+	            },
+	            this.state.bookings.map(function (booking) {
+	              return React.createElement(BookingIndexItem, { key: booking.id, booking: booking, __self: _this
+	              });
+	            })
+	          )
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        { className: 'user-bookings', __self: this
+	        },
+	        React.createElement('div', { className: 'sidebar', __self: this
+	        }),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content', __self: this
+	          },
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
+	            },
+	            'Your Bookings'
+	          ),
+	          React.createElement('hr', {
+	            __self: this
+	          }),
+	          React.createElement(
+	            'ul',
+	            { className: 'user-bookings-index', __self: this
+	            },
+	            React.createElement(
+	              'div',
+	              { className: 'no-bookings', __self: this
+	              },
+	              'You have no bookings with any puppies. Check out Amsterdam or Sydney to rent some awesome puppies!'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }
+	});
+
+	module.exports = UserBookings;
+
+/***/ },
+/* 445 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(168).hashHistory;
+	var BookingActions = __webpack_require__(438);
+
+	var BookingIndexItem = React.createClass({
+	  displayName: 'BookingIndexItem',
+	  render: function render() {
+	    var startDate = new Date(this.props.booking.start_date);
+	    var endDate = new Date(this.props.booking.end_date);
+
+	    return React.createElement(
+	      'li',
+	      { className: 'booking-listing-item', __self: this
+	      },
+	      React.createElement(
+	        'h1',
+	        {
+	          __self: this
+	        },
+	        this.props.booking.puppy.name
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'booking-listing-info', __self: this
+	        },
+	        React.createElement('img', { onClick: this._redirectToPuppy, className: 'booking-listing-pic', src: this.props.booking.puppy.image_url, __self: this
+	        }),
+	        React.createElement(
+	          'div',
+	          { className: 'booking-text-container', __self: this
+	          },
+	          'Start Date: ',
+	          startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear(),
+	          ' ',
+	          React.createElement('br', {
+	            __self: this
+	          }),
+	          'End Date: ',
+	          endDate.getMonth() + '/' + endDate.getDate() + '/' + endDate.getFullYear(),
+	          ' ',
+	          React.createElement('br', {
+	            __self: this
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = BookingIndexItem;
 
 /***/ }
 /******/ ]);

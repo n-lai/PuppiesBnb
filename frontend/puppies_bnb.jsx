@@ -16,6 +16,7 @@ const PuppyIndex = require('./components/puppy_index');
 const PuppyDetail = require('./components/puppy_detail');
 
 const PuppyListings = require('./components/puppy_listings');
+const UserBookings = require('./components/user_bookings');
 
 
 const App = React.createClass({
@@ -36,6 +37,7 @@ const appRouter = (
       <Route path='/api/puppies' component={Search}/>
       <Route path='/api/puppies/:puppyId' component={PuppyDetail}/>
       <Route path='/api/user/puppies' component={PuppyListings}/>
+      <Route path='/api/user/bookings' component={UserBookings}/>
     </Route>
   </Router>
 );

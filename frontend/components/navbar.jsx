@@ -38,6 +38,9 @@ const NavBar = React.createClass({
     HashHistory.push('/api/user/puppies');
   },
 
+  _handleYourBookingsClick() {
+    HashHistory.push('/api/user/bookings');
+  },
 
   _handleRoot() {
     document.getElementById('searchTextField').value = '';
