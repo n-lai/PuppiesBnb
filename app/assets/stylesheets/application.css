@@ -362,12 +362,12 @@ hr {
 }
 
 .sidebar {
-  width: 30%;
+  width: 10%;
   background-color: white;
 }
 
 .main-content {
-  width: 70%;
+  width: 90%;
   background-color: whitesmoke;
   text-align: center;
   padding-top: 10px;
