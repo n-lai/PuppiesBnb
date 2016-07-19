@@ -8,16 +8,20 @@ const BookingIndexItem = React.createClass({
     const endDate = new Date(this.props.booking.end_date);
 
     return (
-      <li className='booking-listing-item'>
-        <h1>{this.props.booking.puppy.name}</h1>
+      <div className='booking-listing-item'>
+        <div className="booking-pic-wrapper">
+          <img className='booking-pic' onClick={this._redirectToPuppy} width="500px" src={this.props.booking.puppy.image_url} />
+        </div>
         <div className='booking-listing-info'>
-          <img onClick={this._redirectToPuppy} className='booking-listing-pic' src={this.props.booking.puppy.image_url} />
           <div className='booking-text-container'>
-            Start Date: {(startDate.getMonth()) + '/' + startDate.getDate() + '/' + startDate.getFullYear()} <br/>
-            End Date: {(endDate.getMonth()) + '/' + endDate.getDate() + '/' + endDate.getFullYear()} <br/>
+            <h1 className="booking-puppy-name">{this.props.booking.puppy.name}</h1>
+            <div className="booking-dates">
+              Start Date: {(startDate.getMonth()) + '/' + startDate.getDate() + '/' + startDate.getFullYear()} <br/>
+              End Date: {(endDate.getMonth()) + '/' + endDate.getDate() + '/' + endDate.getFullYear()} <br/>
+            </div>
           </div>
         </div>
-      </li>
+      </div>
     );
   }
 });

@@ -1,4 +1,6 @@
 const React = require('react');
+const HashHistory = require('react-router').hashHistory;
+
 
 const Sidebar = React.createClass({
   getInitialState() {

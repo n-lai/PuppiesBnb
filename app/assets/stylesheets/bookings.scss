@@ -64,3 +64,30 @@ div .booking-form-dates {
   width: 100%;
   cursor: pointer;
 }
+
+.user-bookings-index {
+  display: block;
+}
+
+ul.user-bookings-index li {
+  position: relative;
+}
+
+.booking-listing-item {
+  border-radius: 50%;
+  max-width: 30%;
+  margin: 0;
+}
+
+.booking-pic-wrapper {
+  width: 500px;
+}
+
+.booking-pic {
+  width: 100%;
+}
+
+.booking-listing-info {
+  background: #fff;
+  padding: 20px;
+}

@@ -3,6 +3,12 @@ const SessionStore = require('../stores/session_store');
 const BookingStore = require('../stores/booking_store');
 const BookingActions = require('../actions/booking_actions');
 
+const Masonry = require('react-masonry-component');
+const masonryOptions = {
+  isFitWidth: true,
+  gutter: 10
+}
+
 const BookingIndexItem = require('./booking_index_item');
 
 const UserBookings = React.createClass({
@@ -24,6 +30,13 @@ const UserBookings = React.createClass({
   },
 
   render() {
+
+    let bookingItems = this.state.bookings.map(booking => {
+      return (
+        <li><BookingIndexItem key={booking.id} booking={booking} /></li>
+      );
+    });
+
     if (this.state.bookings.length > 0) {
       return(
         <div className='user-bookings'>
@@ -34,13 +47,9 @@ const UserBookings = React.createClass({
           <div className='main-content'>
             <h1>Your Bookings</h1>
             <hr/>
-            <ul className='user-bookings-index'>
-              {this.state.bookings.map(booking => {
-                return (
-                  <BookingIndexItem key={booking.id} booking={booking} />
-                );
-              })}
-            </ul>
+            <Masonry className="user-bookings-index" elementType="ul" options={masonryOptions}>
+              {bookingItems}
+            </Masonry>
           </div>
         </div>
       )
