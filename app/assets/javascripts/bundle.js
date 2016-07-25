@@ -54775,38 +54775,38 @@
 	        { className: 'booking-pic-wrapper', __self: this
 	        },
 	        React.createElement('img', { className: 'booking-pic', onClick: this._redirectToPuppy, width: '500px', src: this.props.booking.puppy.image_url, __self: this
-	        })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'booking-listing-info', __self: this
-	        },
+	        }),
 	        React.createElement(
 	          'div',
-	          { className: 'booking-text-container', __self: this
+	          { className: 'booking-listing-info', __self: this
 	          },
 	          React.createElement(
-	            'h1',
-	            { className: 'booking-puppy-name', __self: this
-	            },
-	            this.props.booking.puppy.name
-	          ),
-	          React.createElement(
 	            'div',
-	            { className: 'booking-dates', __self: this
+	            { className: 'booking-text-container', __self: this
 	            },
-	            'Start Date: ',
-	            startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear(),
-	            ' ',
-	            React.createElement('br', {
-	              __self: this
-	            }),
-	            'End Date: ',
-	            endDate.getMonth() + '/' + endDate.getDate() + '/' + endDate.getFullYear(),
-	            ' ',
-	            React.createElement('br', {
-	              __self: this
-	            })
+	            React.createElement(
+	              'h1',
+	              { className: 'booking-puppy-name', __self: this
+	              },
+	              this.props.booking.puppy.name
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'booking-dates', __self: this
+	              },
+	              'Start Date: ',
+	              startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear(),
+	              ' ',
+	              React.createElement('br', {
+	                __self: this
+	              }),
+	              'End Date: ',
+	              endDate.getMonth() + '/' + endDate.getDate() + '/' + endDate.getFullYear(),
+	              ' ',
+	              React.createElement('br', {
+	                __self: this
+	              })
+	            )
 	          )
 	        )
 	      )

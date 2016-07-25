@@ -368,6 +368,7 @@ hr {
 
 .main-content {
   width: 90%;
+  display: block;
   background-color: whitesmoke;
   text-align: center;
   padding-top: 10px;

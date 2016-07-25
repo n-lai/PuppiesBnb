@@ -66,20 +66,18 @@ div .booking-form-dates {
 }
 
 .user-bookings-index {
-  display: block;
-}
-
-ul.user-bookings-index li {
-  position: relative;
+  margin: auto;
 }
 
 .booking-listing-item {
   border-radius: 50%;
   max-width: 30%;
   margin: 0;
+  margin-bottom: 8px;
 }
 
 .booking-pic-wrapper {
+  position: relative;
   width: 500px;
 }
 
@@ -87,7 +85,26 @@ ul.user-bookings-index li {
   width: 100%;
 }
 
-.booking-listing-info {
-  background: #fff;
-  padding: 20px;
+.booking-pic-wrapper .booking-listing-info {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+}
+
+.booking-pic-wrapper:hover .booking-listing-info {
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.booking-text-container {
+  padding: 100px;
 }
