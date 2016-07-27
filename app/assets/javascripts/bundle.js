@@ -35707,7 +35707,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var that = this;
-	    // this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
 	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.geocoder = new google.maps.Geocoder();
 	    var input = document.getElementById('puppyTextField');
@@ -35718,13 +35718,13 @@
 	    });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    // this.puppyListener.remove();
+	    this.puppyListener.remove();
 	    this.errorListener.remove();
 	    this.autocompleteListener.remove();
 	  },
 	  redirectIfPuppyMade: function redirectIfPuppyMade() {
 	    this.props.close();
-	    HashHistory.push('/api/user/puppies');
+	    // HashHistory.push('/api/user/puppies');
 	  },
 	  fieldErrors: function fieldErrors(field) {
 	    var _this = this;
@@ -54436,7 +54436,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var Masonry = __webpack_require__(438);
+
 	var SessionStore = __webpack_require__(238);
+	var HashHistory = __webpack_require__(168).hashHistory;
 	var PuppyIndexItem = __webpack_require__(316);
 	var PuppyActions = __webpack_require__(287);
 	var PuppyStore = __webpack_require__(285);
@@ -54445,6 +54448,11 @@
 	var ModalStyles = __webpack_require__(279);
 
 	var PuppyListingItem = __webpack_require__(436);
+
+	var masonryOptions = {
+	  isFitWidth: true,
+	  gutter: 10
+	};
 
 	var PuppyListings = React.createClass({
 	  displayName: 'PuppyListings',
@@ -54457,6 +54465,7 @@
 	  },
 	  handleCloseModal: function handleCloseModal() {
 	    this.setState({ modalIsOpen: false });
+	    document.location.reload();
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.puppyListener = PuppyStore.addListener(this.getPuppies);
@@ -54496,59 +54505,114 @@
 	        Modal,
 	        { isOpen: this.state.modalIsOpen, onRequestClose: this.handleCloseModal, style: ModalStyles, className: 'modal', __self: this
 	        },
-	        React.createElement(PuppyForm, {
-	          __self: this
+	        React.createElement(PuppyForm, { close: this.handleCloseModal, __self: this
 	        })
 	      );
 	    }
 
-	    return React.createElement(
-	      'div',
-	      { className: 'user-puppies', __self: this
-	      },
-	      React.createElement(
-	        'div',
-	        { className: 'sidebar', __self: this
+	    var puppyItems = this.state.puppies.map(function (puppy) {
+	      return React.createElement(
+	        'li',
+	        {
+	          __self: _this
 	        },
-	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.handleOpenModal,
-	            id: 'puppy-form',
-	            __self: this
-	          },
-	          'Add a Puppy'
-	        ),
-	        modal
-	      ),
-	      React.createElement(
+	        React.createElement(PuppyListingItem, { key: puppy.id, puppy: puppy, removePuppy: _this.removePuppy, __self: _this
+	        })
+	      );
+	    });
+
+	    if (this.state.puppies.length > 0) {
+	      return React.createElement(
 	        'div',
-	        { className: 'main-content', __self: this
+	        { className: 'user-bookings', __self: this
 	        },
-	        React.createElement(
-	          'h1',
-	          {
-	            __self: this
-	          },
-	          'Your Puppies'
-	        ),
-	        React.createElement('hr', {
-	          __self: this
-	        }),
 	        React.createElement(
 	          'div',
-	          { className: 'user-puppies-index', __self: this
+	          { className: 'sidebar', __self: this
 	          },
-	          this.state.puppies.map(function (puppy) {
-	            return React.createElement(PuppyListingItem, { puppy: puppy, key: puppy.id, removePuppy: _this.removePuppy, __self: _this
-	            });
-	          })
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal,
+	              id: 'puppy-form',
+	              __self: this
+	            },
+	            'Add a Puppy'
+	          ),
+	          modal
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content', __self: this
+	          },
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
+	            },
+	            'Your Puppies'
+	          ),
+	          React.createElement('hr', {
+	            __self: this
+	          }),
+	          React.createElement(
+	            Masonry,
+	            { className: 'user-bookings-index', elementType: 'ul', options: masonryOptions, __self: this
+	            },
+	            puppyItems
+	          )
 	        )
-	      )
-	    );
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        { className: 'user-bookings', __self: this
+	        },
+	        React.createElement(
+	          'div',
+	          { className: 'sidebar', __self: this
+	          },
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal,
+	              id: 'puppy-form',
+	              __self: this
+	            },
+	            'Add a Puppy'
+	          ),
+	          modal
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content', __self: this
+	          },
+	          React.createElement(
+	            'h1',
+	            {
+	              __self: this
+	            },
+	            'Your Puppies'
+	          ),
+	          React.createElement('hr', {
+	            __self: this
+	          }),
+	          React.createElement(
+	            'ul',
+	            { className: 'user-bookings-index', __self: this
+	            },
+	            React.createElement(
+	              'div',
+	              { className: 'no-bookings', __self: this
+	              },
+	              'You have no puppies. Add one today!'
+	            )
+	          )
+	        )
+	      );
+	    }
 	  }
 	});
-
 	module.exports = PuppyListings;
 
 /***/ },
@@ -54562,63 +54626,67 @@
 
 	var PuppyListingItem = React.createClass({
 	  displayName: 'PuppyListingItem',
-	  redirectToPuppy: function redirectToPuppy() {
+	  _removePuppy: function _removePuppy(e) {
+	    e.stopPropagation();
+
+	    this.props.removePuppy(this.props.puppy);
+	  },
+	  _redirectToPuppy: function _redirectToPuppy() {
 	    var puppyId = this.props.puppy.id;
 	    HashHistory.push('/api/puppies/' + puppyId);
 	  },
 	  render: function render() {
-	    var style = {
-	      backgroundImage: 'url(' + this.props.puppy.image_url + ')',
-	      backgroundRepeat: 'no-repeat',
-	      backgroundSize: 'cover',
-	      backgroundPosition: 'center'
-	    };
 
 	    return React.createElement(
 	      'div',
 	      { className: 'puppy-listing-item', __self: this
 	      },
-	      React.createElement('div', { className: 'puppy-listing-img-container', style: style, onClick: this.redirectToPuppy, __self: this
-	      }),
 	      React.createElement(
 	        'div',
-	        { className: 'puppy-listing-info', __self: this
+	        { className: 'listing-pic-wrapper', onClick: this._redirectToPuppy, __self: this
 	        },
-	        React.createElement(
-	          'h1',
-	          {
-	            __self: this
-	          },
-	          this.props.puppy.name
-	        ),
+	        React.createElement('img', { className: 'listing-pic', width: '500px', src: this.props.puppy.image_url, __self: this
+	        }),
 	        React.createElement(
 	          'div',
-	          { className: 'puppy-listing-info-details', __self: this
+	          { className: 'puppy-listing-info', __self: this
 	          },
 	          React.createElement(
-	            'p',
-	            {
-	              __self: this
+	            'div',
+	            { className: 'listing-text-container', __self: this
 	            },
-	            'Breed: ',
-	            this.props.puppy.breed.replace(/_/g, " ")
-	          ),
-	          React.createElement(
-	            'p',
-	            {
-	              __self: this
-	            },
-	            'Temperament: ',
-	            this.props.puppy.temperament
-	          ),
-	          React.createElement(
-	            'button',
-	            {
-	              onClick: this.props.removePuppy.bind(null, this.props.puppy),
-	              id: 'remove-puppy-button',
-	              __self: this
-	            },
-	            'Remove Puppy'
+	            React.createElement(
+	              'h1',
+	              { className: 'listing-puppy-name', __self: this
+	              },
+	              this.props.puppy.name
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'listing-info', __self: this
+	              },
+	              'Breed: ',
+	              this.props.puppy.breed.replace(/_/g, " "),
+	              ' ',
+	              React.createElement('br', {
+	                __self: this
+	              }),
+	              'Temperament: ',
+	              this.props.puppy.temperament,
+	              ' ',
+	              React.createElement('br', {
+	                __self: this
+	              }),
+	              React.createElement(
+	                'button',
+	                {
+	                  onClick: this._removePuppy,
+	                  className: 'remove-puppy-button',
+	                  __self: this
+	                },
+	                'Remove Puppy'
+	              )
+	            )
 	          )
 	        )
 	      )

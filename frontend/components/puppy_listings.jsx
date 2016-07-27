@@ -1,5 +1,8 @@
 const React = require('react');
+const Masonry = require('react-masonry-component');
+
 const SessionStore = require('../stores/session_store');
+const HashHistory = require('react-router').hashHistory;
 const PuppyIndexItem = require('./puppy_index_item');
 const PuppyActions = require('../actions/puppy_actions');
 const PuppyStore = require('../stores/puppy_store');
@@ -8,6 +11,11 @@ const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
 
 const PuppyListingItem = require('./puppy_listing_item');
+
+const masonryOptions = {
+  isFitWidth: true,
+  gutter: 10
+}
 
 const PuppyListings = React.createClass({
   getInitialState() {
@@ -21,7 +29,8 @@ const PuppyListings = React.createClass({
 
   handleCloseModal() {
     this.setState({ modalIsOpen: false });
-  },
+    document.location.reload();
+    },
 
 
   componentDidMount() {
@@ -58,35 +67,62 @@ const PuppyListings = React.createClass({
     if (this.state.modalIsOpen) {
       modal = (
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.handleCloseModal} style={ModalStyles} className='modal'>
-          <PuppyForm />
+          <PuppyForm close={this.handleCloseModal} />
         </Modal>
       );
     }
 
-    return (
-      <div className='user-puppies'>
-        <div className='sidebar'>
-          <button
-            onClick={this.handleOpenModal}
-            id='puppy-form'
-            >Add a Puppy</button>
-          {modal}
-        </div>
+    let puppyItems = this.state.puppies.map(puppy => {
+      return (
+        <li><PuppyListingItem key={puppy.id} puppy={puppy} removePuppy={this.removePuppy}/></li>
+      );
+    })
 
-        <div className='main-content'>
-          <h1>Your Puppies</h1>
-          <hr/>
-          <div className='user-puppies-index'>
-            {this.state.puppies.map(puppy => {
-              return (
-                <PuppyListingItem puppy={puppy} key={puppy.id} removePuppy={this.removePuppy} />
-              );
-            })}
+    if (this.state.puppies.length > 0) {
+      return(
+        <div className='user-bookings'>
+          <div className='sidebar'>
+            <button
+              onClick={this.handleOpenModal}
+              id='puppy-form'
+              >Add a Puppy</button>
+            {modal}
+          </div>
+
+          <div className='main-content'>
+            <h1>Your Puppies</h1>
+            <hr/>
+            <Masonry className="user-bookings-index" elementType="ul" options={masonryOptions}>
+              {puppyItems}
+            </Masonry>
           </div>
         </div>
-      </div>
-    );
+      )
+    } else {
+      return (
+        <div className='user-bookings'>
+          <div className='sidebar'>
+            <button
+              onClick={this.handleOpenModal}
+              id='puppy-form'
+              >Add a Puppy</button>
+            {modal}
+          </div>
+          <div className='main-content'>
+            <h1>Your Puppies</h1>
+            <hr/>
+            <ul className='user-bookings-index'>
+              <div className='no-bookings'>
+                You have no puppies. Add one today!
+              </div>
+            </ul>
+        </div>
+
+        </div>
+      );
+    }
+
+
   }
 });
-
 module.exports = PuppyListings;

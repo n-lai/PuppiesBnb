@@ -21,7 +21,7 @@ const PuppyForm = React.createClass({
 
   componentDidMount() {
     const that = this;
-    // this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
     this.geocoder = new google.maps.Geocoder();
     const input = document.getElementById('puppyTextField');
@@ -34,14 +34,14 @@ const PuppyForm = React.createClass({
   },
 
   componentWillUnmount() {
-    // this.puppyListener.remove();
+    this.puppyListener.remove();
     this.errorListener.remove();
     this.autocompleteListener.remove();
   },
 
   redirectIfPuppyMade() {
     this.props.close();
-    HashHistory.push('/api/user/puppies');
+    // HashHistory.push('/api/user/puppies');
   },
 
   fieldErrors(field) {
