@@ -3,14 +3,18 @@ const HashHistory = require('react-router').hashHistory;
 const BookingActions = require('../actions/booking_actions');
 
 const BookingIndexItem = React.createClass({
+  _redirectToPuppy() {
+    HashHistory.push('/api/puppies/' + this.props.booking.puppy.id);
+  },
+
   render() {
     const startDate = new Date(this.props.booking.start_date);
     const endDate = new Date(this.props.booking.end_date);
 
     return (
       <div className='booking-listing-item'>
-        <div className="booking-pic-wrapper">
-          <img className='booking-pic' onClick={this._redirectToPuppy} width="500px" src={this.props.booking.puppy.image_url} />
+        <div className="booking-pic-wrapper" onClick={this._redirectToPuppy}>
+          <img className='booking-pic' width="500px" src={this.props.booking.puppy.image_url} />
 
           <div className='booking-listing-info'>
             <div className='booking-text-container'>

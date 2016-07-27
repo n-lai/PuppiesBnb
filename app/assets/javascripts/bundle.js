@@ -61385,6 +61385,9 @@
 
 	var BookingIndexItem = React.createClass({
 	  displayName: 'BookingIndexItem',
+	  _redirectToPuppy: function _redirectToPuppy() {
+	    HashHistory.push('/api/puppies/' + this.props.booking.puppy.id);
+	  },
 	  render: function render() {
 	    var startDate = new Date(this.props.booking.start_date);
 	    var endDate = new Date(this.props.booking.end_date);
@@ -61395,9 +61398,9 @@
 	      },
 	      React.createElement(
 	        'div',
-	        { className: 'booking-pic-wrapper', __self: this
+	        { className: 'booking-pic-wrapper', onClick: this._redirectToPuppy, __self: this
 	        },
-	        React.createElement('img', { className: 'booking-pic', onClick: this._redirectToPuppy, width: '500px', src: this.props.booking.puppy.image_url, __self: this
+	        React.createElement('img', { className: 'booking-pic', width: '500px', src: this.props.booking.puppy.image_url, __self: this
 	        }),
 	        React.createElement(
 	          'div',
