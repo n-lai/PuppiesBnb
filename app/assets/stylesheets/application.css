@@ -125,8 +125,8 @@ li.errors {
 }
 
 .map {
-  width: 40%;
-  height: calc(100% - 62px);
+  width: 100%;
+  height: 100%;
   margin-left: 10px;
   position: fixed;
 }
@@ -136,7 +136,7 @@ li.errors {
   justify-content: space-between;
   margin: 0px 25px;
   padding-top: 62px;
-  height: 100%;
+  height: calc(100% - 62px);
 }
 
 .map-picture {
@@ -149,9 +149,8 @@ li.errors {
 }
 
 .map-box {
-  position: fixed;
   height: 100%;
-  width: 100%;
+  width: 40%;
 }
 
 .booking-form-container {
@@ -159,8 +158,6 @@ li.errors {
   top: 90%;
   right: 7%;
 }
-
-
 
 .header-group {
   display: flex;
@@ -191,8 +188,16 @@ li.errors {
 }
 
 .search-params {
-  margin-bottom: 20px;
   width: 100%;
+  height: 20%;
+
+}
+
+.search-params ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 70%;
 }
 
 .slider {
@@ -242,6 +247,7 @@ li.errors {
   margin: 0px 20px;
   padding: 10px 0px;
   border: 3px solid #c4x4x4;
+  display: flex;
 }
 
 .search-params li {
@@ -510,4 +516,13 @@ hr {
 
 .user-menu li:first-child {
   border-top: 1px solid grey;
+}
+
+.search-icon {
+  background-image: url('http://res.cloudinary.com/dl8lhjvx0/image/upload/v1469640029/Search-64x64_gix3la.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: auto;
+  height: 50%;
+  width: 3%;
 }

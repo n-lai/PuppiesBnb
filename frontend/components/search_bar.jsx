@@ -37,6 +37,8 @@ const SearchBar = React.createClass({
   render() {
     return (
       <div className='search-bar-container'>
+        <div className='search-icon'>
+        </div>
         <input
           ref='searchField'
           id='searchTextField'
