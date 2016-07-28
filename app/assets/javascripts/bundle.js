@@ -60983,18 +60983,18 @@
 	              React.createElement(
 	                'button',
 	                {
-	                  onClick: this._removePuppy,
-	                  className: 'remove-puppy-button'
-	                },
-	                'Remove Puppy'
-	              ),
-	              React.createElement(
-	                'button',
-	                {
 	                  onClick: this._editPuppy,
 	                  className: 'edit-puppy-button'
 	                },
 	                'Edit Puppy'
+	              ),
+	              React.createElement(
+	                'button',
+	                {
+	                  onClick: this._removePuppy,
+	                  className: 'remove-puppy-button'
+	                },
+	                'Remove Puppy'
 	              )
 	            )
 	          )

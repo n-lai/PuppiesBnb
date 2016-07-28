@@ -368,12 +368,12 @@ hr {
 }
 
 .sidebar {
-  width: 10%;
+  width: 15%;
   background-color: white;
 }
 
 .main-content {
-  width: 90%;
+  width: 85%;
   display: block;
   background-color: whitesmoke;
   text-align: center;
@@ -527,6 +527,6 @@ hr {
   width: 3%;
 }
 
-#remove-puppy-button {
-  z-index: 200;
+.edit-puppy-button {
+  margin-right: 5px;
 }

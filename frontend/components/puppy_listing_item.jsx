@@ -33,13 +33,13 @@ const PuppyListingItem = React.createClass({
                 Breed: {this.props.puppy.breed.replace(/_/g, " ")} <br/>
                 Temperament: {this.props.puppy.temperament} <br/>
                 <button
+                  onClick={this._editPuppy}
+                  className='edit-puppy-button'
+                  >Edit Puppy</button>
+                <button
                   onClick={this._removePuppy}
                   className='remove-puppy-button'
                   >Remove Puppy</button>
-                <button
-                  onClick={this._editPuppy}
-                  className='edit-puppy-button'
-                >Edit Puppy</button>
               </div>
             </div>
           </div>
