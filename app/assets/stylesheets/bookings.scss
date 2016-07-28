@@ -69,24 +69,24 @@ div .booking-form-dates {
   margin: auto;
 }
 
-.booking-listing-item {
+.booking-listing-item, .puppy-listing-item {
   border-radius: 50%;
   max-width: 30%;
   margin: 0;
   margin-bottom: 8px;
 }
 
-.booking-pic-wrapper {
+.booking-pic-wrapper, .listing-pic-wrapper {
   position: relative;
   width: 500px;
   cursor: pointer;
 }
 
-.booking-pic {
+.booking-pic, .listing-pic {
   width: 100%;
 }
 
-.booking-pic-wrapper .booking-listing-info {
+.booking-pic-wrapper .booking-listing-info, .listing-pic-wrapper .puppy-listing-info{
   position: absolute;
   bottom: 0;
   top: 0;
@@ -101,11 +101,11 @@ div .booking-form-dates {
   -webkit-transition: opacity .25s ease-in-out;
 }
 
-.booking-pic-wrapper:hover .booking-listing-info {
+.booking-pic-wrapper:hover .booking-listing-info, .listing-pic-wrapper:hover .puppy-listing-info {
   display: block;
   background: rgba(0, 0, 0, 0.6);
 }
 
-.booking-text-container {
+.booking-text-container, .listing-text-container {
   padding: 100px;
 }

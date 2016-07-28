@@ -33872,7 +33872,6 @@
 
 	var LoginForm = __webpack_require__(285);
 	var SignupForm = __webpack_require__(287);
-	var PuppyForm = __webpack_require__(289);
 
 	var SearchBar = __webpack_require__(294);
 
@@ -33976,9 +33975,8 @@
 	      component = React.createElement(LoginForm, { close: this.handleCloseModal });
 	    } else if (this.state.modal === "Sign Up") {
 	      component = React.createElement(SignupForm, { close: this.handleCloseModal });
-	    } else if (this.state.modal === "Puppy Form") {
-	      component = React.createElement(PuppyForm, { close: this.handleCloseModal });
 	    }
+
 	    var modal = void 0;
 
 	    if (this.state.modalIsOpen) {
@@ -36398,7 +36396,6 @@
 	var ErrorStore = __webpack_require__(286);
 	var PuppyActions = __webpack_require__(292);
 	var ErrorActions = __webpack_require__(261);
-	var hashHistory = __webpack_require__(172).hashHistory;
 	var UploadButton = __webpack_require__(288);
 	var SearchBar = __webpack_require__(294);
 
@@ -36414,7 +36411,7 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var that = this;
-	    // this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
 	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 	    this.geocoder = new google.maps.Geocoder();
 	    var input = document.getElementById('puppyTextField');
@@ -36425,13 +36422,13 @@
 	    });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    // this.puppyListener.remove();
+	    this.puppyListener.remove();
 	    this.errorListener.remove();
 	    this.autocompleteListener.remove();
 	  },
 	  redirectIfPuppyMade: function redirectIfPuppyMade() {
 	    this.props.close();
-	    HashHistory.push('/api/user/puppies');
+	    document.location.reload();
 	  },
 	  fieldErrors: function fieldErrors(field) {
 	    var errors = ErrorStore.formErrors("puppy");
@@ -54994,24 +54991,33 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var Masonry = __webpack_require__(441);
+
 	var SessionStore = __webpack_require__(243);
+	var HashHistory = __webpack_require__(172).hashHistory;
 	var PuppyIndexItem = __webpack_require__(321);
 	var PuppyActions = __webpack_require__(292);
 	var PuppyStore = __webpack_require__(290);
 	var PuppyForm = __webpack_require__(289);
+	var EditPuppyForm = __webpack_require__(453);
 	var Modal = __webpack_require__(264);
 	var ModalStyles = __webpack_require__(284);
 
 	var PuppyListingItem = __webpack_require__(454);
 
+	var masonryOptions = {
+	  isFitWidth: true,
+	  gutter: 10
+	};
+
 	var PuppyListings = React.createClass({
 	  displayName: 'PuppyListings',
 	  getInitialState: function getInitialState() {
 	    Modal.setAppElement('body');
-	    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false };
+	    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false, modal: "", puppyId: null };
 	  },
-	  handleOpenModal: function handleOpenModal() {
-	    this.setState({ modalIsOpen: true });
+	  handleOpenModal: function handleOpenModal(modal, puppyId) {
+	    this.setState({ modalIsOpen: true, modal: modal, puppyId: puppyId });
 	  },
 	  handleCloseModal: function handleCloseModal() {
 	    this.setState({ modalIsOpen: false });
@@ -55035,6 +55041,14 @@
 	  render: function render() {
 	    var _this = this;
 
+	    var component = void 0;
+
+	    if (this.state.modal === "Puppy Form") {
+	      component = React.createElement(PuppyForm, { close: this.handleCloseModal });
+	    } else if (this.state.modal === "Edit Puppy Form") {
+	      component = React.createElement(EditPuppyForm, { puppyId: this.state.puppyId, close: this.handleCloseModal });
+	    }
+
 	    var puppies = this.state.puppies;
 
 	    if (Object.keys(puppies).length === 0 && puppies.constructor === Object) {
@@ -55051,47 +55065,91 @@
 	      modal = React.createElement(
 	        Modal,
 	        { isOpen: this.state.modalIsOpen, onRequestClose: this.handleCloseModal, style: ModalStyles, className: 'modal' },
-	        React.createElement(PuppyForm, null)
+	        component
 	      );
 	    }
 
-	    return React.createElement(
-	      'div',
-	      { className: 'user-puppies' },
-	      React.createElement(
+	    var puppyItems = this.state.puppies.map(function (puppy) {
+	      return React.createElement(
+	        'li',
+	        { key: 'l' + puppy.id },
+	        React.createElement(PuppyListingItem, { puppy: puppy, editPuppy: _this.handleOpenModal.bind(_this, "Edit Puppy Form", puppy.id), removePuppy: _this.removePuppy })
+	      );
+	    });
+
+	    if (this.state.puppies.length > 0) {
+	      return React.createElement(
 	        'div',
-	        { className: 'sidebar' },
-	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.handleOpenModal,
-	            id: 'puppy-form'
-	          },
-	          'Add a Puppy'
-	        ),
-	        modal
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'main-content' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Your Puppies'
-	        ),
-	        React.createElement('hr', null),
+	        { className: 'user-bookings' },
 	        React.createElement(
 	          'div',
-	          { className: 'user-puppies-index' },
-	          this.state.puppies.map(function (puppy) {
-	            return React.createElement(PuppyListingItem, { puppy: puppy, key: puppy.id, removePuppy: _this.removePuppy });
-	          })
+	          { className: 'sidebar' },
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal.bind(this, "Puppy Form"),
+	              id: 'puppy-form'
+	            },
+	            'Add a Puppy'
+	          ),
+	          modal
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            'Your Puppies'
+	          ),
+	          React.createElement('hr', null),
+	          React.createElement(
+	            Masonry,
+	            { className: 'user-bookings-index', elementType: 'ul', options: masonryOptions },
+	            puppyItems
+	          )
 	        )
-	      )
-	    );
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        { className: 'user-bookings' },
+	        React.createElement(
+	          'div',
+	          { className: 'sidebar' },
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: this.handleOpenModal,
+	              id: 'puppy-form'
+	            },
+	            'Add a Puppy'
+	          ),
+	          modal
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'main-content' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            'Your Puppies'
+	          ),
+	          React.createElement('hr', null),
+	          React.createElement(
+	            'ul',
+	            { className: 'user-bookings-index' },
+	            React.createElement(
+	              'div',
+	              { className: 'no-bookings' },
+	              'You have no puppies. Add one today!'
+	            )
+	          )
+	        )
+	      );
+	    }
 	  }
 	});
-
 	module.exports = PuppyListings;
 
 /***/ },
@@ -60694,7 +60752,179 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 453 */,
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(172).hashHistory;
+
+	var PuppyStore = __webpack_require__(290);
+	var PuppyActions = __webpack_require__(292);
+
+	var ErrorStore = __webpack_require__(286);
+	var ErrorActions = __webpack_require__(261);
+	var UploadButton = __webpack_require__(288);
+	var SearchBar = __webpack_require__(294);
+
+	var PuppyEditForm = React.createClass({
+	  displayName: 'PuppyEditForm',
+	  getInitialState: function getInitialState() {
+	    var potential = PuppyStore.find(this.props.puppyId);
+	    var puppy = potential ? potential : {};
+
+	    return {
+	      name: puppy.name,
+	      breed: puppy.breed,
+	      temperament: puppy.temperament,
+	      description: puppy.description,
+	      lat: puppy.lat,
+	      lng: puppy.lng,
+	      price: puppy.price,
+	      owner_id: puppy.owner_id,
+	      image_url: puppy.image_url,
+	      buttonText: ['blank', 'Upload Puppy Picture']
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.puppyListener = PuppyStore.addListener(this._handleChange);
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
+	    this.errorListener.remove();
+	  },
+	  _handleChange: function _handleChange() {
+	    var potential = PuppyStore.find(this.props.puppyId);
+	    var puppy = potential ? potential : {};
+
+	    this.setState({
+	      name: puppy.name,
+	      breed: puppy.breed,
+	      temperament: puppy.temperament,
+	      description: puppy.description,
+	      price: puppy.price
+
+	    });
+
+	    this.props.close();
+	    HashHistory.push('api/puppies/' + this.props.puppyId);
+	  },
+	  fieldErrors: function fieldErrors(field) {
+	    var errors = ErrorStore.formErrors("puppy");
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i, className: 'errors' },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  update: function update(property) {
+	    var _this = this;
+
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  updateUrl: function updateUrl(url) {
+	    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
+
+	    var puppyData = {
+	      id: this.props.puppyId,
+	      name: this.state.name,
+	      breed: this.state.breed,
+	      lat: this.state.lat,
+	      lng: this.state.lng,
+	      description: this.state.description,
+	      temperament: this.state.temperament,
+	      owner_id: this.state.owner_id,
+	      price: parseInt(this.state.price),
+	      image_url: this.state.image_url
+	    };
+
+	    PuppyActions.editPuppy(puppyData);
+	    ErrorActions.clearErrors();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.fieldErrors('base'),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, className: 'form' },
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Name',
+	          value: this.state.name,
+	          onChange: this.update("name"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Breed',
+	          value: this.state.breed,
+	          onChange: this.update("breed"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          ref: 'searchField',
+	          id: 'puppyTextField',
+	          type: 'text',
+	          placeholder: 'Enter an Address',
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Temperament',
+	          value: this.state.temperament,
+	          onChange: this.update("temperament"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'number',
+	          placeholder: 'Price per day',
+	          value: this.state.price,
+	          onChange: this.update("price"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('textarea', {
+	          placeholder: 'Description',
+	          value: this.state.description,
+	          onChange: this.update("description"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonText: this.state.buttonText }),
+	        React.createElement(
+	          'button',
+	          { type: 'submit', className: 'login-form-button' },
+	          'Edit Puppy'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PuppyEditForm;
+
+/***/ },
 /* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -60705,52 +60935,68 @@
 
 	var PuppyListingItem = React.createClass({
 	  displayName: 'PuppyListingItem',
-	  redirectToPuppy: function redirectToPuppy() {
+	  _removePuppy: function _removePuppy(e) {
+	    e.stopPropagation();
+
+	    this.props.removePuppy(this.props.puppy);
+	  },
+	  _editPuppy: function _editPuppy(e) {
+	    e.stopPropagation();
+
+	    this.props.editPuppy();
+	  },
+	  _redirectToPuppy: function _redirectToPuppy() {
 	    var puppyId = this.props.puppy.id;
 	    HashHistory.push('/api/puppies/' + puppyId);
 	  },
 	  render: function render() {
-	    var style = {
-	      backgroundImage: 'url(' + this.props.puppy.image_url + ')',
-	      backgroundRepeat: 'no-repeat',
-	      backgroundSize: 'cover',
-	      backgroundPosition: 'center'
-	    };
 
 	    return React.createElement(
 	      'div',
 	      { className: 'puppy-listing-item' },
-	      React.createElement('div', { className: 'puppy-listing-img-container', style: style, onClick: this.redirectToPuppy }),
 	      React.createElement(
 	        'div',
-	        { className: 'puppy-listing-info' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          this.props.puppy.name
-	        ),
+	        { className: 'listing-pic-wrapper', onClick: this._redirectToPuppy },
+	        React.createElement('img', { className: 'listing-pic', width: '500px', src: this.props.puppy.image_url }),
 	        React.createElement(
 	          'div',
-	          { className: 'puppy-listing-info-details' },
+	          { className: 'puppy-listing-info' },
 	          React.createElement(
-	            'p',
-	            null,
-	            'Breed: ',
-	            this.props.puppy.breed.replace(/_/g, " ")
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            'Temperament: ',
-	            this.props.puppy.temperament
-	          ),
-	          React.createElement(
-	            'button',
-	            {
-	              onClick: this.props.removePuppy.bind(null, this.props.puppy),
-	              id: 'remove-puppy-button'
-	            },
-	            'Remove Puppy'
+	            'div',
+	            { className: 'listing-text-container' },
+	            React.createElement(
+	              'h1',
+	              { className: 'listing-puppy-name' },
+	              this.props.puppy.name
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'listing-info' },
+	              'Breed: ',
+	              this.props.puppy.breed.replace(/_/g, " "),
+	              ' ',
+	              React.createElement('br', null),
+	              'Temperament: ',
+	              this.props.puppy.temperament,
+	              ' ',
+	              React.createElement('br', null),
+	              React.createElement(
+	                'button',
+	                {
+	                  onClick: this._removePuppy,
+	                  className: 'remove-puppy-button'
+	                },
+	                'Remove Puppy'
+	              ),
+	              React.createElement(
+	                'button',
+	                {
+	                  onClick: this._editPuppy,
+	                  className: 'edit-puppy-button'
+	                },
+	                'Edit Puppy'
+	              )
+	            )
 	          )
 	        )
 	      )
@@ -60799,8 +61045,8 @@
 	    var bookingItems = this.state.bookings.map(function (booking) {
 	      return React.createElement(
 	        'li',
-	        null,
-	        React.createElement(BookingIndexItem, { key: booking.id, booking: booking })
+	        { key: 'b' + booking.id },
+	        React.createElement(BookingIndexItem, { booking: booking })
 	      );
 	    });
 

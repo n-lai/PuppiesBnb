@@ -526,3 +526,7 @@ hr {
   height: 50%;
   width: 3%;
 }
+
+#remove-puppy-button {
+  z-index: 200;
+}

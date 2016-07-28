@@ -5,7 +5,6 @@ const ModalStyles = require('../styles/modal_styles');
 
 const LoginForm = require('./login_form');
 const SignupForm = require('./signup_form');
-const PuppyForm = require ('./puppy_form');
 
 const SearchBar = require('./search_bar');
 
@@ -88,9 +87,8 @@ const NavBar = React.createClass({
       component = <LoginForm close={this.handleCloseModal}/>;
     } else if (this.state.modal === "Sign Up") {
       component = <SignupForm close={this.handleCloseModal}/>;
-    } else if (this.state.modal === "Puppy Form"){
-      component = <PuppyForm close={this.handleCloseModal}/>;
     }
+
     let modal;
 
     if (this.state.modalIsOpen) {
