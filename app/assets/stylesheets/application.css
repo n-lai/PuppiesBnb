@@ -529,4 +529,9 @@ hr {
 
 .edit-puppy-button {
   margin-right: 5px;
+  color: white;
+}
+
+.remove-puppy-button {
+  color: white;
 }
