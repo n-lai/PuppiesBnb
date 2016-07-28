@@ -8,6 +8,12 @@ const PuppyListingItem = React.createClass({
     this.props.removePuppy(this.props.puppy);
   },
 
+  _editPuppy(e) {
+    e.stopPropagation();
+
+    this.props.editPuppy();
+  },
+
   _redirectToPuppy() {
     const puppyId = this.props.puppy.id;
     HashHistory.push('/api/puppies/' + puppyId);
@@ -30,6 +36,10 @@ const PuppyListingItem = React.createClass({
                   onClick={this._removePuppy}
                   className='remove-puppy-button'
                   >Remove Puppy</button>
+                <button
+                  onClick={this._editPuppy}
+                  className='edit-puppy-button'
+                >Edit Puppy</button>
               </div>
             </div>
           </div>

@@ -1,46 +1,59 @@
 const React = require('react');
 const HashHistory = require('react-router').hashHistory;
-const Link = require('react-router').Link;
+
 const PuppyStore = require('../stores/puppy_store');
-const SessionStore = require('../stores/session_store')
-const ErrorStore = require('../stores/error_store');
 const PuppyActions = require('../actions/puppy_actions');
+
+const ErrorStore = require('../stores/error_store');
 const ErrorActions = require('../actions/error_actions');
 const UploadButton = require('./upload_button');
 const SearchBar = require('./search_bar');
 
-const PuppyForm = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
 
+const PuppyEditForm = React.createClass({
   getInitialState() {
-    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "", buttonText: ['blank', 'Upload Puppy Picture']}
+    let potential = PuppyStore.find(this.props.puppyId);
+    let puppy = potential ? potential : {};
+
+    return ({
+      name: puppy.name,
+      breed: puppy.breed,
+      temperament: puppy.temperament,
+      description: puppy.description,
+      lat: puppy.lat,
+      lng: puppy.lng,
+      price: puppy.price,
+      owner_id: puppy.owner_id,
+      image_url: puppy.image_url,
+      buttonText: ['blank', 'Upload Puppy Picture']
+    });
   },
 
   componentDidMount() {
-    const that = this;
-    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+    this.puppyListener = PuppyStore.addListener(this._handleChange);
     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-    this.geocoder = new google.maps.Geocoder();
-    const input = document.getElementById('puppyTextField');
-    const autocomplete = new google.maps.places.Autocomplete(input);
-    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', () => {
-      const address = autocomplete.getPlace();
-      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng()})
-    });
-
   },
 
   componentWillUnmount() {
     this.puppyListener.remove();
     this.errorListener.remove();
-    this.autocompleteListener.remove();
   },
 
-  redirectIfPuppyMade() {
+  _handleChange() {
+    let potential = PuppyStore.find(this.props.puppyId);
+    let puppy = potential ? potential : {};
+
+    this.setState({
+      name: puppy.name,
+      breed: puppy.breed,
+      temperament: puppy.temperament,
+      description: puppy.description,
+      price: puppy.price,
+
+    });
+
     this.props.close();
-    document.location.reload();
+    HashHistory.push('api/puppies/' + this.props.puppyId);
   },
 
   fieldErrors(field) {
@@ -66,6 +79,7 @@ const PuppyForm = React.createClass({
     e.preventDefault();
 
     const puppyData = {
+      id: this.props.puppyId,
       name: this.state.name,
       breed: this.state.breed,
       lat: this.state.lat,
@@ -77,8 +91,9 @@ const PuppyForm = React.createClass({
       image_url: this.state.image_url
     };
 
-    PuppyActions.createPuppy(puppyData, this.redirectIfPuppyMade);
+    PuppyActions.editPuppy(puppyData);
     ErrorActions.clearErrors();
+
   },
 
   render() {
@@ -92,7 +107,7 @@ const PuppyForm = React.createClass({
             value={this.state.name}
             onChange={this.update("name")}
             className='puppy-form-input'
-          />
+            />
 
           <input
             type='text'
@@ -100,15 +115,15 @@ const PuppyForm = React.createClass({
             value={this.state.breed}
             onChange={this.update("breed")}
             className='puppy-form-input'
-          />
+            />
 
           <input
-           ref='searchField'
-           id='puppyTextField'
-           type='text'
-           placeholder='Enter an Address'
-           className='puppy-form-input'
-         />
+            ref='searchField'
+            id='puppyTextField'
+            type='text'
+            placeholder='Enter an Address'
+            className='puppy-form-input'
+            />
 
           <input
             type='text'
@@ -116,7 +131,7 @@ const PuppyForm = React.createClass({
             value={this.state.temperament}
             onChange={this.update("temperament")}
             className='puppy-form-input'
-          />
+            />
 
           <input
             type='number'
@@ -124,20 +139,20 @@ const PuppyForm = React.createClass({
             value={this.state.price}
             onChange={this.update("price")}
             className='puppy-form-input'
-          />
+            />
 
           <textarea
             placeholder='Description'
             value={this.state.description}
             onChange={this.update("description")}
             className='puppy-form-input'
-          />
-        <UploadButton updateUrl={this.updateUrl} buttonText={this.state.buttonText}/>
-        <button type='submit' className='login-form-button'>Add Puppy</button>
+            />
+          <UploadButton updateUrl={this.updateUrl} buttonText={this.state.buttonText}/>
+          <button type='submit' className='login-form-button'>Edit Puppy</button>
         </form>
       </div>
     );
   }
 });
 
-module.exports = PuppyForm;
+module.exports = PuppyEditForm;

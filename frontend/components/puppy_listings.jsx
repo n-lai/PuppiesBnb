@@ -7,6 +7,7 @@ const PuppyIndexItem = require('./puppy_index_item');
 const PuppyActions = require('../actions/puppy_actions');
 const PuppyStore = require('../stores/puppy_store');
 const PuppyForm = require ('./puppy_form');
+const EditPuppyForm = require('./edit_puppy_form');
 const Modal = require('react-modal');
 const ModalStyles = require('../styles/modal_styles');
 
@@ -20,17 +21,16 @@ const masonryOptions = {
 const PuppyListings = React.createClass({
   getInitialState() {
     Modal.setAppElement('body');
-    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false };
+    return { puppies: {}, currentUser: SessionStore.currentUser(), modalIsOpen: false, modal: "", puppyId: null};
   },
 
-  handleOpenModal() {
-    this.setState({ modalIsOpen: true });
+  handleOpenModal(modal, puppyId) {
+    this.setState({ modalIsOpen: true, modal: modal, puppyId: puppyId });
   },
 
   handleCloseModal() {
     this.setState({ modalIsOpen: false });
-    document.location.reload();
-    },
+  },
 
 
   componentDidMount() {
@@ -55,6 +55,14 @@ const PuppyListings = React.createClass({
   },
 
   render() {
+    let component;
+
+    if (this.state.modal === "Puppy Form") {
+      component = <PuppyForm close={this.handleCloseModal}/>;
+    } else if (this.state.modal === "Edit Puppy Form"){
+      component = <EditPuppyForm puppyId={this.state.puppyId} close={this.handleCloseModal} />;
+    }
+
 
     const puppies = this.state.puppies;
 
@@ -67,14 +75,14 @@ const PuppyListings = React.createClass({
     if (this.state.modalIsOpen) {
       modal = (
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.handleCloseModal} style={ModalStyles} className='modal'>
-          <PuppyForm close={this.handleCloseModal} />
+          {component}
         </Modal>
       );
     }
 
     let puppyItems = this.state.puppies.map(puppy => {
       return (
-        <li><PuppyListingItem key={puppy.id} puppy={puppy} removePuppy={this.removePuppy}/></li>
+        <li key={'l' + puppy.id}><PuppyListingItem puppy={puppy} editPuppy={this.handleOpenModal.bind(this, "Edit Puppy Form", puppy.id)} removePuppy={this.removePuppy}/></li>
       );
     })
 
@@ -83,7 +91,7 @@ const PuppyListings = React.createClass({
         <div className='user-bookings'>
           <div className='sidebar'>
             <button
-              onClick={this.handleOpenModal}
+              onClick={this.handleOpenModal.bind(this, "Puppy Form")}
               id='puppy-form'
               >Add a Puppy</button>
             {modal}

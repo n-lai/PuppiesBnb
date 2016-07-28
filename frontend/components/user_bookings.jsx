@@ -33,7 +33,7 @@ const UserBookings = React.createClass({
 
     let bookingItems = this.state.bookings.map(booking => {
       return (
-        <li><BookingIndexItem key={booking.id} booking={booking} /></li>
+        <li key={'b' + booking.id}><BookingIndexItem booking={booking} /></li>
       );
     });
 
