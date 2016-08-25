@@ -60,7 +60,6 @@ const PuppyMap = React.createClass({
       const lng = location.lng();
       const coords = { lat: lat, lng: lng }
 
-      that._handleClick(coords);
     });
 
     window.autocomplete.addListener('place_changed', function() {
@@ -90,9 +89,6 @@ const PuppyMap = React.createClass({
     });
 
     removeMarkers.forEach(this.removeMarker);
-  },
-
-  _handleClick(coords) {
   },
 
   removeMarker(marker) {
