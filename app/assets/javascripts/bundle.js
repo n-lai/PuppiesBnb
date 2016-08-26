@@ -56,12 +56,12 @@
 	var HashHistory = ReactRouter.hashHistory;
 
 	var LandingPage = __webpack_require__(235);
-	var Search = __webpack_require__(316);
+	var Search = __webpack_require__(311);
 	var SessionActions = __webpack_require__(236);
 	var NavBar = __webpack_require__(263);
 
-	var PuppyIndex = __webpack_require__(320);
-	var PuppyDetail = __webpack_require__(325);
+	var PuppyIndex = __webpack_require__(319);
+	var PuppyDetail = __webpack_require__(324);
 
 	var PuppyListings = __webpack_require__(440);
 	var UserBookings = __webpack_require__(455);
@@ -26763,8 +26763,8 @@
 	var SessionActions = __webpack_require__(236);
 	var SessionStore = __webpack_require__(243);
 	var NavBar = __webpack_require__(263);
-	var Slider = __webpack_require__(295);
-	var FeaturedPlaces = __webpack_require__(315);
+	var Slider = __webpack_require__(290);
+	var FeaturedPlaces = __webpack_require__(310);
 
 	var LandingPage = React.createClass({
 	  displayName: 'LandingPage',
@@ -26846,13 +26846,6 @@
 
 	    var style4 = {
 	      backgroundImage: 'url(http://res.cloudinary.com/dl8lhjvx0/image/upload/v1467742201/Husky-Puppy_u6nhrj.jpg)',
-	      backgroundRepeat: 'no-repeat',
-	      backgroundSize: 'cover',
-	      backgroundPosition: 'center'
-	    };
-
-	    var city1 = {
-	      backgroundImage: 'url(http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg)',
 	      backgroundRepeat: 'no-repeat',
 	      backgroundSize: 'cover',
 	      backgroundPosition: 'center'
@@ -33873,7 +33866,7 @@
 	var LoginForm = __webpack_require__(285);
 	var SignupForm = __webpack_require__(287);
 
-	var SearchBar = __webpack_require__(294);
+	var SearchBar = __webpack_require__(289);
 
 	var SessionStore = __webpack_require__(243);
 	var SessionActions = __webpack_require__(236);
@@ -36386,381 +36379,6 @@
 
 	'use strict';
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var React = __webpack_require__(1);
-	var HashHistory = __webpack_require__(172).hashHistory;
-	var Link = __webpack_require__(172).Link;
-	var PuppyStore = __webpack_require__(290);
-	var SessionStore = __webpack_require__(243);
-	var ErrorStore = __webpack_require__(286);
-	var PuppyActions = __webpack_require__(292);
-	var ErrorActions = __webpack_require__(261);
-	var UploadButton = __webpack_require__(288);
-	var SearchBar = __webpack_require__(294);
-
-	var PuppyForm = React.createClass({
-	  displayName: 'PuppyForm',
-
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "", buttonText: ['blank', 'Upload Puppy Picture'] };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var that = this;
-	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.geocoder = new google.maps.Geocoder();
-	    var input = document.getElementById('puppyTextField');
-	    var autocomplete = new google.maps.places.Autocomplete(input);
-	    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', function () {
-	      var address = autocomplete.getPlace();
-	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
-	    });
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.puppyListener.remove();
-	    this.errorListener.remove();
-	    this.autocompleteListener.remove();
-	  },
-	  redirectIfPuppyMade: function redirectIfPuppyMade() {
-	    this.props.close();
-	    document.location.reload();
-	  },
-	  fieldErrors: function fieldErrors(field) {
-	    var errors = ErrorStore.formErrors("puppy");
-	    if (!errors[field]) {
-	      return;
-	    }
-
-	    var messages = errors[field].map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i, className: 'errors' },
-	        errorMsg
-	      );
-	    });
-
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  update: function update(property) {
-	    var _this = this;
-
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  updateUrl: function updateUrl(url) {
-	    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
-	  },
-	  _handleSubmit: function _handleSubmit(e) {
-	    e.preventDefault();
-
-	    var puppyData = {
-	      name: this.state.name,
-	      breed: this.state.breed,
-	      lat: this.state.lat,
-	      lng: this.state.lng,
-	      description: this.state.description,
-	      temperament: this.state.temperament,
-	      owner_id: this.state.owner_id,
-	      price: parseInt(this.state.price),
-	      image_url: this.state.image_url
-	    };
-
-	    PuppyActions.createPuppy(puppyData, this.redirectIfPuppyMade);
-	    ErrorActions.clearErrors();
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      this.fieldErrors('base'),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this._handleSubmit, className: 'form' },
-	        React.createElement('input', {
-	          type: 'text',
-	          placeholder: 'Name',
-	          value: this.state.name,
-	          onChange: this.update("name"),
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement('input', {
-	          type: 'text',
-	          placeholder: 'Breed',
-	          value: this.state.breed,
-	          onChange: this.update("breed"),
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement('input', {
-	          ref: 'searchField',
-	          id: 'puppyTextField',
-	          type: 'text',
-	          placeholder: 'Enter an Address',
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement('input', {
-	          type: 'text',
-	          placeholder: 'Temperament',
-	          value: this.state.temperament,
-	          onChange: this.update("temperament"),
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement('input', {
-	          type: 'number',
-	          placeholder: 'Price per day',
-	          value: this.state.price,
-	          onChange: this.update("price"),
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement('textarea', {
-	          placeholder: 'Description',
-	          value: this.state.description,
-	          onChange: this.update("description"),
-	          className: 'puppy-form-input'
-	        }),
-	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonText: this.state.buttonText }),
-	        React.createElement(
-	          'button',
-	          { type: 'submit', className: 'login-form-button' },
-	          'Add Puppy'
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = PuppyForm;
-
-/***/ },
-/* 290 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(238);
-	var Store = __webpack_require__(244).Store;
-	var PuppyConstants = __webpack_require__(291);
-	var PuppyStore = new Store(AppDispatcher);
-
-	var _puppies = {};
-
-	var _resetAllPuppies = function _resetAllPuppies(puppies) {
-	  _puppies = {};
-
-	  puppies.forEach(function (puppy) {
-	    _puppies[puppy.id] = puppy;
-	  });
-
-	  PuppyStore.__emitChange();
-	};
-
-	var _resetSinglePuppy = function _resetSinglePuppy(puppy) {
-	  _puppies[puppy.id] = puppy;
-	  PuppyStore.__emitChange();
-	};
-
-	var _removePuppy = function _removePuppy(puppy) {
-	  delete _puppies[puppy.id];
-	  PuppyStore.__emitChange();
-	};
-
-	PuppyStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case PuppyConstants.PUPPIES_RECEIVED:
-	      _resetAllPuppies(payload.puppies);
-	      break;
-	    case PuppyConstants.PUPPY_RECEIVED:
-	      _resetSinglePuppy(payload.puppy);
-	      break;
-	    case PuppyConstants.PUPPY_REMOVED:
-	      _removePuppy(payload.puppy);
-	      break;
-	  }
-	};
-
-	PuppyStore.all = function () {
-	  var puppies = [];
-
-	  for (var id in _puppies) {
-	    if (_puppies.hasOwnProperty(id)) {
-	      puppies.push(_puppies[id]);
-	    }
-	  }
-	  return puppies;
-	};
-
-	PuppyStore.find = function (id) {
-	  return _puppies[id];
-	};
-
-	module.exports = PuppyStore;
-
-/***/ },
-/* 291 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var PuppyConstants = {
-	  PUPPIES_RECEIVED: 'PUPPIES_RECEIVED',
-	  PUPPY_RECEIVED: 'PUPPY_RECEIVED',
-	  PUPPY_REMOVED: 'PUPPY_REMOVED'
-	};
-
-	module.exports = PuppyConstants;
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var PuppyApiUtil = __webpack_require__(293);
-	var AppDispatcher = __webpack_require__(238);
-	var PuppyConstants = __webpack_require__(291);
-	var PuppyStore = __webpack_require__(290);
-	var ErrorActions = __webpack_require__(261);
-	var hashHistory = __webpack_require__(172).hashHistory;
-
-	var PuppyActions = {
-	  fetchAllPuppies: function fetchAllPuppies(params) {
-	    PuppyApiUtil.fetchAllPuppies(params, this.receiveAllPuppies);
-	  },
-	  fetchUserPuppies: function fetchUserPuppies(id) {
-	    PuppyApiUtil.fetchUserPuppies(id, this.receiveAllPuppies);
-	  },
-	  receiveAllPuppies: function receiveAllPuppies(puppies) {
-	    AppDispatcher.dispatch({
-	      actionType: PuppyConstants.PUPPIES_RECEIVED,
-	      puppies: puppies
-	    });
-	  },
-	  fetchPuppy: function fetchPuppy(id) {
-	    PuppyApiUtil.fetchPuppy(id, this.receivePuppy);
-	  },
-	  receivePuppy: function receivePuppy(puppy) {
-	    AppDispatcher.dispatch({
-	      actionType: PuppyConstants.PUPPY_RECEIVED,
-	      puppy: puppy
-	    });
-	  },
-	  createPuppy: function createPuppy(puppyData, success) {
-	    PuppyApiUtil.createPuppy(puppyData, success, ErrorActions.setErrors);
-	  },
-	  editPuppy: function editPuppy(puppy) {
-	    PuppyApiUtil.updatePuppy(puppy, this.receivePuppy);
-	  },
-	  deletePuppy: function deletePuppy(id) {
-	    PuppyApiUtil.deletePuppy(id, this.removePuppy);
-	  },
-	  removePuppy: function removePuppy(puppy) {
-	    AppDispatcher.dispatch({
-	      actionType: PuppyConstants.PUPPY_REMOVED,
-	      puppy: puppy
-	    });
-	  },
-	  createReview: function createReview(review) {
-	    PuppyApiUtil.createReview(review, this.receivePuppy);
-	  }
-	};
-
-	module.exports = PuppyActions;
-
-/***/ },
-/* 293 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var PuppyApiUtil = {
-	  fetchAllPuppies: function fetchAllPuppies(params, cb) {
-	    $.ajax({
-	      method: 'GET',
-	      url: '/api/puppies',
-	      data: params,
-	      success: function success(puppies) {
-	        cb(puppies);
-	      }
-	    });
-	  },
-	  fetchUserPuppies: function fetchUserPuppies(id, cb) {
-	    $.ajax({
-	      method: 'GET',
-	      url: '/api/puppies?user=' + id,
-	      success: function success(response) {
-	        cb(response);
-	      }
-	    });
-	  },
-	  fetchPuppy: function fetchPuppy(id, cb) {
-	    $.ajax({
-	      method: 'GET',
-	      url: '/api/puppies/' + id,
-	      success: function success(puppy) {
-	        cb(puppy);
-	      }
-	    });
-	  },
-	  createPuppy: function createPuppy(puppy, success, _error) {
-	    $.ajax({
-	      method: 'POST',
-	      url: '/api/puppies',
-	      data: { puppy: puppy },
-	      success: success,
-	      error: function error(xhr) {
-	        var errors = xhr.responseJSON;
-	        _error("puppy", errors);
-	      }
-	    });
-	  },
-	  updatePuppy: function updatePuppy(puppy, cb) {
-	    $.ajax({
-	      method: 'PATCH',
-	      url: '/api/puppies/' + puppy.id,
-	      data: { puppy: puppy },
-	      success: function success(puppy) {
-	        cb(puppy);
-	      }
-	    });
-	  },
-	  deletePuppy: function deletePuppy(id, cb) {
-	    $.ajax({
-	      method: 'DELETE',
-	      url: '/api/puppies/' + id,
-	      success: function success(puppy) {
-	        cb(puppy);
-	      }
-	    });
-	  },
-	  createReview: function createReview(review, cb) {
-	    $.ajax({
-	      method: 'POST',
-	      url: '/api/reviews',
-	      data: { review: review },
-	      success: function success(response) {
-	        cb(response);
-	      }
-	    });
-	  }
-	};
-
-	module.exports = PuppyApiUtil;
-
-/***/ },
-/* 294 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(172).hashHistory;
 
@@ -36813,15 +36431,15 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 295 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(296);
+	module.exports = __webpack_require__(291);
 
 /***/ },
-/* 296 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36832,21 +36450,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _innerSlider = __webpack_require__(297);
+	var _innerSlider = __webpack_require__(292);
 
-	var _objectAssign = __webpack_require__(303);
+	var _objectAssign = __webpack_require__(298);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
-	var _json2mq = __webpack_require__(310);
+	var _json2mq = __webpack_require__(305);
 
 	var _json2mq2 = _interopRequireDefault(_json2mq);
 
-	var _reactResponsiveMixin = __webpack_require__(312);
+	var _reactResponsiveMixin = __webpack_require__(307);
 
 	var _reactResponsiveMixin2 = _interopRequireDefault(_reactResponsiveMixin);
 
-	var _defaultProps = __webpack_require__(305);
+	var _defaultProps = __webpack_require__(300);
 
 	var _defaultProps2 = _interopRequireDefault(_defaultProps);
 
@@ -36923,7 +36541,7 @@
 	module.exports = Slider;
 
 /***/ },
-/* 297 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36940,31 +36558,31 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _mixinsEventHandlers = __webpack_require__(298);
+	var _mixinsEventHandlers = __webpack_require__(293);
 
 	var _mixinsEventHandlers2 = _interopRequireDefault(_mixinsEventHandlers);
 
-	var _mixinsHelpers = __webpack_require__(301);
+	var _mixinsHelpers = __webpack_require__(296);
 
 	var _mixinsHelpers2 = _interopRequireDefault(_mixinsHelpers);
 
-	var _initialState = __webpack_require__(304);
+	var _initialState = __webpack_require__(299);
 
 	var _initialState2 = _interopRequireDefault(_initialState);
 
-	var _defaultProps = __webpack_require__(305);
+	var _defaultProps = __webpack_require__(300);
 
 	var _defaultProps2 = _interopRequireDefault(_defaultProps);
 
-	var _classnames = __webpack_require__(306);
+	var _classnames = __webpack_require__(301);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _track = __webpack_require__(307);
+	var _track = __webpack_require__(302);
 
-	var _dots = __webpack_require__(308);
+	var _dots = __webpack_require__(303);
 
-	var _arrows = __webpack_require__(309);
+	var _arrows = __webpack_require__(304);
 
 	var InnerSlider = _react2['default'].createClass({
 	  displayName: 'InnerSlider',
@@ -37117,7 +36735,7 @@
 	exports.InnerSlider = InnerSlider;
 
 /***/ },
-/* 298 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37127,13 +36745,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _trackHelper = __webpack_require__(299);
+	var _trackHelper = __webpack_require__(294);
 
-	var _helpers = __webpack_require__(301);
+	var _helpers = __webpack_require__(296);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _objectAssign = __webpack_require__(303);
+	var _objectAssign = __webpack_require__(298);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -37306,7 +36924,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 299 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37316,7 +36934,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _ReactDOM = __webpack_require__(300);
+	var _ReactDOM = __webpack_require__(295);
 
 	var _ReactDOM2 = _interopRequireDefault(_ReactDOM);
 
@@ -37432,7 +37050,7 @@
 	exports.getTrackLeft = getTrackLeft;
 
 /***/ },
-/* 300 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37457,7 +37075,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 301 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37472,17 +37090,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ReactDOM = __webpack_require__(300);
+	var _ReactDOM = __webpack_require__(295);
 
 	var _ReactDOM2 = _interopRequireDefault(_ReactDOM);
 
-	var _reactLibReactTransitionEvents = __webpack_require__(302);
+	var _reactLibReactTransitionEvents = __webpack_require__(297);
 
 	var _reactLibReactTransitionEvents2 = _interopRequireDefault(_reactLibReactTransitionEvents);
 
-	var _trackHelper = __webpack_require__(299);
+	var _trackHelper = __webpack_require__(294);
 
-	var _objectAssign = __webpack_require__(303);
+	var _objectAssign = __webpack_require__(298);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -37758,7 +37376,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 302 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37836,7 +37454,7 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 303 */
+/* 298 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37868,7 +37486,7 @@
 
 
 /***/ },
-/* 304 */
+/* 299 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37918,7 +37536,7 @@
 	module.exports = initialState;
 
 /***/ },
-/* 305 */
+/* 300 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37971,7 +37589,7 @@
 	module.exports = defaultProps;
 
 /***/ },
-/* 306 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -38025,7 +37643,7 @@
 
 
 /***/ },
-/* 307 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38040,11 +37658,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _objectAssign = __webpack_require__(303);
+	var _objectAssign = __webpack_require__(298);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
-	var _classnames = __webpack_require__(306);
+	var _classnames = __webpack_require__(301);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -38178,7 +37796,7 @@
 	exports.Track = Track;
 
 /***/ },
-/* 308 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38193,7 +37811,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(306);
+	var _classnames = __webpack_require__(301);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -38257,7 +37875,7 @@
 	exports.Dots = Dots;
 
 /***/ },
-/* 309 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38274,7 +37892,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(306);
+	var _classnames = __webpack_require__(301);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -38372,10 +37990,10 @@
 	exports.NextArrow = NextArrow;
 
 /***/ },
-/* 310 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var camel2hyphen = __webpack_require__(311);
+	var camel2hyphen = __webpack_require__(306);
 
 	var isDimension = function (feature) {
 	  var re = /[height|width]$/;
@@ -38428,7 +38046,7 @@
 	module.exports = json2mq;
 
 /***/ },
-/* 311 */
+/* 306 */
 /***/ function(module, exports) {
 
 	var camel2hyphen = function (str) {
@@ -38442,12 +38060,12 @@
 	module.exports = camel2hyphen;
 
 /***/ },
-/* 312 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var canUseDOM = __webpack_require__(313);
-	var enquire = canUseDOM && __webpack_require__(314);
-	var json2mq = __webpack_require__(310);
+	var canUseDOM = __webpack_require__(308);
+	var enquire = canUseDOM && __webpack_require__(309);
+	var json2mq = __webpack_require__(305);
 
 	var ResponsiveMixin = {
 	  media: function (query, handler) {
@@ -38477,7 +38095,7 @@
 	module.exports = ResponsiveMixin;
 
 /***/ },
-/* 313 */
+/* 308 */
 /***/ function(module, exports) {
 
 	var canUseDOM = !!(
@@ -38489,7 +38107,7 @@
 	module.exports = canUseDOM;
 
 /***/ },
-/* 314 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -38787,7 +38405,7 @@
 	}));
 
 /***/ },
-/* 315 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38826,15 +38444,15 @@
 	module.exports = FeaturedPlaces;
 
 /***/ },
-/* 316 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PuppyMap = __webpack_require__(317);
-	var PuppyIndex = __webpack_require__(320);
-	var FilterParams = __webpack_require__(322);
+	var PuppyMap = __webpack_require__(312);
+	var PuppyIndex = __webpack_require__(319);
+	var FilterParams = __webpack_require__(321);
 
 	var Search = React.createClass({
 	  displayName: 'Search',
@@ -38867,16 +38485,16 @@
 	module.exports = Search;
 
 /***/ },
-/* 317 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var PuppyStore = __webpack_require__(290);
-	var PuppyActions = __webpack_require__(292);
-	var FilterStore = __webpack_require__(318);
+	var PuppyStore = __webpack_require__(313);
+	var PuppyActions = __webpack_require__(315);
+	var FilterStore = __webpack_require__(317);
 	var hashHistory = __webpack_require__(172).hashHistory;
 
 	var PuppyMap = React.createClass({
@@ -38914,8 +38532,7 @@
 
 	    var params = FilterStore.params();
 	    params.bounds = bounds;
-
-	    PuppyActions.fetchAllPuppies(params, bounds);
+	    PuppyActions.fetchAllPuppies(params);
 	    this._onChange();
 	  },
 	  registerListeners: function registerListeners() {
@@ -38929,8 +38546,6 @@
 	      var lat = location.lat();
 	      var lng = location.lng();
 	      var coords = { lat: lat, lng: lng };
-
-	      that._handleClick(coords);
 	    });
 
 	    window.autocomplete.addListener('place_changed', function () {
@@ -38966,7 +38581,6 @@
 
 	    removeMarkers.forEach(this.removeMarker);
 	  },
-	  _handleClick: function _handleClick(coords) {},
 	  removeMarker: function removeMarker(marker) {
 	    var idx = this.markers.indexOf(marker);
 	    this.markers[idx].setMap(null);
@@ -38983,7 +38597,7 @@
 
 	    var puppy = PuppyStore.find(puppyId);
 
-	    var content = '<img id=\'map-pic\' src=' + puppy.image_url + ' class=\'map-picture\'/>' + ('<div class=\'infowindow-detail\'>\n                        <h3 class=\'map-puppy-name\'>' + puppy.name + '</h3>\n                        <h3>$' + puppy.price + ' / day</h3>\n                      </div>');
+	    var content = '<img id=\'map-pic\' src=\'' + puppy.image_url + '\' class=\'map-picture\'/>' + ('<div class=\'infowindow-detail\'>\n                        <h3 class=\'map-puppy-name\'>' + puppy.name + '</h3>\n                        <h3>$' + puppy.price + ' / day</h3>\n                      </div>');
 
 	    marker.addListener('click', function () {
 	      var markerPuppy = marker.puppyId;
@@ -39005,14 +38619,229 @@
 	module.exports = PuppyMap;
 
 /***/ },
-/* 318 */
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(238);
+	var Store = __webpack_require__(244).Store;
+	var PuppyConstants = __webpack_require__(314);
+	var PuppyStore = new Store(AppDispatcher);
+
+	var _puppies = {};
+
+	var _resetAllPuppies = function _resetAllPuppies(puppies) {
+	  _puppies = {};
+
+	  puppies.forEach(function (puppy) {
+	    _puppies[puppy.id] = puppy;
+	  });
+
+	  PuppyStore.__emitChange();
+	};
+
+	var _resetSinglePuppy = function _resetSinglePuppy(puppy) {
+	  _puppies[puppy.id] = puppy;
+	  PuppyStore.__emitChange();
+	};
+
+	var _removePuppy = function _removePuppy(puppy) {
+	  delete _puppies[puppy.id];
+	  PuppyStore.__emitChange();
+	};
+
+	PuppyStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case PuppyConstants.PUPPIES_RECEIVED:
+	      _resetAllPuppies(payload.puppies);
+	      break;
+	    case PuppyConstants.PUPPY_RECEIVED:
+	      _resetSinglePuppy(payload.puppy);
+	      break;
+	    case PuppyConstants.PUPPY_REMOVED:
+	      _removePuppy(payload.puppy);
+	      break;
+	  }
+	};
+
+	PuppyStore.all = function () {
+	  var puppies = [];
+
+	  for (var id in _puppies) {
+	    if (_puppies.hasOwnProperty(id)) {
+	      puppies.push(_puppies[id]);
+	    }
+	  }
+	  return puppies;
+	};
+
+	PuppyStore.find = function (id) {
+	  return _puppies[id];
+	};
+
+	module.exports = PuppyStore;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var PuppyConstants = {
+	  PUPPIES_RECEIVED: 'PUPPIES_RECEIVED',
+	  PUPPY_RECEIVED: 'PUPPY_RECEIVED',
+	  PUPPY_REMOVED: 'PUPPY_REMOVED'
+	};
+
+	module.exports = PuppyConstants;
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PuppyApiUtil = __webpack_require__(316);
+	var AppDispatcher = __webpack_require__(238);
+	var PuppyConstants = __webpack_require__(314);
+	var PuppyStore = __webpack_require__(313);
+	var ErrorActions = __webpack_require__(261);
+	var hashHistory = __webpack_require__(172).hashHistory;
+
+	var PuppyActions = {
+	  fetchAllPuppies: function fetchAllPuppies(params) {
+	    PuppyApiUtil.fetchAllPuppies(params, this.receiveAllPuppies);
+	  },
+	  fetchUserPuppies: function fetchUserPuppies(id) {
+	    PuppyApiUtil.fetchUserPuppies(id, this.receiveAllPuppies);
+	  },
+	  receiveAllPuppies: function receiveAllPuppies(puppies) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPIES_RECEIVED,
+	      puppies: puppies
+	    });
+	  },
+	  fetchPuppy: function fetchPuppy(id) {
+	    PuppyApiUtil.fetchPuppy(id, this.receivePuppy);
+	  },
+	  receivePuppy: function receivePuppy(puppy) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPY_RECEIVED,
+	      puppy: puppy
+	    });
+	  },
+	  createPuppy: function createPuppy(puppyData, success) {
+	    PuppyApiUtil.createPuppy(puppyData, success, ErrorActions.setErrors);
+	  },
+	  editPuppy: function editPuppy(puppy) {
+	    PuppyApiUtil.updatePuppy(puppy, this.receivePuppy);
+	  },
+	  deletePuppy: function deletePuppy(id) {
+	    PuppyApiUtil.deletePuppy(id, this.removePuppy);
+	  },
+	  removePuppy: function removePuppy(puppy) {
+	    AppDispatcher.dispatch({
+	      actionType: PuppyConstants.PUPPY_REMOVED,
+	      puppy: puppy
+	    });
+	  },
+	  createReview: function createReview(review) {
+	    PuppyApiUtil.createReview(review, this.receivePuppy);
+	  }
+	};
+
+	module.exports = PuppyActions;
+
+/***/ },
+/* 316 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var PuppyApiUtil = {
+	  fetchAllPuppies: function fetchAllPuppies(params, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies',
+	      data: params,
+	      success: function success(puppies) {
+	        cb(puppies);
+	      }
+	    });
+	  },
+	  fetchUserPuppies: function fetchUserPuppies(id, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies?user=' + id,
+	      success: function success(response) {
+	        cb(response);
+	      }
+	    });
+	  },
+	  fetchPuppy: function fetchPuppy(id, cb) {
+	    $.ajax({
+	      method: 'GET',
+	      url: '/api/puppies/' + id,
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  createPuppy: function createPuppy(puppy, success, _error) {
+	    $.ajax({
+	      method: 'POST',
+	      url: '/api/puppies',
+	      data: { puppy: puppy },
+	      success: success,
+	      error: function error(xhr) {
+	        var errors = xhr.responseJSON;
+	        _error("puppy", errors);
+	      }
+	    });
+	  },
+	  updatePuppy: function updatePuppy(puppy, cb) {
+	    $.ajax({
+	      method: 'PATCH',
+	      url: '/api/puppies/' + puppy.id,
+	      data: { puppy: puppy },
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  deletePuppy: function deletePuppy(id, cb) {
+	    $.ajax({
+	      method: 'DELETE',
+	      url: '/api/puppies/' + id,
+	      success: function success(puppy) {
+	        cb(puppy);
+	      }
+	    });
+	  },
+	  createReview: function createReview(review, cb) {
+	    $.ajax({
+	      method: 'POST',
+	      url: '/api/reviews',
+	      data: { review: review },
+	      success: function success(response) {
+	        cb(response);
+	      }
+	    });
+	  }
+	};
+
+	module.exports = PuppyApiUtil;
+
+/***/ },
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Store = __webpack_require__(244).Store;
 	var AppDispatcher = __webpack_require__(238);
-	var FilterConstants = __webpack_require__(319);
+	var FilterConstants = __webpack_require__(318);
 
 	var FilterStore = new Store(AppDispatcher);
 
@@ -39043,7 +38872,7 @@
 	module.exports = FilterStore;
 
 /***/ },
-/* 319 */
+/* 318 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39056,15 +38885,15 @@
 	module.exports = FilterConstants;
 
 /***/ },
-/* 320 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PuppyStore = __webpack_require__(290);
-	var PuppyActions = __webpack_require__(292);
-	var PuppyIndexItem = __webpack_require__(321);
+	var PuppyStore = __webpack_require__(313);
+	var PuppyActions = __webpack_require__(315);
+	var PuppyIndexItem = __webpack_require__(320);
 
 	var PuppyIndex = React.createClass({
 	  displayName: 'PuppyIndex',
@@ -39110,7 +38939,7 @@
 	module.exports = PuppyIndex;
 
 /***/ },
-/* 321 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39171,15 +39000,15 @@
 	module.exports = PuppyIndexItem;
 
 /***/ },
-/* 322 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ReactSlider = __webpack_require__(323);
+	var ReactSlider = __webpack_require__(322);
 	var HashHistory = __webpack_require__(172).hashHistory;
-	var FilterActions = __webpack_require__(324);
+	var FilterActions = __webpack_require__(323);
 	var FilterParams = React.createClass({
 	  displayName: 'FilterParams',
 	  getInitialState: function getInitialState() {
@@ -39293,7 +39122,7 @@
 	module.exports = FilterParams;
 
 /***/ },
-/* 323 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
@@ -40091,14 +39920,14 @@
 
 
 /***/ },
-/* 324 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PuppyApiUtil = __webpack_require__(293);
-	var PuppyActions = __webpack_require__(292);
-	var FilterConstants = __webpack_require__(319);
+	var PuppyApiUtil = __webpack_require__(316);
+	var PuppyActions = __webpack_require__(315);
+	var FilterConstants = __webpack_require__(318);
 	var AppDispatcher = __webpack_require__(238);
 
 	var FilterActions = {
@@ -40119,7 +39948,7 @@
 	module.exports = FilterActions;
 
 /***/ },
-/* 325 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40128,9 +39957,9 @@
 	var Modal = __webpack_require__(264);
 	var ModalStyles = __webpack_require__(284);
 
-	var PuppyStore = __webpack_require__(290);
-	var PuppyActions = __webpack_require__(292);
-	var PuppyForm = __webpack_require__(289);
+	var PuppyStore = __webpack_require__(313);
+	var PuppyActions = __webpack_require__(315);
+	var PuppyForm = __webpack_require__(325);
 
 	var BookingForm = __webpack_require__(326);
 	var BookingStore = __webpack_require__(434);
@@ -40304,6 +40133,166 @@
 	module.exports = PuppyDetail;
 
 /***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(172).hashHistory;
+	var Link = __webpack_require__(172).Link;
+	var PuppyStore = __webpack_require__(313);
+	var SessionStore = __webpack_require__(243);
+	var ErrorStore = __webpack_require__(286);
+	var PuppyActions = __webpack_require__(315);
+	var ErrorActions = __webpack_require__(261);
+	var UploadButton = __webpack_require__(288);
+	var SearchBar = __webpack_require__(289);
+
+	var PuppyForm = React.createClass({
+	  displayName: 'PuppyForm',
+
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return { name: "", breed: "", temperament: "", description: "", lat: 0, lng: 0, price: "", owner_id: SessionStore.currentUser().id, image_url: "", buttonText: ['blank', 'Upload Puppy Picture'] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var that = this;
+	    this.puppyListener = PuppyStore.addListener(this.redirectIfPuppyMade);
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.geocoder = new google.maps.Geocoder();
+	    var input = document.getElementById('puppyTextField');
+	    var autocomplete = new google.maps.places.Autocomplete(input);
+	    this.autocompleteListener = google.maps.event.addListener(autocomplete, 'place_changed', function () {
+	      var address = autocomplete.getPlace();
+	      that.setState({ lat: address.geometry.location.lat(), lng: address.geometry.location.lng() });
+	    });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.puppyListener.remove();
+	    this.errorListener.remove();
+	    this.autocompleteListener.remove();
+	  },
+	  redirectIfPuppyMade: function redirectIfPuppyMade() {
+	    this.props.close();
+	    document.location.reload();
+	  },
+	  fieldErrors: function fieldErrors(field) {
+	    var errors = ErrorStore.formErrors("puppy");
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i, className: 'errors' },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  update: function update(property) {
+	    var _this = this;
+
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  updateUrl: function updateUrl(url) {
+	    this.setState({ image_url: url, buttonText: ['success', 'Picture successfully uploaded!'] });
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
+
+	    var puppyData = {
+	      name: this.state.name,
+	      breed: this.state.breed,
+	      lat: this.state.lat,
+	      lng: this.state.lng,
+	      description: this.state.description,
+	      temperament: this.state.temperament,
+	      owner_id: this.state.owner_id,
+	      price: parseInt(this.state.price),
+	      image_url: this.state.image_url
+	    };
+
+	    PuppyActions.createPuppy(puppyData, this.redirectIfPuppyMade);
+	    ErrorActions.clearErrors();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.fieldErrors('base'),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, className: 'form' },
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Name',
+	          value: this.state.name,
+	          onChange: this.update("name"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Breed',
+	          value: this.state.breed,
+	          onChange: this.update("breed"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          ref: 'searchField',
+	          id: 'puppyTextField',
+	          type: 'text',
+	          placeholder: 'Enter an Address',
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Temperament',
+	          value: this.state.temperament,
+	          onChange: this.update("temperament"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('input', {
+	          type: 'number',
+	          placeholder: 'Price per day',
+	          value: this.state.price,
+	          onChange: this.update("price"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement('textarea', {
+	          placeholder: 'Description',
+	          value: this.state.description,
+	          onChange: this.update("description"),
+	          className: 'puppy-form-input'
+	        }),
+	        React.createElement(UploadButton, { updateUrl: this.updateUrl, buttonText: this.state.buttonText }),
+	        React.createElement(
+	          'button',
+	          { type: 'submit', className: 'login-form-button' },
+	          'Add Puppy'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PuppyForm;
+
+/***/ },
 /* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40314,7 +40303,7 @@
 	var moment = __webpack_require__(328);
 	var HashHistory = __webpack_require__(172).hashHistory;
 
-	var PuppyStore = __webpack_require__(290);
+	var PuppyStore = __webpack_require__(313);
 	var SessionStore = __webpack_require__(243);
 	var BookingStore = __webpack_require__(434);
 
@@ -54842,8 +54831,8 @@
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(243);
-	var PuppyActions = __webpack_require__(292);
-	var PuppyStore = __webpack_require__(290);
+	var PuppyActions = __webpack_require__(315);
+	var PuppyStore = __webpack_require__(313);
 
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -54995,10 +54984,10 @@
 
 	var SessionStore = __webpack_require__(243);
 	var HashHistory = __webpack_require__(172).hashHistory;
-	var PuppyIndexItem = __webpack_require__(321);
-	var PuppyActions = __webpack_require__(292);
-	var PuppyStore = __webpack_require__(290);
-	var PuppyForm = __webpack_require__(289);
+	var PuppyIndexItem = __webpack_require__(320);
+	var PuppyActions = __webpack_require__(315);
+	var PuppyStore = __webpack_require__(313);
+	var PuppyForm = __webpack_require__(325);
 	var EditPuppyForm = __webpack_require__(453);
 	var Modal = __webpack_require__(264);
 	var ModalStyles = __webpack_require__(284);
@@ -60762,13 +60751,13 @@
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(172).hashHistory;
 
-	var PuppyStore = __webpack_require__(290);
-	var PuppyActions = __webpack_require__(292);
+	var PuppyStore = __webpack_require__(313);
+	var PuppyActions = __webpack_require__(315);
 
 	var ErrorStore = __webpack_require__(286);
 	var ErrorActions = __webpack_require__(261);
 	var UploadButton = __webpack_require__(288);
-	var SearchBar = __webpack_require__(294);
+	var SearchBar = __webpack_require__(289);
 
 	var PuppyEditForm = React.createClass({
 	  displayName: 'PuppyEditForm',

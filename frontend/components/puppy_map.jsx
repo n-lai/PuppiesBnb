@@ -43,8 +43,7 @@ const PuppyMap = React.createClass({
 
     const params = FilterStore.params();
     params.bounds = bounds;
-
-    PuppyActions.fetchAllPuppies(params, bounds);
+    PuppyActions.fetchAllPuppies(params);
     this._onChange();
   },
 
@@ -63,7 +62,7 @@ const PuppyMap = React.createClass({
     });
 
     window.autocomplete.addListener('place_changed', function() {
-      var place = window.autocomplete.getPlace().geometry.location;
+      const place = window.autocomplete.getPlace().geometry.location;
       that.map.setCenter(place);
       that.map.setZoom(12);
     });
