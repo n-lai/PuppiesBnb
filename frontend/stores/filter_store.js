@@ -11,11 +11,8 @@ let _params = {
 };
 
 FilterStore.resetFilters = function() {
-  _params = {
-    location: "",
-    breed: "",
-    price: { minPrice: 0, maxPrice: 100000 }
-  };
+  _params.location = "";
+  _params.breed = "";
 }
 
 FilterStore.params = function() {

@@ -19,6 +19,7 @@ const SearchBar = React.createClass({
 
   _handleSubmit() {
     FilterStore.resetFilters();
+
     const address = window.autocomplete.getPlace();
 
     if (!address) {

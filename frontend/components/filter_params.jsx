@@ -13,11 +13,7 @@ const FilterParams = React.createClass({
   },
 
   componentWillReceiveProps() {
-    this.setState({
-      breed: "All",
-      min: 0,
-      max: 100
-    });
+    this.setState({ breed: "All" });
   },
 
   updateBreed(e) {

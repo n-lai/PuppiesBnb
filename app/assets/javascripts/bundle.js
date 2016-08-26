@@ -36398,6 +36398,7 @@
 	  },
 	  _handleSubmit: function _handleSubmit() {
 	    FilterStore.resetFilters();
+
 	    var address = window.autocomplete.getPlace();
 
 	    if (!address) {
@@ -38854,11 +38855,8 @@
 	};
 
 	FilterStore.resetFilters = function () {
-	  _params = {
-	    location: "",
-	    breed: "",
-	    price: { minPrice: 0, maxPrice: 100000 }
-	  };
+	  _params.location = "";
+	  _params.breed = "";
 	};
 
 	FilterStore.params = function () {
@@ -39030,11 +39028,7 @@
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
-	    this.setState({
-	      breed: "All",
-	      min: 0,
-	      max: 100
-	    });
+	    this.setState({ breed: "All" });
 	  },
 	  updateBreed: function updateBreed(e) {
 	    var breed = e.target.value;
