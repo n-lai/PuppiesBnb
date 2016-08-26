@@ -22,10 +22,10 @@ class Puppy < ActiveRecord::Base
     min_lng = bounds['southWest']['lng'].to_f
     max_lng = bounds['northEast']['lng'].to_f
 
-    self.where("lat < ?", max_lat)
-        .where("lat > ?", min_lat)
-        .where("lng > ?", min_lng)
-        .where("lng < ?", max_lng)
+    self.where(
+      lat: (min_lat..max_lat),
+      lng: (min_lng..max_lng)
+    )
   end
 
 end
