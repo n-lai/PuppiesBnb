@@ -36381,6 +36381,7 @@
 
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(172).hashHistory;
+	var FilterStore = __webpack_require__(317);
 
 	var SearchBar = React.createClass({
 	  displayName: 'SearchBar',
@@ -36396,6 +36397,7 @@
 	    this.autocompleteListener.remove();
 	  },
 	  _handleSubmit: function _handleSubmit() {
+	    FilterStore.resetFilters();
 	    var address = window.autocomplete.getPlace();
 
 	    if (!address) {
@@ -38851,6 +38853,14 @@
 	  price: { minPrice: 0, maxPrice: 100000 }
 	};
 
+	FilterStore.resetFilters = function () {
+	  _params = {
+	    location: "",
+	    breed: "",
+	    price: { minPrice: 0, maxPrice: 100000 }
+	  };
+	};
+
 	FilterStore.params = function () {
 	  return _params;
 	};
@@ -39009,6 +39019,7 @@
 	var ReactSlider = __webpack_require__(322);
 	var HashHistory = __webpack_require__(172).hashHistory;
 	var FilterActions = __webpack_require__(323);
+
 	var FilterParams = React.createClass({
 	  displayName: 'FilterParams',
 	  getInitialState: function getInitialState() {
@@ -39017,6 +39028,13 @@
 	      min: 0,
 	      max: 100
 	    };
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    this.setState({
+	      breed: "All",
+	      min: 0,
+	      max: 100
+	    });
 	  },
 	  updateBreed: function updateBreed(e) {
 	    var breed = e.target.value;
@@ -55139,6 +55157,7 @@
 	    }
 	  }
 	});
+
 	module.exports = PuppyListings;
 
 /***/ },

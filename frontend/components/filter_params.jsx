@@ -2,6 +2,7 @@ const React = require('react');
 const ReactSlider = require('react-slider');
 const HashHistory = require('react-router').hashHistory;
 const FilterActions = require('../actions/filter_actions');
+
 const FilterParams = React.createClass({
   getInitialState() {
     return {
@@ -9,6 +10,14 @@ const FilterParams = React.createClass({
       min: 0,
       max: 100
     };
+  },
+
+  componentWillReceiveProps() {
+    this.setState({
+      breed: "All",
+      min: 0,
+      max: 100
+    });
   },
 
   updateBreed(e) {

@@ -1,5 +1,6 @@
 const React = require('react');
 const hashHistory = require('react-router').hashHistory;
+const FilterStore = require('../stores/filter_store');
 
 const SearchBar = React.createClass({
   getInitialState() {
@@ -17,6 +18,7 @@ const SearchBar = React.createClass({
   },
 
   _handleSubmit() {
+    FilterStore.resetFilters();
     const address = window.autocomplete.getPlace();
 
     if (!address) {
