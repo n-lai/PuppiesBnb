@@ -98,13 +98,6 @@ const LandingPage = React.createClass({
       backgroundPosition: 'center',
     };
 
-    const city1={
-      backgroundImage: 'url(http://res.cloudinary.com/dl8lhjvx0/image/upload/v1468000516/paris-eiffeltowerviewsunsetview-500_rtt5aq.jpg)',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }
-
     return (
       <div className='landing-page-container'>
         <div className='landing-page-carousel'>

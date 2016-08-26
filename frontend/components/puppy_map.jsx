@@ -106,7 +106,7 @@ const PuppyMap = React.createClass({
 
     const puppy = PuppyStore.find(puppyId);
 
-    const content = `<img id='map-pic' src=${puppy.image_url} class='map-picture'/>` +
+    const content = `<img id='map-pic' src='${puppy.image_url}' class='map-picture'/>` +
                     `<div class='infowindow-detail'>
                         <h3 class='map-puppy-name'>${puppy.name}</h3>
                         <h3>$${puppy.price} / day</h3>
