@@ -88,4 +88,4 @@ As of now, user accounts are very basic and only show the puppies that the user 
 
 ### Direct Messaging
 
-Another feature I would like to implement is messaging, allowing for the user to contact and communicate with puppy hosts.
+Another feature I would like to implement is messaging, allowing for the user to contact and communicate with puppy hosts. I am planning to use WebSockets to create a direct line of communication between different users. 
